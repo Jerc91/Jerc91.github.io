@@ -1,10 +1,172 @@
-<!doctype html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es" class="no-js">
 <head>
-	<meta charset="UTF-8">
-	<title>Julian Ruiz</title>
+    <title>Sin Que Hacer</title>
+    <meta charset="utf-8" />
+    <!--Javascript soporte para internet explorer versiones antiguas-->
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <!--Jquery-->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/jquery-2.0.3.min.js">\x3C/script>')</script>
+    <!--Controles css, js-->
+    <script src="assets/js/hogan-2.0.0.min.js"></script>
+    <script src="assets/js/controls/pipeline.min.js"></script>
+    <script src="assets/js/jquery.onepage-scroll.js"></script>
+    <!--Estilos-->
+    <link href="assets/css/controls/pipeline.css" rel="stylesheet" />
+    <link href="assets/css/sinquehacer.css" rel="stylesheet" />
+    <!--Javascript-->
+    <script>
+        // función de inicio
+        $(document).ready(function () {
+            // Scroll
+            $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
+        }); // end function ready
+    </script>
 </head>
 <body>
-	<h1>Nueva página web</h1>
+    <header>
+        <nav id="menu">
+            <ul class="menu">
+                <li><a class="fa fa-list-alt active" data-index="1">&nbsp;Formularios</a></li>
+                <li><a class="fa fa-table" data-index="2">&nbsp;Listas</a></li>
+                <li><a class="fa fa-print" data-index="3">&nbsp;Reportes</a></li>
+                <li><a class="fa fa-globe" data-index="4">&nbsp;Estadísticos</a></li>
+                <li><a class="fa fa-gamepad" data-index="5">&nbsp;Entrenimiento</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="content">
+        <section id="forms">
+            <div class="content">
+                <h1><i class="fa fa-list-alt"></i>Formularios</h1>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+                
+            </div>
+        </section>
+        <section id="list">
+            <div class="content">
+                <h1><i class="fa fa-table"></i>Listas</h1>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+                <article>
+                    
+                </article>
+            </div>
+        </section>
+        <section id="reports">
+            <div class="content">
+                <h1><i class="fa fa-print"></i>Reportes</h1>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+                <article>
+                    <!--<object id='report' type='application/pdf' data='rutaashx'>Error! (No puede mostrarse el objeto)</object>-->
+                </article>
+            </div>
+        </section>
+        <section id="statics">
+            <div class="content">
+                <h1><i class="fa fa-table"></i>Estadísticos</h1>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+                <article id="contentPipeline" class="contentPipeline">
+                </article>
+                <!--Templates-->
+                <script id="templatePipeline" type="text/html">
+                    <a class="btnLeft fa fa-chevron-left fa-2x"></a>
+                    <a class="btnRight fa fa-chevron-right fa-2x"></a>
+                    <ul class="pipeline">
+                        {{#list}}
+                    <li>
+                        <div class="content">
+                            <span>{{Name}}</span>
+                            <a class="add" href="{{ActionLink}}{{Id}}">+</a>
+                        </div>
+                        <div class="second">
+                            <span>{{Candidates}}</span>
+                            <i class="panel"></i>
+                        </div>
+                    </li>
+                        {{/list}}
+                    </ul>
+                </script>
+            </div>
+        </section>
+        <section id="triqui">
+            <div class="content">
+                <h1><i class="fa fa-table"></i>Triqui</h1>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+                <article>
+                    <table class="grilla">
+                        <thead>
+                            <tr>
+                                <th>Texto 01</th>
+                                <th>Texto 02</th>
+                                <th>Texto 03</th>
+                                <th>Texto 04</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fila 01-01</td>
+                                <td>Fila 01-02</td>
+                                <td>Fila 01-03</td>
+                                <td>Fila 01-04</td>
+                            </tr>
+                            <tr>
+                                <td>Fila 02-01</td>
+                                <td>Fila 02-02</td>
+                                <td>Fila 02-03</td>
+                                <td>Fila 02-04</td>
+                            </tr>
+                            <tr>
+                                <td>Fila 03-01</td>
+                                <td>Fila 03-02</td>
+                                <td>Fila 03-03</td>
+                                <td>Fila 03-04</td>
+                            </tr>
+                            <tr>
+                                <td>Fila 04-01</td>
+                                <td>Fila 04-02</td>
+                                <td>Fila 04-03</td>
+                                <td>Fila 04-04</td>
+                            </tr>
+                            <tr>
+                                <td>Fila 05-01</td>
+                                <td>Fila 05-02</td>
+                                <td>Fila 05-03</td>
+                                <td>Fila 05-04</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </section>
+        <aside>
+        </aside>
+        <footer></footer>
+    </div>
+    <!-- Sección para el Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <div class="content">
+            <a class="close" title="Cerrar">X</a>
+            <div>
+                <article class="description">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </article>
+            </div>
+        </div>
+        <a class="bg"></a>
+    </div>
 </body>
 </html>
