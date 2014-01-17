@@ -4,6 +4,13 @@
 .form { background-color: #f0f4f4; border: 1px solid rgba(0,0,0,0.4); border-radius: 8px; box-shadow: 0 0 10px 1px rgba(0,0,0,0.24); margin: 0 auto 20px; padding-bottom: 8px; width: 80%; }
     .form h4 { background: -webkit-linear-gradient(top, #e8e8e8, #ffffff); background: -moz-linear-gradient(top, #e8e8e8, #ffffff); background: -o-linear-gradient(top, #e8e8e8, #ffffff); background: -webkit-linear-gradient(top, #e8e8e8, #ffffff); border-bottom: 1px solid #ccc; border-radius: 8px 8px 0 0; color: #5c72c1; filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#e8e8e8', EndColorStr='#ffffff'); border-radius: 8px 8px 0 0; color: #7a7a7a; font-weight: bold; height: 35px; padding: 9px 10px; text-align: left; }
         .form h4 i { display: inline-block; font-size: 1.2em; margin-right: 10px; position: relative; top: 0; }
+        .form select { /*for firefox*/ -moz-appearance: none; /*for chrome*/ -webkit-appearance:none; text-indent: 0.01px; padding-right: 15px; text-overflow: ''; }
+        .form label { color: #000; }
+
+/*for IE10*/
+select::-ms-expand {
+    display: none;
+}
 
 /* Controles de formularios */
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus, input[type="file"]:focus, input[type="email"]:focus, input[type="url"]:focus,

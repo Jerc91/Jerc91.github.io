@@ -15,17 +15,12 @@
     <script src="assets/js/hogan-2.0.0.min.js"></script>
     <script src="assets/js/controls/pipeline.min.js"></script>
     <script src="assets/js/jquery.onepage-scroll.js"></script>
+    <script src="assets/js/script.js"></script>
     <!--Estilos-->
     <link href="assets/css/controls/pipeline.css" rel="stylesheet" />
     <link href="assets/css/sinquehacer.css" rel="stylesheet" />
     <!--Javascript-->
-    <script>
-        // función de inicio
-        $(document).ready(function () {
-            // Scroll
-            $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
-        }); // end function ready
-    </script>
+    <script src="assets/js/home.js"></script>
 </head>
 <body>
     <header>
@@ -44,9 +39,60 @@
             <div class="content">
                 <h1><i class="fa fa-list-alt"></i>Formularios</h1>
                 <article class="description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Crea formularios profesionales para tus webs, controles con validación inmediata con la posibilidad de poner ayuda para cada control. formularios hechos con HTML5 y CSS 3</p>
                 </article>
-                
+                <form action="#" id="form">
+                    <article class="form">
+                        <h4><i class="fa fa-chevron-right"></i>Registro</h4>
+                        <ul>
+                            <li>
+                                <label for="nacionalidad">Nacionalidad:</label>
+                                <select id="nacionalidad" name="nacionalidad" required="required">
+                                    <option value="">Seleccione un País</option>
+                                </select>
+                                <span class="tooltipForm">Selecciona tu país de nacionalidad</span>
+                            </li>
+                            <li>
+                                <label for="nombre">Nombres:</label>
+                                <input id="nombre" maxlength="60" name="nombre" placeholder="Ingresa tus nombre" required="required" size="60" type="text" />
+                                <span class="tooltipForm">Ejemplo: Julian</span>
+                            </li>
+                            <li>
+                                <label for="apellidos">Apellidos:</label>
+                                <input id="apellidos" maxlength="60" name="apellidos" placeholder="Ingresa tus apellidos" required="required" size="60" type="text" />
+                                <span class="tooltipForm">Ejemplo: Ruiz</span>
+                            </li>
+                            <li>
+                                <label for="correo">Correo:</label>
+                                <input id="correo" maxlength="60" name="correo" placeholder="Ingresa tu correo" required="required" size="60" type="email" />
+                                <span class="tooltipForm">usuario@dominio.com</span>
+                            </li>
+                            <li>
+                                <label for="sitioWeb">Sitio web:</label>
+                                <input id="sitioWeb" maxlength="60" name="sitioWeb" placeholder="http://www.tusitio.com" required="required" size="60" type="url" />
+                                <span class="tooltipForm">http://www.tusitio.com</span>
+                            </li>
+                            <li>
+                                <label for="anio">Fecha de nacimiento:</label>
+                                <select id="anio" class="width70px" required="required">
+                                    <option value="">Año</option>
+                                </select>
+                                -
+                            <select id="mes" class="widthAut" required="required">
+                                <option value="">Mes</option>
+                            </select>
+                                -
+                            <select id="dia" class="width70px" required="required">
+                                <option value="">Día</option>
+                            </select>
+                            </li>
+                        </ul>
+                    </article>
+                    <div class="buttons col2 center">
+                        <input type="submit" value="Guardar" />
+                        <input id="show" type="button" value="Cancelar" />
+                    </div>
+                </form>
             </div>
         </section>
         <section id="list">
@@ -75,7 +121,7 @@
             <div class="content">
                 <h1><i class="fa fa-table"></i>Estadísticos</h1>
                 <article class="description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p><b><a href="https://github.com/Jerc91/Pipeline" target="_blank">Pipeline: </a></b>este control tiene como finaldad mostrar el seguimientos de cifras las cuales se reducen en cada etapa del proceso que se este llevando. El ejemplo es acerca de los días que faltan para terminar el año, y con esto se evidencia que las cifras se reducen tras pasar los meses.</p>
                 </article>
                 <article id="contentPipeline" class="contentPipeline">
                 </article>
@@ -85,16 +131,16 @@
                     <a class="btnRight fa fa-chevron-right fa-2x"></a>
                     <ul class="pipeline">
                         {{#list}}
-                    <li>
-                        <div class="content">
-                            <span>{{Name}}</span>
-                            <a class="add" href="{{ActionLink}}{{Id}}">+</a>
-                        </div>
-                        <div class="second">
-                            <span>{{Candidates}}</span>
-                            <i class="panel"></i>
-                        </div>
-                    </li>
+                        <li>
+                            <div class="content">
+                                <span>{{Name}}</span>
+                                <a class="add" data-lb="true" href="{{ActionLink}}{{Id}}">+</a>
+                            </div>
+                            <div class="second">
+                                <span>{{Total}}</span>
+                                <i class="panel"></i>
+                            </div>
+                        </li>
                         {{/list}}
                     </ul>
                 </script>
@@ -107,48 +153,7 @@
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 </article>
                 <article>
-                    <table class="grilla">
-                        <thead>
-                            <tr>
-                                <th>Texto 01</th>
-                                <th>Texto 02</th>
-                                <th>Texto 03</th>
-                                <th>Texto 04</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Fila 01-01</td>
-                                <td>Fila 01-02</td>
-                                <td>Fila 01-03</td>
-                                <td>Fila 01-04</td>
-                            </tr>
-                            <tr>
-                                <td>Fila 02-01</td>
-                                <td>Fila 02-02</td>
-                                <td>Fila 02-03</td>
-                                <td>Fila 02-04</td>
-                            </tr>
-                            <tr>
-                                <td>Fila 03-01</td>
-                                <td>Fila 03-02</td>
-                                <td>Fila 03-03</td>
-                                <td>Fila 03-04</td>
-                            </tr>
-                            <tr>
-                                <td>Fila 04-01</td>
-                                <td>Fila 04-02</td>
-                                <td>Fila 04-03</td>
-                                <td>Fila 04-04</td>
-                            </tr>
-                            <tr>
-                                <td>Fila 05-01</td>
-                                <td>Fila 05-02</td>
-                                <td>Fila 05-03</td>
-                                <td>Fila 05-04</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
                 </article>
             </div>
         </section>

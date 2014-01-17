@@ -71,7 +71,7 @@ var ControlCaptcha = function (idImg, idCaptcha, idCOriginal, idCRequeried, idRe
 } // end ControlCaptcha
 
 // Estructura de control
-var j = function (e) {
+var jTools = function (e) {
     var BlockUI, ControlDate;
     var elemento = e;
     function lightboxFade() {
@@ -264,7 +264,7 @@ var j = function (e) {
                     lightboxFade();
                 } // end if
             }); // key dow
-            tablesInit();
+            //tablesInit();
             return false;
         },
         Thread: function (e) {

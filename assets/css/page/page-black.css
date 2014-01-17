@@ -26,16 +26,16 @@ section#reports { background-color: rgb(226,114,50); }
     section#reports p { color: #fdc8a8; }
 
 section#statics { background-color: #f1f2f4; }
-    section#statics h1 { color: #36393c; }
+    section#statics, section#statics b a { color: #36393c; text-decoration: none;  }
     section#statics p { color: #858a8f; }
 
 section#triqui { background-color: #5ec369; }
     section#triqui p { color: #363e45; }
-/*section#triqui h1 { color: #33383d; }*/
+/*section#triqui   { color: #33383d; }*/
 
 
 /* Header de la página */
-section h1 { color: #fff; }
+section   { color: #fff; }
 
 /* En donde esta el contenido de la página */
 section p { color: #fff; }

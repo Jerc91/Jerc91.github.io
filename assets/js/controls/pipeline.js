@@ -313,14 +313,14 @@ $(document).ready(function () {
         "heightButtons": 50,
         "list":
             [
-                { "Total": "1,123", "Id": "#", "Name": "Process 01" },
-                { "Total": "600", "Id": "#", "Name": "Process 02" },
-                { "Total": "510", "Id": "#", "Name": "Process 03" },
-                { "Total": "395", "Id": "#", "Name": "Process 04" },
-                { "Total": "173", "Id": "#", "Name": "Process 05" },
-                { "Total": "132", "Id": "#", "Name": "Process 06" },
-                { "Total": "100", "Id": "#", "Name": "Process 07" },
-                { "Total": "32", "Id": "#", "Name": "Process 08" }
+                { "Total": "1,123", "Id": "#", "Name": "January" },
+                { "Total": "600", "Id": "#", "Name": "Febrary" },
+                { "Total": "510", "Id": "#", "Name": "March" },
+                { "Total": "395", "Id": "#", "Name": "April" },
+                { "Total": "173", "Id": "#", "Name": "May" },
+                { "Total": "132", "Id": "#", "Name": "June" },
+                { "Total": "100", "Id": "#", "Name": "July" },
+                { "Total": "100", "Id": "#", "Name": "Augost" }
             ],
         "maxElementsShow": 4,
         "rotateY": 16,
