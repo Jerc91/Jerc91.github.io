@@ -39,13 +39,13 @@
     function fnInit(fnAdd) {
         var popup = document.getElementById(identifier);
         // Se agrega la función de ocultar el lightbox al botón x
-        popup.getElementsByClassName(classBg)[0].addEventListener('click', function () { lightboxFade(); });
+        popup.getElementsByClassName(classBg)[0].addEventListener('click', function () { fnLightboxFade(); });
         // Se agrega la función de ocultar el lightbox al botón x
-        popup.getElementsByClassName(classClose)[0].addEventListener('click', function () { lightboxFade(); });
+        popup.getElementsByClassName(classClose)[0].addEventListener('click', function () { fnLightboxFade(); });
         // Cuando se presione ecs y el lighbox este activo este se ocultara
         $("body").keydown(function (e) {
             if (e.keyCode == 27 && activeLightbox) {
-                lightboxFade();
+                fnLightboxFade();
             } // end if
         }); // key down
         if (j.tools.fnIsFunction(fnAdd)) fnAdd();
