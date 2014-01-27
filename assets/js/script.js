@@ -1,6 +1,4 @@
-﻿// Variable para saber en que lenguajes esta hecha la página
-var lang = document.getElementsByTagName("html")[0].getAttribute("lang");
-// variable para el uso del lightbox
+﻿// variable para el uso del lightbox
 var activeLightbox = false;
 
 // Encuentra un elemento en el Array
@@ -82,10 +80,7 @@ var jTools = function (e) {
         } // end if
         return false;
     }; // end function
-    // Validates if parameter is a function
-    function isFunction(x) {
-        return Object.prototype.toString.call(x) == '[object Function]';
-    };
+    
     // Inicializa el control para las tablas
     function tablesInit() {
         $('.dataTable').dataTable({
@@ -106,24 +101,6 @@ var jTools = function (e) {
     // Agrega class
     function AddClass(name, elemento) { elemento.className += ' ' + name; } // agrega una clase a un elemento
     return {
-        // Funcionaes para bloquear la pantalla para que el usuario 
-        // no evnie la ininformación dos veces aal servidor
-        BlockUI: function () {
-            function block() { // Mientras se envian los datos al servidor se mostrara un panel ocultando los controles de servidor
-                $(".postback").easyValidate(vldt);
-            } // end function
-            return {
-                init: function () {
-                    loadClick();
-                    return false;
-                }, // end function
-                unBlock: function () {
-                    fnHideLoading();
-                    // ValidatorOnLoad();
-                    block();
-                }
-            } // end return
-        }, // End Estructura BlockUI
         // Grupo de funciones para el uso de tres controles select para fechas
         ControlDate: function (idCYear, idCMoth, idCDay, idCOutDate) {
             // Variables del control
@@ -211,17 +188,6 @@ var jTools = function (e) {
                 } // retorna la fecha que hay
             } // end return
         }, // end controlDate
-        // Recibe un arreglo de objetos obtenido por medio de jquery
-        Hide: function (elements) {
-            if (Array.isArray(elements))
-                for (var i = 0; i < elements.length; i++) $("#" + elements[i]).addClass("hide");
-            else $("#" + elements).addClass("hide");
-        }, // end function hide
-        Show: function (elements) {
-            if (Array.isArray(elements))
-                for (var i = 0; i < elements.length; i++) $("#" + elements[i]).removeClass("hide");
-            else $("#" + elements).removeClass("hide");
-        }, // end function show
         // funcion para eleminar todas las opciones de un select excepto el primero si como segundo parametro recibe un false
         // el elemento que se espera debe se llamado a través de jquery 
         ClearOption: function (ele, all) {
@@ -246,10 +212,6 @@ var jTools = function (e) {
                     if (cover) AddClass('cover', cntLight);
                 } // end function style
             }; // end return
-        },
-        // Función para ocultar el lightbox terminando con una animación
-        LightboxFade: function () {
-            lightboxFade();
         },
         // Funciones para el manejo de las teclas en el formulario
         Init: function () {

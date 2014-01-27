@@ -169,4 +169,3 @@
         return false;
     }
 }(window.jQuery);
-

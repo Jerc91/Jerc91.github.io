@@ -1,154 +1,4 @@
 ﻿//---------------------------------
-// Functions globals, coomon
-(function () {
-    //---------------------------------
-    // Variables globals
-    //---------------------------------
-    // Variable for validate the name of NameSpace
-    this.validateNS = /^[a-zA-Z]?[a-zA-z0-9]+$/;
-    // Variables for the all browsers
-    this.URL = window.URL || window.webkitURL;
-    //---------------------------------
-    // Get path of a namespace
-    this.fnImport = function (namespace) {
-        var parent;
-        try {
-            var parts = namespace.split('.');
-            for (var i = 0; i < parts.length; i++) {
-                if (!parent && i == 0) parent = window;
-                parent = parent[parts[i]];
-            } // end for
-            return parent;
-        } // end try
-        catch (e) {
-            console.log(e);
-            return null;
-        } // end catch
-    };
-    //---------------------------------
-
-    //---------------------------------
-    // Validate the dependences
-    this.fnDepenciesTrue = function (dependencies) {
-        if (dependencies.constructor === Assembly) if (!dependencies) return false;
-        if (dependencies.constructor === Array) for (var i in dependencies) if (!dependencies[i]) return false;
-        return true;
-    };
-    //---------------------------------
-
-    // Struct for the namespace
-    this.Assembly = function () {
-        this.Author = '';
-        this.Created = '';
-        this.Description = '';
-        this.Title = '';
-        // Add new namespace
-        this.fnAddNS = function (name) {
-            if (!name) return;
-            if (!name.match(validateNS)) return;
-            // create a property if it doesnt exist
-            if (typeof this[name] == 'undefined') this[name] = new Assembly();
-            return this[name];
-        };
-    };
-    //---------------------------------
-})(window);
-//---------------------------------
-
-//---------------------------------
-// Namespace Main for library
-var company = "j";
-var j = new Assembly();
-$.extend(j, {
-    Author: 'Julian Ruiz', Created: '2013-12-03', Page: 'Coming soon', preBrowsers: ['', '-moz-', '-ms-', '-o-', '-webkit-'], Title: 'Namespace Main'
-});
-//---------------------------------
-
-//---------------------------------
-// Common Tools, Namespace Main
-(function () {
-    // Private members
-    var j = fnImport(company);
-    if (!fnDepenciesTrue(j)) return;
-    //---------------------------------
-    // Color string to hexadecimal color
-    function fnStrToHex(str) {
-        if (!str) return undefined;
-        var hex = (str.indexOf("#") === 0) ? str.substring(1) : str;
-        hex = parseInt("0x" + hex, 16);
-        return hex;
-    };
-    //---------------------------------
-
-    //---------------------------------
-    // Hexadecimal color to string color
-    function fnHexToStr(n) {
-        n = n.toString(16);
-        if (n.length === 6) return '#' + n;
-        return '#000000'.substr(0, 7 - n.length) + n;
-    };
-    //---------------------------------
-
-    // Public API
-    //---------------------------------
-    // Find "n" colors gradients between two colors
-    this.fnGradientColors = function (fromColor, toColor, steps) {
-        fromColor = fnStrToHex(fromColor);
-        toColor = fnStrToHex(toColor);
-        var colors = [];
-        var fadeHex = function (hex, hex2, ratio) {
-            var r = hex >> 16;
-            var g = hex >> 8 & 0xFF;
-            var b = hex & 0xFF;
-            r += ((hex2 >> 16) - r) * ratio;
-            g += ((hex2 >> 8 & 0xFF) - g) * ratio;
-            b += ((hex2 & 0xFF) - b) * ratio;
-            return (r << 16 | g << 8 | b);
-        };
-        for (var i = 0; i <= steps; i++) colors.push(fnHexToStr(fadeHex(fromColor, toColor, i / steps)));
-        return colors;
-    };
-    //---------------------------------
-
-    //---------------------------------
-    // Insert an element after the other element
-    this.fnInsertAfter = function (referenceNode, newNode) {
-        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-    };
-    //---------------------------------
-
-    //---------------------------------
-    // Find word in text
-    // Parameters: Expression Regular, Text
-    this.fnFindWord = function (reString, text) {
-        var re = new RegExp(reString);
-        var result = re.exec(text);
-        return result ? result[0] : result;
-    };
-    //---------------------------------
-
-    //---------------------------------
-    // Created a RegularExpression for a number range
-    this.fnGetERNumberRange = function (max) {
-        var range = "[0-9]{";
-        for (var i = 0; i < max; i++) range += (i + 1) + (i + 1 != max ? ',' : '');
-        return range += "}";
-    };
-    //--------------------------------
-
-    //---------------------------------
-    // Created text with the prefixed of browsers
-    this.fnGetTextPreBrowsers = function (text) {
-        var result = '';
-        for (var i = 0; i < j.preBrowsers.length; i++) result += (j.preBrowsers[i] + text);
-        return result;
-    };
-    //---------------------------------
-}).apply(j.fnAddNS("tools"));
-$.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming soon', Title: 'Common Tools' });
-//---------------------------------
-
-//---------------------------------
 // Plugin Pipeline
 // Depends Tools, Jquery, Namespace Main
 (function () {
@@ -160,12 +10,12 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
 
     //---------------------------------
     // Move elements to left
-    this.fnPipelineLeft = function () {
+    function fnPipelineLeft() {
         var $ul = $(p.classPipeline);
         var classString = tools.fnFindWord("[a]" + p.rangeNumber, $ul.attr("class")) || 'a0';
         var activeItem = parseInt(tools.fnFindWord(p.rangeNumber, classString)) + 1;
         if (p.active) return;
-        if (this.fnShowButton(activeItem)) return;
+        if (fnShowButton(activeItem)) return;
         p.active = true;
         $ul.removeClass(classString);
         $ul.addClass("a" + (activeItem));
@@ -175,12 +25,12 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
 
     //---------------------------------
     // Move elements to right
-    this.fnPipelineRight = function () {
+    function fnPipelineRight() {
         var $ul = $(p.classPipeline);
         var classString = tools.fnFindWord("[a]" + p.rangeNumber, $ul.attr("class")) || 'a0';
         var activeItem = parseInt(tools.fnFindWord(p.rangeNumber, classString)) - 1;
         if (p.active) return;
-        if (this.fnShowButton(activeItem)) return;
+        if (fnShowButton(activeItem)) return;
         p.active = true;
         $ul.removeClass(classString);
         if (activeItem > 0) $ul.addClass("a" + (activeItem));
@@ -190,31 +40,40 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
 
     //---------------------------------
     // Show or fade the buttons(Left, Right)
-    this.fnShowButton = function (activeItem) {
-        if (activeItem == -1) { $(".btnRight").addClass("disable"); return true; }
-        else if (activeItem == 0) $(".btnRight").addClass("disable");
-        else $(".btnRight").removeClass("disable");
-        if (activeItem > p.elementsFade) { $(".btnLeft").addClass("disable"); return true; }
-        if (activeItem == p.elementsFade) $(".btnLeft").addClass("disable");
-        else $(".btnLeft").removeClass("disable");
+    function fnShowButton(activeItem) {
+        var btn1, btn2, countItems = p.elementsFade, classDisabled = "disable";
+        if (!p.leftToRight) {
+            btn1 = ".btnRight";
+            btn2 = ".btnLeft";
+        } // end if
+        else {
+            btn1 = ".btnLeft";
+            btn2 = ".btnRight";    
+        } // end else
+
+        if (activeItem == -1) { $(btn1).addClass(classDisabled); return true; }
+        else if (activeItem == 0) $(btn1).addClass(classDisabled);
+        else $(btn1).removeClass(classDisabled);
+        if (activeItem > countItems) { $(btn2).addClass(classDisabled); return true; }
+        if (activeItem == countItems) $(btn2).addClass(classDisabled);
+        else $(btn2).removeClass(classDisabled);
         return false;
     };
     //---------------------------------
 
-    // Public API
     //---------------------------------
     // Show or hide the buttons of navigation Pipeline
-    this.fnBtnMove = function () {
+    function fnBtnMove() {
         var $button = $(this);
         if ($button.hasClass("disable")) return;
-        if ($button.hasClass("btnLeft")) p.fnPipelineLeft();
-        else if ($button.hasClass("btnRight")) p.fnPipelineRight();
+        if ($button.hasClass("btnLeft")) {if(!p.leftToRight) p.fnPipelineLeft(); else p.fnPipelineRight();}
+        else if ($button.hasClass("btnRight")) {if(!p.leftToRight) p.fnPipelineRight(); else p.fnPipelineLeft();}
     };
     //---------------------------------
 
     //---------------------------------
     // Init of plugin Pipeline
-    this.fnInit = function (config) {
+    function fnInit(config) {
         //var pipeline = 
         // Set values to config and asing this to p for do small code
         $.extend(p, config);
@@ -222,6 +81,7 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
         // Local variables for the funcionamiento del control
         p.active = false;
         var count = p.list.length;
+        // Work colors for backgrounds of panels
         var backColors = (p.changeColorsPanel ? tools.fnGradientColors(p.backGradients[0], p.backGradients[1], count) : p.colorsPanel);
         var countFadeElements = 0;
         var elements = (count > p.maxElementsShow ? p.maxElementsShow : count);
@@ -234,25 +94,34 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
         var preBrowser = j.preBrowsers;
         p.rangeNumber = tools.fnGetERNumberRange(count.toString().length);
         var widthElements = Math.round(p.width / elements);
-        var leftAnimation = p.elementsFade * widthElements;
-        leftAnimation *= leftAnimation <= 0 ? -1 : 1;
-
+        // For the animation with move left to right or right to left
+        p.leftToRight = p.leftToRight || false;
+        // Calculate pixels to left for animation left to right or right to left
+        var leftAnimation = !p.leftToRight ? 
+            (p.elementsFade * widthElements) - (p.leftToRight ? (p.maxElementsShow * widthElements) : 0) :
+            (p.maxElementsShow * widthElements) - (p.leftToRight ? (p.elementsFade * widthElements) : 0);
+        if (!p.leftToRight) leftAnimation *= leftAnimation <= 0 ? -1 : 1;
         // Styles for the pipeline
         var css = [];
         css.push(p.classContent + "{width:" + p.width + "px}");
-        var la = " init-pipeline{0%{left:100%;opacity:0;}100%{left:0;opacity:1;}}"; // left animation
+        var la = " init-pipeline{0%{left:" + (p.leftToRight ? "-" : "") + "100%;opacity:0;}100%{left:0;opacity:1;}}"; // left animation
         for (var i = 0; i < j.preBrowsers.length; i++) css.push("@" + j.preBrowsers[i] + "keyframes" + la);
         css.push(p.classPipeline + " {" + (paddingLeft < 0 ? '' : 'padding-left:' + paddingLeft + 'px;') + "width:" + p.width + "px;}");
         var pi = tools.fnGetTextPreBrowsers("transform: translateX(-" + leftAnimation + "px);");
-        css.push(p.classPipeline + " li{max-width:" + maxWidthElements + "px;min-width:" + widthElements + "px;" + pi + "}")
+        css.push(p.classPipeline + " li{max-width:" + maxWidthElements + "px;min-width:" + widthElements + "px;" + pi + "}");
+        // Assing the classes for each li in the pipeline
         for (var i = 0; i < count; i++) {
             var i2 = i + 1;
             var b = count > 1 && ((i2 + i) == count || (i2) == count);
             var child = " li:nth-child(" + (i2) + ") ";
-            if (p.elementsFade > countFadeElements) {
+            if (p.elementsFade > countFadeElements && !p.leftToRight) {
                 var tx = tools.fnGetTextPreBrowsers("transform: translateX(-" + (widthElements * (p.elementsFade - i2)) + "px);");
                 css.push(p.classPipeline + ".a" + i2 + " li {" + tx + "}");
                 countFadeElements++;
+            } // end if
+            else if (i < p.elementsFade && p.leftToRight) {
+                var tx = tools.fnGetTextPreBrowsers("transform: translateX(-" + (widthElements * i2) + "px);");
+                css.push(p.classPipeline + ".a" + i2 + " li {" + tx + "}");
             } // end if
             if (i != 0) height -= Math.round(height * 9.09 / 100);
             if (b) p.rotateY -= (p.rotateY * 25 / 100);
@@ -275,6 +144,12 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
             $(".btnLeft").remove();
             $(".btnRight").remove();
         } // end if
+        $(".btnLeft").click(fnBtnMove).addClass(p.leftToRight ? "disable" : "");
+        $(".btnRight").click(fnBtnMove).addClass(!p.leftToRight ? "disable" : "");
+        $('body').keydown(function (e) {
+            if (e.keyCode == 37) if (!p.leftToRight) p.fnPipelineLeft(); else p.fnPipelineRight();
+            else if (e.keyCode == 39) if (!p.leftToRight) p.fnPipelineRight(); else p.fnPipelineLeft();
+        });
         // Animation active init
         if (p.animations) {
             var $ul = $(p.classPipeline);
@@ -282,16 +157,18 @@ $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming 
             p.active = true;
             setTimeout(function () { $(p.classPipeline).removeClass("init"); p.active = false; }, 2000, $ul);
         } // end if
-        $(".btnLeft").click(p.fnBtnMove);
-        $(".btnRight").click(p.fnBtnMove).addClass("disable");
-        $('body').keydown(function (e) {
-            if (e.keyCode == 37) p.fnPipelineLeft();
-            else if (e.keyCode == 39) p.fnPipelineRight();
-        });
-    };
+    }; // end function init
+    //---------------------------------
+
+    //---------------------------------
+    // Public API
+    this.fnPipelineLeft = fnPipelineLeft;
+    this.fnPipelineRight = fnPipelineRight;
+    //this.fnShowButton = fnShowButton;
+    this.fnInit = fnInit;
     //---------------------------------
 }).apply(j.fnAddNS("pipeline"));
-$.extend(j.pipeline, { Author: 'Julian Ruiz', Created: '2013-12-01', Page: 'Coming soon', Title: 'Pipeline' });
+$.extend(j.pipeline, { Author: 'Julian Ruiz', Created: '2014-01-27', Page: 'http://jerc91.github.io/', Title: 'Pipeline' });
 //---------------------------------
 
 $(document).ready(function () {
@@ -311,6 +188,7 @@ $(document).ready(function () {
         "firtsHeight": 330,
         "fontGradients": ["#ffffff", "#ffffff"],
         "heightButtons": 50,
+        "leftToRight": true,
         "list":
             [
                 { "Total": "1,123", "Id": "#", "Name": "January" },

@@ -6,7 +6,7 @@ function LoadData() {
         type: "GET",
         contentType: "text/plain; charset=utf-8",
         dataType: "json",
-        url: "services/file/paises.txt",
+        url: "../services/file/paises.txt",
         success: function (data) {
             if (data) j().FillDataSelect(data, 'nacionalidad');
         } // end success
@@ -14,13 +14,9 @@ function LoadData() {
 } // end function
 // función de inicio
 $(document).ready(function () {
-     // Se inician los componentes del j()
-    jTools().Init();
-    jTools().ControlDate('anio', 'mes', 'dia').init();
     LoadData();
     // Scroll
     $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
-    
     setTimeout(function () {$(".fa-globe").click()}, 500);
 
     var j = window.j || fnImport("j");
@@ -56,11 +52,25 @@ $(document).ready(function () {
         "width": 880,
         "widthButtons": 50
     };
-    // Creation of   HTML
-    var template = Hogan.compile($("#templatePipeline").html());
-    $("#contentPipeline").html(template.render(configPipeline));
-    j.pipeline.fnInit(configPipeline);  
+    // Creation of HTML
 
+    // implementación del hilo
+    j.tools.fnThread({ 
+        Data: { "list" : configPipeline.list }, 
+        Template: $("#templatePipeline").html(),
+        WorkerJs: "../js/workers/pipelineWorker.js",
+        Success: function (e) {
+            $("#contentPipeline").html(e.data);
+            j.pipeline.fnInit(configPipeline);
+            // Init ui controls
+            j.ui.init($("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href","javascript:void()"));
+        } // end function success 
+    }); // end function thread
 
-    $("a[data-lb='true']").click(function () {jTools().LightboxShow()}).attr("href","javascript:void()");
+    //var template = Hogan.compile($("#templatePipeline").html());
+    //$("#contentPipeline").html(template.render(configPipeline));
+    //j.pipeline.fnInit(configPipeline); 
+    // Init control date
+    j.controlDate.fnInit('anio', 'mes', 'dia');
+    
 }); // end function ready
