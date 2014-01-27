@@ -63,13 +63,10 @@ $(document).ready(function () {
             $("#contentPipeline").html(e.data);
             j.pipeline.fnInit(configPipeline);
             // Init ui controls
-            j.ui.init($("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href","javascript:void()"));
+            j.ui.fnInit($("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href","javascript:void()"));
         } // end function success 
     }); // end function thread
 
-    //var template = Hogan.compile($("#templatePipeline").html());
-    //$("#contentPipeline").html(template.render(configPipeline));
-    //j.pipeline.fnInit(configPipeline); 
     // Init control date
     j.controlDate.fnInit('anio', 'mes', 'dia');
     
