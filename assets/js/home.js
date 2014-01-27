@@ -58,7 +58,7 @@ $(document).ready(function () {
     j.tools.fnThread({ 
         Data: { "list" : configPipeline.list }, 
         Template: $("#templatePipeline").html(),
-        WorkerJs: "../js/workers/pipelineWorker.js",
+        WorkerJs: "assets/js/workers/pipelineWorker.js",
         Success: function (e) {
             $("#contentPipeline").html(e.data);
             j.pipeline.fnInit(configPipeline);

@@ -162,7 +162,8 @@ $.extend(j, {
     // Function that used the Web Workers when it create new templates with Hogan.js
     //---------------------------------
     function fnThread(e) {
-        var worker = new Worker("../js/workers/pipelineWorker.js");
+        var worker = new Worker(e.WorkerJs);
+
         // se envia la plantilla y se envian los datos JSON
         worker.postMessage({ compile: e.Template, data: e.Data });
         // Agregar función para cuando responde el hilo
