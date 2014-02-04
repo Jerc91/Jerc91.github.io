@@ -339,3 +339,12 @@ function coments() {
 //    $('html, body').animate({ scrollTop: blockRoof }, 600, 'swing');
 //    return false;
 //}); // end function a click
+
+
+
+
+//_gaq = ga;
+//_gaq.prototyp.push = function(){
+//    var even = arguments[0], category = arguments[1], action = arguments[2], optLabel = arguments[3] || undefined, value = arguments[4] || undefined;
+//    ga('send', event, category, action, optLabel, value);
+//};

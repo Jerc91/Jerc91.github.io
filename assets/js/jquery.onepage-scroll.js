@@ -130,10 +130,10 @@
                 var tag = e.target.tagName.toLowerCase();
                 switch (e.which) {
                     case 38:
-                        if (tag != 'input' && tag != 'textarea') el.moveUp()
+                        if (tag != 'input' && tag != 'textarea' && tag != 'select') el.moveUp();
                         break;
                     case 40:
-                        if (tag != 'input' && tag != 'textarea') el.moveDown()
+                        if (tag != 'input' && tag != 'textarea' && tag != 'select') el.moveDown();
                         break;
                     default: return;
                 }

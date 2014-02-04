@@ -62,10 +62,11 @@ $(document).ready(function () {
         Success: function (e) {
             $("#contentPipeline").html(e.data);
             j.pipeline.fnInit(configPipeline);
-            // Init ui controls
-            j.ui.fnInit($("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href","javascript:void()"));
         } // end function success 
     }); // end function thread
+
+    // Init ui controls
+    j.ui.fnInit($("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href","javascript:void()"));
 
     // Init control date
     j.controlDate.fnInit('anio', 'mes', 'dia');
