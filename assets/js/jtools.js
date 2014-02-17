@@ -2,7 +2,7 @@
 // Functions globals, coomon
 (function () {
     // Get path of a namespace
-    function fnImport (namespace) {
+    function fnImport(namespace) {
         var parent;
         try {
             var parts = namespace.split('.');
@@ -184,6 +184,14 @@ $.extend(j, {
     } // end method
     //---------------------------------
 
+    // Import content of files .HTML, with ref="import"
+    //---------------------------------
+    function fnImportHTML(idImport, idContent, partOfImport) {
+        var link = document.querySelector(idImport);
+        var content = link.import.querySelector(partOfImport || 'body');
+        document.querySelector(idContent).appendChild((!partOfImport ? content.firstChild : content).cloneNode(true));
+    }
+    //---------------------------------
 
     //---------------------------------
     // Public API
@@ -195,6 +203,7 @@ $.extend(j, {
     this.fnIsFunction = fnIsFunction;
     this.fnThread = fnThread;
     this.fnParseJsonDate = fnParseJsonDate;
+    this.fnImportHTML = fnImportHTML;
     //---------------------------------    
 }).apply(j.fnAddNS("tools"));
 $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2014-01-27', Page: 'http://jerc91.github.io/', Title: 'Common Tools' });

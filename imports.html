@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script>
+        if (!('import' in document.createElement('link'))) {
+            var instructions = "<h4>Only on browser Chrome, instructions:</h4></h4><ol>";
+            instructions += "<li>Input on browser Chrome the url chrome://flags/ </li>";
+            instructions += "<li>Ctr + f, input \"#enable-html-imports\" change to enableds";
+            instructions += "<li>Ctr + f, input \"Experimental-Web-Platform-features\" change to enabled</li>";
+            instructions += "<li>Reboot browser</li>";
+            instructions += "</ol>";
+            document.write(instructions);
+        }
+    </script>
+    <!--Jquery-->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js" async></script>
+    <script async>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-2.0.3.min.js">\x3C/script>')</script>
+    <script src="/assets/js/jtools.js"></script>
+    <!--Imports-->
+    <link id="imHead" rel="import" href="imports/shared/head.html" />
+    <link id="imHeader" rel="import" href="imports/shared/header.html" />
+    <link id="imForms" rel="import" href="imports/home/forms.html" />
+    <link id="imList" rel="import" href="imports/home/list.html" />
+    <link id="imReports" rel="import" href="imports/home/reports.html" />
+    <link id="imStatics" rel="import" href="imports/home/statics.html" />
+    <link id="imTriqui" rel="import" href="imports/home/triqui.html" />
+    <link id="imLightbox" rel="import" href="imports/controls/lightbox.html" />
+    <!--End imports-->
+    <script async>j.tools.fnImportHTML('#imHead', 'head', 'head');</script>
+</head>
+<body>
+    <header>
+        <script async>j.tools.fnImportHTML('#imHeader', 'header');</script>
+    </header>
+    <div id="content">
+        <section id="forms">
+            <script async>j.tools.fnImportHTML('#imForms', '#forms');</script>
+        </section>
+        <section id="list">
+            <script async>j.tools.fnImportHTML('#imList', '#list');</script>
+        </section>
+        <section id="reports">
+            <script async>j.tools.fnImportHTML('#imReports', '#reports');</script>
+        </section>
+        <section id="statics">
+            <script async>j.tools.fnImportHTML('#imStatics', '#statics');</script>
+        </section>
+        <section id="triqui">
+            <script async>j.tools.fnImportHTML('#imTriqui', '#triqui');</script>
+        </section>
+    </div>
+    <footer></footer>
+    <script async>j.tools.fnImportHTML('#imLightbox', 'body');</script>
+</body>
+</html>

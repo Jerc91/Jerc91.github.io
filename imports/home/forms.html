@@ -1,0 +1,58 @@
+﻿<div class="content">
+    <h1><i class="fa fa-list-alt"></i>Formularios</h1>
+    <article class="description">
+        <p>Crea formularios profesionales para tus webs, controles con validación inmediata con la posibilidad de poner ayuda para cada control. formularios hechos con HTML5 y CSS 3</p>
+    </article>
+    <form action="#" id="form">
+        <article class="form">
+            <h4><i class="fa fa-chevron-right"></i>Registro</h4>
+            <ul>
+                <li>
+                    <label for="nacionalidad">Nacionalidad:</label>
+                    <select id="nacionalidad" name="nacionalidad" required="required">
+                        <option value="">Seleccione un País</option>
+                    </select>
+                    <span class="tooltipForm">Selecciona tu país de nacionalidad</span>
+                </li>
+                <li>
+                    <label for="nombre">Nombres:</label>
+                    <input id="nombre" maxlength="60" name="nombre" placeholder="Ingresa tus nombre" required="required" size="60" type="text" />
+                    <span class="tooltipForm">Ejemplo: Julian</span>
+                </li>
+                <li>
+                    <label for="apellidos">Apellidos:</label>
+                    <input id="apellidos" maxlength="60" name="apellidos" placeholder="Ingresa tus apellidos" required="required" size="60" type="text" />
+                    <span class="tooltipForm">Ejemplo: Ruiz</span>
+                </li>
+                <li>
+                    <label for="correo">Correo:</label>
+                    <input id="correo" maxlength="60" name="correo" placeholder="Ingresa tu correo" required="required" size="60" type="email" />
+                    <span class="tooltipForm">usuario@dominio.com</span>
+                </li>
+                <li>
+                    <label for="sitioWeb">Sitio web:</label>
+                    <input id="sitioWeb" maxlength="60" name="sitioWeb" placeholder="http://www.tusitio.com" required="required" size="60" type="url" />
+                    <span class="tooltipForm">http://www.tusitio.com</span>
+                </li>
+                <li>
+                    <label for="anio">Fecha de nacimiento:</label>
+                    <select id="anio" class="width70px" required="required">
+                        <option value="">Año</option>
+                    </select>
+                    -
+                    <select id="mes" class="widthAut" required="required">
+                        <option value="">Mes</option>
+                    </select>
+                    -
+                    <select id="dia" class="width70px" required="required">
+                        <option value="">Día</option>
+                    </select>
+                </li>
+            </ul>
+        </article>
+        <div class="buttons col2 center">
+            <input type="submit" value="Guardar" />
+            <input id="show" type="button" value="Cancelar" />
+        </div>
+    </form>
+</div>

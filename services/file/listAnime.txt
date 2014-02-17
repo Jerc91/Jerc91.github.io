@@ -1,0 +1,7 @@
+﻿{
+    list: [
+        { idVideo: "Qy7Q77ZD_ME", title: "Fate Stay Night" },
+        { idVideo: "eOnDgn79EKc", title: "Hellsing" },
+        { idVideo: "f2LTeuPuQFk", title: "Darkstalkers" }
+    ]
+};
