@@ -1,4 +1,4 @@
-importScripts('/assets/js/vendor/hogan-2.0.0.min.js');
+importScripts('../../../assets/js/vendor/hogan-2.0.0.min.js');
 self.addEventListener("message", function (e) {
     var data = e.data;
     var template = Hogan.compile(data.compile);

@@ -1,5 +1,6 @@
-﻿var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
+﻿// Called the API of Youtube
+var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -8,12 +9,14 @@ $(document).ready(function () {
     $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
 });
 
+// When API is ready
+//---------------------------------
 function onYouTubeIframeAPIReady() {
     // implementación del hilo
     j.tools.fnThread({
         Data: listVideos,
         Template: $("#tmpListVideos").html(),
-        WorkerJs: "/assets/js/workers/worker.js",
+        WorkerJs: "assets/js/workers/worker.js",
         Success: function (e) {
             $("#dvListVideos").html(e.data);
             $("#dvListVideos").owlCarousel({ items: 2 });
@@ -21,6 +24,7 @@ function onYouTubeIframeAPIReady() {
         } // end function success 
     }); // end function thread
 } // end function
+//---------------------------------
 
 var listVideos = {
     list: [
@@ -67,13 +71,13 @@ var listVideos = {
     } // end function
     //---------------------------------
 
-    // Import content of files .HTML, with ref="import"
+    // Load all videos
     //---------------------------------
     function fnInit(data) {
         for (var i in data) {
             data[i].video = new YT.Player(data[i].videoId, {
                 videoId: data[i].videoId,
-                playerVars: { controls: 0, rel: 0, showinfo: 0, wmode: "transparent" },
+                playerVars: { controls: 0, rel: 0, showinfo: 0, wmode: "transparent", html5:1 },
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
@@ -88,4 +92,4 @@ var listVideos = {
     this.fnInit = fnInit;
     //---------------------------------
 }).apply(j.fnAddNS("youtube"));
-$.extend(j.youtube, { Author: ';Julian Ruiz', Created: '2014-02-16', Page: 'http://jerc91.github.io/', Title: 'Tool for API Iframe of Youtube' });
+$.extend(j.youtube, { Author: 'Julian Ruiz', Created: '2014-02-16', Page: 'http://jerc91.github.io/', Title: 'Tool for API Iframe of Youtube' });

@@ -1,3 +1,6 @@
+// Object with tools
+var j = window.j || fnImport("j");
+
 // Funcion que carga todos los datos de la página
 function LoadData() {
     // Se cargan los paises desde un txt
@@ -6,9 +9,9 @@ function LoadData() {
         type: "GET",
         contentType: "text/plain; charset=utf-8",
         dataType: "json",
-        url: "/services/file/paises.txt",
+        url: "services/file/paises.json", 
         success: function (data) {
-            if (data) j().FillDataSelect(data, 'nacionalidad');
+            if (data) j.tools.fnFillDataSelect(data, 'nacionalidad');
         } // end success
     }); // end ajax
 } // end function
@@ -17,9 +20,8 @@ $(document).ready(function () {
     LoadData();
     // Scroll
     $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
-    setTimeout(function () {$(".fa-globe").click()}, 500);
+    setTimeout(function () {$(".fa-table").click()}, 500);
 
-    var j = window.j || fnImport("j");
     // Config for pipeline
     var configPipeline = {
         "actionLink": "#",
@@ -58,12 +60,12 @@ $(document).ready(function () {
     j.tools.fnThread({ 
         Data: { "list" : configPipeline.list }, 
         Template: $("#templatePipeline").html(),
-        WorkerJs: "/assets/js/workers/worker.js",
+        WorkerJs: "assets/js/workers/worker.js",
         Success: function (e) {
             $("#contentPipeline").html(e.data);
             j.pipeline.fnInit(configPipeline);
             // Init ui controls
-            j.ui.fnInit(function () { $("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href", "javascript:void()"); console.log("otro"); });
+            j.ui.fnInit(function () { $("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href", "javascript:void()"); });
         } // end function success 
     }); // end function thread
 

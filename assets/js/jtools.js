@@ -193,6 +193,19 @@ $.extend(j, {
     }
     //---------------------------------
 
+    // Method to load a select with an object json with properties Pk, Name
+    //---------------------------------
+    function fnFillDataSelect(data, id) {
+        var elemento = document.getElementById(id);
+        for (var i = 0; i < data.length; i++) {
+            opcion = document.createElement("option");
+            opcion.value = data[i].Pk;
+            opcion.text = data[i].Name;
+            elemento.add(opcion);
+        } // end for
+    } // end method
+    //---------------------------------
+
     //---------------------------------
     // Public API
     this.fnGradientColors = fnGradientColors;
@@ -204,6 +217,7 @@ $.extend(j, {
     this.fnThread = fnThread;
     this.fnParseJsonDate = fnParseJsonDate;
     this.fnImportHTML = fnImportHTML;
+    this.fnFillDataSelect = fnFillDataSelect;
     //---------------------------------    
 }).apply(j.fnAddNS("tools"));
 $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2014-01-27', Page: 'http://jerc91.github.io/', Title: 'Common Tools' });
