@@ -4,28 +4,6 @@ tag.src = "http://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-$(document).ready(function () {
-    // Scroll
-    $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
-});
-
-// When API is ready
-//---------------------------------
-function onYouTubeIframeAPIReady() {
-    // implementación del hilo
-    j.tools.fnThread({
-        Data: listVideos,
-        Template: $("#tmpListVideos").html(),
-        WorkerJs: "assets/js/workers/worker.js",
-        Success: function (e) {
-            $("#dvListVideos").html(e.data);
-            $("#dvListVideos").owlCarousel({ items: 2 });
-            j.youtube.fnInit(listVideos.list);
-        } // end function success 
-    }); // end function thread
-} // end function
-//---------------------------------
-
 var listVideos = {
     list: [
         { videoId: "NaN1rZrYjVk", title: "Elfen Lied" },
@@ -41,6 +19,39 @@ var listVideos = {
         { videoId: "rFxcsgVwmTM", title: "Highlander" }
     ]
 };
+
+// Config for pipeline
+var configJSlide = {
+    "animations": true,
+    "classContent": ".jslide",
+    "heightButtons": 50,
+    "list": listVideos.list,
+    "maxElementsShow": 2,
+    "showButtons": true,
+    "width": 1024,
+    "widthButtons": 50,
+    "leftToRight" : true,
+    "idContent": "#listVideos"
+};
+
+
+// When API is ready
+//---------------------------------
+function onYouTubeIframeAPIReady() {
+    // implementación del hilo
+    j.tools.fnThread({
+        Data: listVideos,
+        Template: $("#tmpListVideos").html(),
+        WorkerJs: "assets/js/workers/worker.js",
+        Success: function (e) {
+            $("#dvListVideos").html(e.data);
+            //$("#dvListVideos").owlCarousel({ items: 2 });
+            j.youtube.fnInit(listVideos.list);
+            j.jslide.fnInit(configJSlide);
+        } // end function success 
+    }); // end function thread
+} // end function
+//---------------------------------
 
 (function () {
     // properties private

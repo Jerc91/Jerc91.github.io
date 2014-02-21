@@ -21,7 +21,7 @@ a.add { background-color: #b0220f; border: 1px solid #812215; border-radius: 3px
     .pipeline li .content { bottom: calc(50% - 40px); max-width: 270px; position: absolute; text-align: center; width: 90%; z-index: 1; }
         .pipeline li .content span { color: #fff; display: block; font-size: 0.9em; padding: 0 6px; }
 
-.btnLeft, .btnRight { border-radius: 100%; cursor: pointer; display: table-cell; padding-top: 8px; position: absolute; transition: opacity cubic-bezier(0.390, 0.575, 0.565, 1.000); -moz-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -ms-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -o-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -webkit-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); text-align: center; top: Calc(50% - 15px); z-index: 3; }
-    .btnLeft.disable, .btnRight.disable { cursor: inherit; opacity: 0.5; }
-.btnLeft { left: -35px; padding-right: 3px; }
-.btnRight { right: -35px; padding-left: 3px; }
+#contentPipeline .btnLeft, #contentPipeline .btnRight { border-radius: 100%; cursor: pointer; display: table-cell; padding-top: 8px; position: absolute; transition: opacity cubic-bezier(0.390, 0.575, 0.565, 1.000); -moz-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -ms-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -o-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); -webkit-transition: opacity 500ms cubic-bezier(0.390, 0.575, 0.565, 1.000); text-align: center; top: Calc(50% - 15px); z-index: 3; }
+    #contentPipeline .btnLeft.disable, #contentPipeline .btnRight.disable { cursor: inherit; opacity: 0.5; }
+#contentPipeline .btnLeft { left: -35px; padding-right: 3px; }
+#contentPipeline .btnRight { right: -35px; padding-left: 3px; }

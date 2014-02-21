@@ -17,11 +17,10 @@
     <script src="assets/js/controls/controlDate.js"></script>
     <script src="assets/js/controls/ui.js"></script>
     <script src="assets/js/vendor/jquery.onepage-scroll.js"></script>
-    <script src="assets/js/vendor/owl.carousel.min.js"></script>
+    <script src="assets/js/controls/jslide.js"></script>
     <!--Estilos-->
-    <link href="assets/css/owl.carousel.css" rel="stylesheet" />
-    <link href="assets/css/owl.theme.css" rel="stylesheet" />
     <link href="assets/css/controls/pipeline.css" rel="stylesheet" />
+    <link href="assets/css/controls/jslide.css" rel="stylesheet" />
     <link href="assets/css/sinquehacer.css" rel="stylesheet" />
     <!--Javascript-->
     <script src="assets/js/home/home.js"></script>
@@ -112,12 +111,14 @@
         </section>
         <section id="list">
             <div class="content">
-                <h1><i class="fa fa-youtube-play"></i>Anime</h1>
+                <h1><i class="fa fa-youtube-play"></i>&nbsp;</h1>
                 <article class="description">
                     <p>Uso del API Iframe de Youtube, con una lista de videos que se cargan a través de Javascript, mostrados en un Slide utilizando el plugin OWL</p>
                 </article>
-                <article>
-                    <ul id="dvListVideos" class="owl-carousel owl-theme listVideos"></ul>
+                <article id="listVideos" class="listVideos">
+                    <a class="btnLeft fa fa-chevron-left fa-2x"></a>
+                    <a class="btnRight fa fa-chevron-right fa-2x"></a>
+                    <ul id="dvListVideos" class="jslide"></ul>
                     <script id="tmpListVideos" type="text/html">
                         {{#list}}
                         <li>
@@ -180,9 +181,6 @@
                 </article>
             </div>
         </section>
-        <aside>
-        </aside>
-        <footer></footer>
     </div>
     <!-- Sección para el Lightbox -->
     <div id="lightbox" class="lightbox">

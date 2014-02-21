@@ -43,12 +43,12 @@
     function fnShowButton(activeItem) {
         var btn1, btn2, countItems = p.elementsFade, classDisabled = "disable";
         if (!p.leftToRight) {
-            btn1 = ".btnRight";
-            btn2 = ".btnLeft";
+            btn1 = p.idContent + " .btnRight";
+            btn2 = p.idContent + " .btnLeft";
         } // end if
         else {
-            btn1 = ".btnLeft";
-            btn2 = ".btnRight";    
+            btn1 = p.idContent + " .btnLeft";
+            btn2 = p.idContent + " .btnRight";    
         } // end else
 
         if (activeItem == -1) { $(btn1).addClass(classDisabled); return true; }
@@ -103,7 +103,7 @@
         if (!p.leftToRight) leftAnimation *= leftAnimation <= 0 ? -1 : 1;
         // Styles for the pipeline
         var css = [];
-        css.push(p.classContent + "{width:" + p.width + "px}");
+        css.push(p.idContent + "{width:" + p.width + "px}");
         var la = " init-pipeline{0%{left:" + (p.leftToRight ? "-" : "") + "100%;opacity:0;}100%{left:0;opacity:1;}}"; // left animation
         for (var i = 0; i < j.preBrowsers.length; i++) css.push("@" + j.preBrowsers[i] + "keyframes" + la);
         css.push(p.classPipeline + " {" + (paddingLeft < 0 ? '' : 'padding-left:' + paddingLeft + 'px;') + "width:" + p.width + "px;}");
@@ -132,7 +132,7 @@
         var tp = tools.fnGetTextPreBrowsers("transform:perspective(" + perspective + "px)rotate3d(0,0,0,0);");
         css.push(p.classPipeline + " li:hover .second " + p.classPanel + "{" + tp + "}");
         // Background color for and color font for the button navigate
-        css.push(".btnLeft, .btnRight {background-color: " + backColors[0] + "; border: 3px solid " + fontColors[0] + "; color: " + fontColors[0] + "; height:" + p.heightButtons + "px; width:" + p.widthButtons + "px;}");
+        css.push(p.idContent + " .btnLeft, " + p.idContent + " .btnRight {background-color: " + backColors[0] + "; border: 3px solid " + fontColors[0] + "; color: " + fontColors[0] + "; height:" + p.heightButtons + "px; width:" + p.widthButtons + "px;}");
         // Blob with the content css and created of tag link with src=blob
         var blob = blob || new Blob(css, { type: 'text/css; charset="utf-8"' });
         var csstag = document.createElement("link");
@@ -141,11 +141,11 @@
         $("head").append(csstag);
         // Events on Pipeline
         if (p.elementsFade == 0 || !p.showButtons) {
-            $(".btnLeft").remove();
-            $(".btnRight").remove();
+            $(p.idContent + " .btnLeft").remove();
+            $(p.idContent + " .btnRight").remove();
         } // end if
-        $(".btnLeft").click(fnBtnMove).addClass(p.leftToRight ? "disable" : "");
-        $(".btnRight").click(fnBtnMove).addClass(!p.leftToRight ? "disable" : "");
+        $(p.idContent + " .btnLeft").click(fnBtnMove).addClass(p.leftToRight ? "disable" : "");
+        $(p.idContent + " .btnRight").click(fnBtnMove).addClass(!p.leftToRight ? "disable" : "");
         $('body').keydown(function (e) {
             if (e.keyCode == 37) if (!p.leftToRight) p.fnPipelineLeft(); else p.fnPipelineRight();
             else if (e.keyCode == 39) if (!p.leftToRight) p.fnPipelineRight(); else p.fnPipelineLeft();

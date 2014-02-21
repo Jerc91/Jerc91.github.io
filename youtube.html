@@ -14,12 +14,11 @@
     <!--Controles css, js-->
     <script src="assets/js/vendor/hogan-2.0.0.min.js"></script>
     <script src="assets/js/jtools.js"></script>
+    <script src="assets/js/controls/jslide.js"></script>
     <script src="assets/js/vendor/jquery.onepage-scroll.js"></script>
-    <script src="assets/js/vendor/owl.carousel.min.js"></script>
     <!--Estilos-->
-    <link href="assets/css/owl.carousel.css" rel="stylesheet" />
-    <link href="assets/css/owl.theme.css" rel="stylesheet" />
     <link href="assets/css/sinquehacer.css" rel="stylesheet" />
+    <link href="assets/css/controls/jslide.css" rel="stylesheet" />
     <!--Javascript-->
     <script src="assets/js/youtube/youtube.js"></script>
     <script>
@@ -48,8 +47,10 @@
                 <article class="description">
                     <p>Uso del API Iframe de Youtube, con una lista de videos que se cargan a través de Javascript, mostrados en un Slide utilizando el plugin OWL</p>
                 </article>
-                <article>
-                    <ul id="dvListVideos" class="owl-carousel owl-theme listVideos"></ul>
+                <article class="listVideos">
+                    <a class="btnLeft fa fa-chevron-left fa-2x"></a>
+                    <a class="btnRight fa fa-chevron-right fa-2x"></a>
+                    <ul id="dvListVideos" class="jslide"></ul>
                     <script id="tmpListVideos" type="text/html">
                         {{#list}}
                         <li>

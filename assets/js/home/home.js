@@ -31,7 +31,7 @@ $(document).ready(function () {
         "changeColorsPanel": true,
         'classPanel': ".panel",
         "classPipeline": ".pipeline",
-        "classContent": ".contentPipeline",
+        "idContent": "#contentPipeline",
         "colorsFont": ["#fff", "#fff", "#fff", "#fff", "#fff", "#444", "#444", "#444"],
         "colorsPanel": ["#01abc4", "#04b7d1", "#04c7e3", "#01d4f3", "#15e1ff", "#bcd8ff", "#ddebff", "#eef5ff"],
         "firtsHeight": 330,
