@@ -34,6 +34,14 @@
     } // end function
     //---------------------------------
 
+    // Fucntion for show or not a form
+    //---------------------------------
+    function fnShowForm(e, form) {
+        $form = $(e).parent();
+        if ($form.hasClass("active") && form) $form.removeClass("active");
+        ($form.hasClass("active") && !form) ? $form.removeClass("active") : $form.addClass("active");
+    } // end function
+
     // Start of control
     //---------------------------------
     function fnInit(fnAdd) {
@@ -49,12 +57,9 @@
             } // end if
         }); // key down
         // Se agrega funcionalidad de acordion a los formularios
-        $(function () {
-            $(".form h4").click(function () {
-                $form = $(this).parent();
-                $form.hasClass("active") ? $form.removeClass("active") : $form.addClass("active")
-            });
-        });
+        $(".form h4").click(function () { fnShowForm(this); });
+        $(".form ul").click(function () { fnShowForm(this,true); });
+        
         if (j.tools.fnIsFunction(fnAdd)) fnAdd();
     } // end function
     //---------------------------------
