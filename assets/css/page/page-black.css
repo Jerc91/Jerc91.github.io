@@ -10,7 +10,7 @@
     ::-webkit-scrollbar-thumb:active { background-color: rgb(90,90,90); }
 
 /* Menú Izquierdo */
-#menu { background: -webkit-linear-gradient(top, rgba(30,30,30,1), #000); }
+#menu { background-image: background-image: -ms-linear-gradient(top, #1F1F1F 0%, #000000 100%); background-image: -moz-linear-gradient(top, #1F1F1F 0%, #000000 100%); background-image: -o-linear-gradient(top, #1F1F1F 0%, #000000 100%); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1F1F1F), color-stop(1, #000000)); background-image: -webkit-linear-gradient(top, #1F1F1F 0%, #000000 100%); background-image: linear-gradient(to bottom, #1F1F1F 0%, #000000 100%); }
     #menu ul li a { color: #808080; transition: color ease 500ms; }
     #menu ul li:hover a { color: #fff; transition: color ease 500ms; }
     #menu ul li a.active { color: #fff; }

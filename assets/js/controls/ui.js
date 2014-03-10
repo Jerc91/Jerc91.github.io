@@ -48,6 +48,13 @@
                 fnLightboxFade();
             } // end if
         }); // key down
+        // Se agrega funcionalidad de acordion a los formularios
+        $(function () {
+            $(".form h4").click(function () {
+                $form = $(this).parent();
+                $form.hasClass("active") ? $form.removeClass("active") : $form.addClass("active")
+            });
+        });
         if (j.tools.fnIsFunction(fnAdd)) fnAdd();
     } // end function
     //---------------------------------

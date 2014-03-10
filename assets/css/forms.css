@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6, b { font-weight: bold; }
 /* Contenido */
 section .buttons input[type="submit"], section .buttons input[type="button"] { border: 1px solid; padding: 10px 15px; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }
 section article input[type="text"], section article select, section article textarea, select, textarea,
-input[type="text"], input[type="password"], input[type="email"], input[type="url"] { border: 1px solid #a1a1a1; border-radius: 2px; max-width: 230px; padding: 5px; -moz-transition: width .25s; -webkit-transition: width .25s; -o-transition: width .25s; transition: width .25s; width: 200px; }
+input[type="text"], input[type="password"], input[type="email"], input[type="url"] { border: 1px solid #a1a1a1; border-radius: 2px; max-width: 230px; padding: 5px 5px 5px 25px; -moz-transition: width .25s; -webkit-transition: width .25s; -o-transition: width .25s; transition: width .25s; width: 200px; }
 section .buttons { padding: 10px 15px; text-align: center; }
 
 /* Links de regreso */
@@ -66,9 +66,10 @@ a.back { float: right; }
         .form table input:focus, .form table textarea:focus, .form table li select:focus { border-radius: 2px; width: 230px; }
 /* Validación para controles HTML5 */
 /* === HTML5 validation styles === */
-.form input:required, .form textarea:required, .form select:required { background-image: url(../img/red_asterisk.png); background-repeat: no-repeat; background-position-x: 98%; background-position-y: center; }
-    .form input:required:valid, .form textarea:required:valid, .form select:required:valid { background-image: url(../img/valid.png); background-repeat: no-repeat; background-position-x: 98%; background-position-y: center; box-shadow: 0 0 5px #5cd053; border-color: #28921f; }
-.form input:focus:invalid, .form textarea:focus:invalid, .form select:focus:invalid { background-image: url(../img/invalid.png); background-repeat: no-repeat; background-position-x: 98%; background-position-y: center; box-shadow: 0 0 5px #d45252; border-color: #b03535; }
+.form input:required, .form textarea:required, .form select:required { background: url(../img/red_asterisk.png) no-repeat 5px center #fff; }
+    .form input:required:valid, .form textarea:required:valid, .form select:required:valid { background-image: url(../img/valid.png); box-shadow: 0 0 5px #5cd053; border-color: #28921f; }
+.form input:focus:invalid, .form textarea:focus:invalid, .form select:focus:invalid { background-image: url(../img/invalid.png); box-shadow: 0 0 5px #d45252; border-color: #b03535; }
+.form select { padding-left: 20px; }
 
 /* Formulario left */
 .form.left > h4 { border-bottom: 1px solid; margin-left: auto; margin-right: auto; }
@@ -150,6 +151,9 @@ a.back { float: right; }
 .tCenter { text-align: center !important; }
 .width60p { width: 60% !important; }
 .width70px { width: 70px !important; }
+.width80px { width: 80px !important; }
+.width90px { width: 90px !important; }
+.width100px { width: 100px !important; }
 .widthAut { width: auto !important; }
 .width70p { width: 70% !important; }
 

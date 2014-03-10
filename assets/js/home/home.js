@@ -20,7 +20,7 @@ $(document).ready(function () {
     LoadData();
     // Scroll
     $("#content").onepage_scroll({ sectionContainer: 'section', easing: 'ease', animationTime: 1000, pagination: true, updateURL: false, loop: false, menus: ".menu" });
-    setTimeout(function () {$(".fa-table").click()}, 500);
+    // setTimeout(function () {$(".fa-table").click()}, 500);
 
     // Config for pipeline
     var configPipeline = {
@@ -37,6 +37,7 @@ $(document).ready(function () {
         "firtsHeight": 330,
         "fontGradients": ["#ffffff", "#ffffff"],
         "heightButtons": 50,
+        "leftToRight" : true,
         "list":
             [
                 { "Total": "364", "Id": "#", "Name": "January" },
