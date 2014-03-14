@@ -50,7 +50,7 @@
 		}
 
 		function makeRequest() {
-		    var request = gapi.client.drive.files.list({'maxResults': 5 });
+		    var request = gapi.client.drive.files.list({'maxResults': 500 });
 		    request.execute(function(resp) {          
 		        for (i=0; i<resp.items.length; i++) {
 		            var titulo = resp.items[i].title;
@@ -98,10 +98,33 @@
 		  var initialRequest = gapi.client.drive.files.list();
 		  retrievePageOfFiles(initialRequest, []);
 		}
-    </script>
+	</script>
   </head>
   <body>
     <button id="authorize-button">Authorize</button>
 	<div id="content">Files:</div>
+	<input type="file">
+	<script>
+		document.querySelector('input[type="file"]').onchange = function(e) {
+		  var reader = new FileReader();
+
+		  reader.onload = function(e) {
+		    var dv = new jDataView(this.result);
+
+		    // "TAG" starts at byte -128 from EOF.
+		    // See http://en.wikipedia.org/wiki/ID3
+		    if (dv.getString(3, dv.byteLength - 128) == 'TAG') {
+		      var title = dv.getString(30, dv.tell());
+		      var artist = dv.getString(30, dv.tell());
+		      var album = dv.getString(30, dv.tell());
+		      var year = dv.getString(4, dv.tell());
+		    } else {
+		      // no ID3v1 data found.
+		    }
+		  };
+
+		  reader.readAsArrayBuffer(this.files[0]);
+		};
+	</script>
   </body>
 </html>

@@ -16,21 +16,21 @@
     #menu ul li a.active { color: #fff; }
 
 /* Contenido */
-section#forms { background-color: rgb(79, 191, 168); }
-    section#forms p { color: #d3fff6; }
+body #content > section:nth-child(5n+1) { background-color: rgb(79, 191, 168); }
+    body #content > section:nth-child(5n+1) p { color: #d3fff6; }
 
-section#list { background-color: rgb(46,114,176); }
-section#list P { color: rgb(161, 210, 255); }
+body #content > section:nth-child(5n+2) { background-color: rgb(46,114,176); }
+    body #content > section:nth-child(5n+2) P { color: rgb(161, 210, 255); }
 
-section#reports { background-color: rgb(226,114,50); }
-    section#reports p { color: #fdc8a8; }
+body #content > section:nth-child(5n+3) { background-color: rgb(226,114,50); }
+    body #content > section:nth-child(5n+3) p { color: #fdc8a8; }
 
-section#statics { background-color: #f1f2f4; }
-    section#statics, section#statics b a { color: #36393c; text-decoration: none;  }
-    section#statics p { color: #858a8f; }
+body #content > section:nth-child(5n+4) { background-color: #f1f2f4; }
+    body #content > section:nth-child(5n+4), body > section:nth-child(5n+4) mark a { color: #36393c; text-decoration: none;  }
+    body #content > section:nth-child(5n+4) p { color: #858a8f; }
 
-section#triqui { background-color: #5ec369; }
-    section#triqui p { color: #363e45; }
+body #content > section:nth-child(5n+5) { background-color: #5ec369; }
+    body #content > section:nth-child(5n+5) p { color: #363e45; }
 /*section#triqui   { color: #33383d; }*/
 
 

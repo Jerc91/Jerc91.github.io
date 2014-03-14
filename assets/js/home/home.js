@@ -66,7 +66,7 @@ $(document).ready(function () {
             $("#contentPipeline").html(e.data);
             j.pipeline.fnInit(configPipeline);
             // Init ui controls
-            j.ui.fnInit(function () { $("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href", "javascript:void()"); });
+            j.ui.fnInit(function () { $("a[data-lb='true']").click(j.ui.fnLightboxShow).attr("href", "javascript:void(0);"); });
         } // end function success 
     }); // end function thread
 

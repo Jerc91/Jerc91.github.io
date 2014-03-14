@@ -24,7 +24,6 @@
     <link href="assets/css/sinquehacer.css" rel="stylesheet" />
     <!--Javascript-->
     <script src="assets/js/home/home.js"></script>
-    <!--<script src="assets/js/youtube/youtube.js"></script>-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -45,14 +44,17 @@
                 <li><a class="fa fa-print" data-index="3">&nbsp;Reportes</a></li>
                 <li><a class="fa fa-globe" data-index="4">&nbsp;Estadísticos</a></li>
                 <li><a class="fa fa-gamepad" data-index="5">&nbsp;Entrenimiento</a></li>
+                <li><a class="fa fa-user" data-index="6">&nbsp;Yo</a></li>
             </ul>
         </nav>
     </header>
     <div id="content">
         <section id="forms">
             <div class="content">
-                <h1><i class="fa fa-list-alt"></i>Formularios</h1>
                 <article class="description">
+                    <header>
+                        <h1><i class="fa fa-list-alt"></i>Formularios</h1>
+                    <header>
                     <p>Crea formularios profesionales para tus webs, controles con validación inmediata con la posibilidad de poner ayuda para cada control. formularios hechos con HTML5 y CSS3</p>
                 </article>
                 <form action="#" id="form">
@@ -111,76 +113,93 @@
         </section>
         <section id="list">
             <div class="content">
-                <h1><i class="fa fa-youtube-play"></i>JSlide</h1>
                 <article class="description">
-                    <p>Uso del API Iframe de Youtube, con una lista de videos que se cargan a través de Hogan.js, mostrados en un Slide utilizando el plugin JSlide que esta en proceso de desarrollo.</p>
-                </article>
-                <article id="listVideos" class="listVideos">
-                    <a class="btnLeft fa fa-chevron-left fa-2x"></a>
-                    <a class="btnRight fa fa-chevron-right fa-2x"></a>
-                    <ul id="dvListVideos" class="jslide"></ul>
-                    <script id="tmpListVideos" type="text/html">
-                        {{#list}}
-                        <li>
-                            <h4>{{title}}</h4>
-                            <div class="video" id="{{videoId}}"></div>
-                        </li>
-                        {{/list}}
-                    </script>
+                    <header>
+                        <h1><i class="fa fa-list-alt"></i>Listas</h1>
+                    </header>
+                    <p>Nuevos tipos de tablas para mostrar información en diferentes tamaños de pantalla, al reducir su tamaño la tabla se convertira en un acordeón</p>
+                    <div class="grid">
+                        <div class="hrow">
+                            <span class="td"></span>
+                            <span class="td"></span>
+                        </div>
+                        <div class="trow">
+                            <span class="td"></span>
+                            <span class="td"></span>
+                        </div>
+                    </div>
                 </article>
             </div>
         </section>
         <section id="reports">
             <div class="content">
-                <h1><i class="fa fa-print"></i>Reportes</h1>
                 <article class="description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </article>
-                <article>
-                    <!--<object id='report' type='application/pdf' data='rutaashx'>Error! (No puede mostrarse el objeto)</object>-->
+                    <header>
+                        <h1><i class="fa fa-print"></i>Reportes</h1>
+                    </header>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
                 </article>
             </div>
         </section>
         <section id="statics">
             <div class="content">
-                <h1><i class="fa fa-table"></i>Estadísticos</h1>
                 <article class="description">
-                    <p><b><a href="https://github.com/Jerc91/Pipeline" target="_blank">Pipeline: </a></b>este control tiene como finaldad mostrar el seguimientos de cifras las cuales se reducen en cada etapa del proceso que se este llevando. El ejemplo es acerca de los días que faltan para terminar el año, y con esto se evidencia que las cifras se reducen tras pasar los meses.</p>
+                    <header>
+                        <h1><i class="fa fa-globe"></i>Estadísticos</h1>
+                    </header>
+                    <p>
+                        <mark><a href="https://github.com/Jerc91/Pipeline" target="_blank">Pipeline: </a></mark>este control tiene como finaldad mostrar el seguimientos de cifras las cuales se reducen en cada etapa del proceso que se este llevando. El ejemplo es acerca de los días que faltan para terminar el año, y con esto se evidencia que las cifras se reducen tras pasar los meses.
+                    </p>
+                    <div id="contentPipeline" class="contentPipeline">
+                    </div>
+                    <!--Templates-->
+                    <script id="templatePipeline" type="text/html">
+                        <a class="btnLeft fa fa-chevron-left fa-2x"></a>
+                        <a class="btnRight fa fa-chevron-right fa-2x"></a>
+                        <ul class="pipeline">
+                            {{#list}}
+                            <li>
+                                <div class="content">
+                                    <span>{{Name}}</span>
+                                    <a class="add" data-lb="true" href="{{ActionLink}}{{Id}}">+</a>
+                                </div>
+                                <div class="second">
+                                    <span>{{Total}}</span>
+                                    <i class="panel"></i>
+                                </div>
+                            </li>
+                            {{/list}}
+                        </ul>
+                    </script>
                 </article>
-                <article id="contentPipeline" class="contentPipeline">
-                </article>
-                <!--Templates-->
-                <script id="templatePipeline" type="text/html">
-                    <a class="btnLeft fa fa-chevron-left fa-2x"></a>
-                    <a class="btnRight fa fa-chevron-right fa-2x"></a>
-                    <ul class="pipeline">
-                        {{#list}}
-                        <li>
-                            <div class="content">
-                                <span>{{Name}}</span>
-                                <a class="add" data-lb="true" href="{{ActionLink}}{{Id}}">+</a>
-                            </div>
-                            <div class="second">
-                                <span>{{Total}}</span>
-                                <i class="panel"></i>
-                            </div>
-                        </li>
-                        {{/list}}
-                    </ul>
-                </script>
             </div>
         </section>
         <section id="triqui">
             <div class="content">
-                <h1><i class="fa fa-table"></i>Triqui</h1>
                 <article class="description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </article>
-                <article>
-                    
+                    <header>
+                        <h1><i class="fa fa-table"></i>Triqui</h1>
+                    </header>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
                 </article>
             </div>
         </section>
+        <!--<section id="yo">
+            <div class="content">
+                <article class="description">
+                    <header>
+                        <h1><i class="fa fa-user"></i>Julian Ruiz</h1>
+                    </header>
+                    <p>
+                        Soy desarrollador web, gamer, algo de otaku, un poco come libros, amante a la tecnología. <address>jerc.691@gmail.com</address>
+                    </p>
+                </article>
+            </div>
+        </section>-->
     </div>
     <!-- Sección para el Lightbox -->
     <div id="lightbox" class="lightbox">

@@ -10,7 +10,7 @@
 
     // properties privates
     //---------------------------------
-    var identifier = "lightbox", classOut = "out", classIn = "in", classBg = "bg", classClose = "close";
+    var identifier = "lightbox", classOut = "out", classIn = "in", classBg = "bg", classClose = "close", activeLightbox = false;
 
     
     // Function for hide the Lightbox, ending with an animation
@@ -29,7 +29,7 @@
     //---------------------------------
     function fnLightboxShow(fnAdd) {
         activeLightbox = true;
-        (document.getElementById(identifier)).className = classIn;
+        document.getElementById(identifier).className = classIn;
         if (j.tools.fnIsFunction(fnAdd)) fnAdd();
     } // end function
     //---------------------------------
@@ -66,7 +66,7 @@
 
     //---------------------------------
     // Public APi
-    this.activeLightbox = false;
+    this.activeLightbox = activeLightbox;
     this.fnLightboxFade = fnLightboxFade;
     this.fnLightboxShow = fnLightboxShow;
     this.fnInit = fnInit;
