@@ -34,10 +34,10 @@
     } // end function
     //---------------------------------
 
-    // Fucntion for show or not a form
+    // Function for show or not a form
     //---------------------------------
     function fnShowForm(e, form) {
-        $form = $(e).parent();
+        $form = $(e).parent().parent();
         if ($form.hasClass("active") && form) $form.removeClass("active");
         ($form.hasClass("active") && !form) ? $form.removeClass("active") : $form.addClass("active");
     } // end function
@@ -59,6 +59,8 @@
         // Se agrega funcionalidad de acordion a los formularios
         $(".form h4").click(function () { fnShowForm(this); });
         $(".form ul").click(function () { fnShowForm(this,true); });
+        // Add a class for that the tooltips are visibility
+        document.addEventListener('invalid', function(e) { $(".form").addClass("validated"); }, true);
         
         if (j.tools.fnIsFunction(fnAdd)) fnAdd();
     } // end function

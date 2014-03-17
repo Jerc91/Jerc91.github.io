@@ -55,21 +55,17 @@ a.back { float: right; }
 .tCenter { text-align: center !important; }
 
 /* Formulario structura html5 sin terminar faltan legends*/
-.form h4 { font-weight: bold; padding: 5px 18px; }
-    .form h4 a.back { font-size: 12px; display: block; margin-top: 2px; }
-.form ul { font-size: 12px; list-style: none outside; margin: 20px auto 10px; width: 100%; }
-    .form ul li { padding-bottom: 10px; padding-right: 5px; }
-        .form ul li label { display: inline-block; text-align: right; vertical-align: middle; width: 49%; }
-        .form ul li input[type="file"] { width: 130px; font-size: 0.8em; }
-        .form ul li input:focus, .form ul li textarea:focus, .form ul li select:focus,
-        /* Para versiones anteriores */
-        .form table input:focus, .form table textarea:focus, .form table li select:focus { border-radius: 2px; width: 230px; }
-/* Validación para controles HTML5 */
-/* === HTML5 validation styles === */
-.form input:required, .form textarea:required, .form select:required { background: url(../img/red_asterisk.png) no-repeat 5px center #fff; }
-    .form input:required:valid, .form textarea:required:valid, .form select:required:valid { background-image: url(../img/valid.png); box-shadow: 0 0 5px #5cd053; border-color: #28921f; }
-.form input:focus:invalid, .form textarea:focus:invalid, .form select:focus:invalid { background-image: url(../img/invalid.png); box-shadow: 0 0 5px #d45252; border-color: #b03535; }
-.form select { padding-left: 20px; }
+.form { overflow: hidden; }
+    .form fieldset { border: 0; }
+    .form h4 { font-weight: bold; padding: 5px 18px; }
+        .form h4 a.back { font-size: 12px; display: block; margin-top: 2px; }
+    .form ul { font-size: 12px; list-style: none outside; margin: 20px auto 10px; width: 100%; }
+        .form ul li { padding-bottom: 10px; padding-right: 5px; }
+            .form ul li label { display: inline-block; text-align: right; vertical-align: middle; width: 49%; }
+            .form ul li input[type="file"] { width: 130px; font-size: 0.8em; }
+            .form ul li input:focus, .form ul li textarea:focus, .form ul li select:focus,
+            /* Para versiones anteriores */
+            .form table input:focus, .form table textarea:focus, .form table li select:focus { border-radius: 2px; width: 230px; }
 
 /* Formulario left */
 .form.left > h4 { border-bottom: 1px solid; margin-left: auto; margin-right: auto; }
@@ -110,12 +106,24 @@ a.back { float: right; }
     .tooltipHelp:hover::before { border: solid; border-color: transparent #ff8f35; border-width: 6px 6px 6px 0; bottom: 21px; content: ""; left: 95px; top: 0; position: absolute; z-index: 95; }
     .tooltipHelp:hover::after { background: #ff8f35; border-radius: 5px; color: #fff; content: attr(data-tt); left: 100px; padding: 5px 15px; position: absolute; top: -5px; width: auto; z-index: 95; }
 
+/* Validación para controles HTML5 */
+/* === HTML5 validation styles === */
+.form input:required, .form textarea:required, .form select:required { background: url(../img/red_asterisk.png) no-repeat 5px center #fff; }
+    .form input:required:valid, .form textarea:required:valid, .form select:required:valid { background-image: url(../img/valid.png); box-shadow: 0 0 5px #5cd053; border-color: #28921f; }
+.form input:required:focus:invalid, .form textarea:required:focus:invalid, .form select:required:focus:invalid { background-image: url(../img/invalid.png); box-shadow: 0 0 5px #d45252; border-color: #b03535; }
+.form select { padding-left: 20px; }
+
 /* Tootltip para formulario con validaciones HTML5 */
-.tooltipForm { background: #d45252; border-radius: 3px 3px 3px 3px; color: white; margin-left: 8px; padding: 4px 6px; z-index: 999; /* hints stay above all other elements */ position: absolute; /* allows proper formatting if hint is two lines */ display: none; }
+.tooltipForm { background: #d45252; border-radius: 3px 3px 3px 3px; color: white;  display: none; margin-left: 8px; padding: 4px 6px; z-index: 999; position: relative;}
     .tooltipForm::before { content: "\25C0"; color: #d45252; position: absolute; left: -6px; top: 1px; }
-.form input:focus + .tooltipForm, .form select:focus + .tooltipForm { display: inline; }
-.form input:required:valid + .tooltipForm { background: #28921f; }
-    .form input:required:valid + .tooltipForm::before { color: #28921f; }
+    .form.active .tooltipForm, .form.active .tooltipForm::before { position: absolute; }
+.form.active input:focus + .tooltipForm, .form.active select:focus + .tooltipForm, .form.active textarea:focus + .tooltipForm { display: inline; }
+.form input:required:valid + .tooltipForm, .form select:required:valid + .tooltipForm, .form textarea:required:valid + .tooltipForm { background: #28921f; }
+    .form input:required:valid + .tooltipForm::before, .form select:required:valid + .tooltipForm::before, .form textarea:required:valid + .tooltipForm::before { color: #28921f; }
+
+/* Cuando se valide el formulario se muestre los errores */
+.form.active.validated input:required:invalid, .form.validated textarea:required:invalid, .form.validated select:required:invalid { box-shadow: 0 0 5px #d45252; border-color: #b03535; }
+.form.active.validated input:required:invalid + .tooltipForm, .form.active.validated select:required:invalid + .tooltipForm, .form.active.validated textarea:required:invalid + .tooltipForm { display: inline; } 
 
 /* Tooltip para validación en exploradores antiguos */
 .vld-tooltip, .inf-tooltip { background: #f5f6f6; /* FF3.6+ */ background: -moz-linear-gradient(top, #f5f6f6 0%, #e3e4ea 50%, #f5f6f6 100%); /* Chrome,Safari4+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f6f6), color-stop(50%,#e3e4ea), color-stop(100%,#f5f6f6)); /* Chrome10+,Safari5.1+ */ background: -webkit-linear-gradient(top, #f5f6f6 0%,#e3e4ea 50%,#f5f6f6 100%); /* Opera 11.10+ */ background: -o-linear-gradient(top, #f5f6f6 0%,#e3e4ea 50%,#f5f6f6 100%); /* IE10+ */ background: -ms-linear-gradient(top, #f5f6f6 0%,#e3e4ea 50%,#f5f6f6 100%); /* W3C */ background: linear-gradient(to bottom, #f5f6f6 0%,#e3e4ea 50%,#f5f6f6 100%); /* IE6-9 */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=0 ); text-align: left; font-size: 11px; border: 1px solid #fff; border-radius: 5px; box-shadow: 0 0 7px rgba(0,0,0,0.6); color: #555; display: inline-block; padding: 4px 7px; white-space: nowrap; position: absolute; z-index: 2998; }
