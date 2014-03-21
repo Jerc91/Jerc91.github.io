@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WebSockets :: API</title>
+	<!--Jquery-->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.0.3.min.js">\x3C/script>')</script>
+	<script src="assets/js/jtools.js"></script>
+	<script language="javascript" type="text/javascript">  
+		window.addEventListener("load", init, false);
+
+		var ws;
+		
+		function init() {
+			var data = {};  
+			//data.url = "ws://echo.websocket.org/";
+			data.url = "ws://localhost:9999/";
+			data.message = function(e) { 
+			//	var blob = e.data;
+			//	console.log("message: " + blob.size + " bytes");
+			//	// Work with prefixed URL API
+			//	var uri = URL.createObjectURL(blob);
+			//	var img = document.createElement("img");
+			//	img.src = uri;
+			//	document.body.appendChild(img);
+				console.log(e.data);
+				this.close(1000,"Se cerro");
+			};
+			data.open = function (e) {
+				console.log('open'); 
+				this.send("Hello Word!!"); 
+			};
+			//ws = j.ws.fnGetNewWS(data);
+			var data2 = {};
+			data2.url = "ws://localhost:9999/repl";
+			data2.message = function(e) {
+				console.log("command:", e.data);
+				try {
+					var result = eval(e.data);
+					this.send(result.toString());
+				}
+				catch(err) {
+					this.send(err.toString());
+				}
+			};
+			ws2 = j.ws.fnGetNewWS(data2);
+		}
+
+		// Handle drop event
+		document.addEventListener("drop", function (e) {
+			document.body.style.backgroundColor = "#fff";
+			try {
+				e.preventDefault();
+				handleFileDrop(e.dataTransfer.files[0]);
+				return false;
+			} catch (err) {
+				console.log(err);
+			}
+		}, false);
+
+		// Provide visual feedback for the drop area
+		document.addEventListener("dragover", function (e) {
+			e.preventDefault();
+			document.body.style.backgroundColor = "#6fff41";
+		}, false);
+
+		// read binary file contents and send them over WebSocket
+		function handleFileDrop(file) {
+			var reader = new FileReader();
+			reader.readAsArrayBuffer(file);
+			reader.onload = function () {
+				console.log("sending: " + file.name)
+				ws.send(reader.result);
+			};
+		}
+
+	</script>
+</head>
+<body>
+	<h2>Drop Image Here</h2>
+</body>
+</html>

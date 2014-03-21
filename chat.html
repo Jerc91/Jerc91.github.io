@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat :: WebSocket</title>
+	<!--Javascript soporte para internet explorer versiones antiguas-->
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <!--Jquery-->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.0.3.min.js">\x3C/script>')</script>
+    <!--Controles css, js-->
+    <script src="assets/js/jtools.js"></script>
+    <script src="assets/js/controls/ui.js"></script>
+    <link href="assets/css/sinquehacer.css" rel="stylesheet">
+    <style>
+    	#output {border-radius:8px;width:500px;}#output div {padding:10px;}#output div:nth-child(even) {background-color:#ccc;}.panel {display:block;padding:20px;border: 1px solid #ccc;} html, body, section, #content {height:100%;}.form{margin:20px auto;}
+    </style>
+    <script>
+    	window.addEventListener("load", function () {
+    		j.ui.fnInit();
+    		
+    		var connectButton = document.querySelector("#connectButton");
+    		connectButton.addEventListener("click", function() {
+    			var persona = {};
+    			persona.username = document.querySelector("#username").value;
+    			persona.password = document.querySelector("#password").value;
+    			// Open websocket
+    			j.chat.fnInit(persona);
+    		}, false);
+   		},false);
+
+    	(function () {
+    		var init = false;
+
+    		//----------------
+    		// Init process
+    		function fnInit(person) {
+    			if (init == false) init = true; else return;
+    			var wsChat = {};
+		    	wsChat.url = "ws://localhost:8080/";
+		    	// Setup WebSocket
+		    	wsChat.open = function() { wsChat.send(JSON.stringify(person)); };
+		    	wsChat.message = function(m) { fnLog(m.data); };
+		    	wsChat = j.ws.fnGetNewWS(wsChat);
+		    	// Create presence update UI
+		    	var presenceArea = document.querySelector("#presenceArea").querySelector("ul");
+		    	var sel = document.createElement("select");
+		    	var availabilites = ["away","chat","dnd","xa"];
+		    	var labels = ["Away","Avaible",'Busy','Gone'];
+		    	for(var i=0;i<availabilites.length;i++){
+		    		var option = document.createElement("option");
+		    		option.value = availabilites[i];
+		    		option.text = labels[i];
+		    		sel.add(option);
+		    	}
+		    	var li = document.createElement("li");
+		    	var label = document.createElement("label");
+		    	label.textContent = "Status:";
+		    	li.appendChild(label);
+				li.appendChild(sel);
+				presenceArea.appendChild(li);
+		    	
+		    	// Input Element for Status Text
+		    	var statusInput = document.createElement("input");
+				statusInput.setAttribute('placeholder','status');
+		    	statusInput.setAttribute('type','text');
+				li = document.createElement("li");
+		    	label = document.createElement("label");
+		    	label.textContent = "Second Status:";
+		    	li.appendChild(label);
+				li.appendChild(statusInput);
+				presenceArea.appendChild(li);
+
+		    	// Button event to send the update
+		    	var statusButton = document.createElement("button");
+		    	statusButton.classList.add("button");
+		    	statusButton.classList.add("center");
+		    	statusButton.textContent = "Save";
+		    	statusButton.addEventListener("click", function() {
+		    		wsChat.send(JSON.stringify({"status":statusInput.value}));
+		    	}, false);
+		    	
+		    	li = document.createElement("li");
+				li.appendChild(statusButton);
+		    	presenceArea.appendChild(li);
+
+		    	presenceArea = document.querySelector("#presenceArea");
+		    	presenceArea.classList.add('active');
+		    	var login = document.querySelector("#login");
+		    	login.classList.remove("active");
+			}
+
+			//----------------
+			// Received messages and print to form
+    		function fnLog(message){
+    			var line = document.createElement("div");
+    			line.textContent = message;
+    			output.appendChild(line);
+    		}
+    		//----------------
+
+    		//----------------
+    		// Habndler of precense
+    		function fnPrecenseHandler(precense) {
+    			var from = precense.getAttribute("from");
+    			var show = "";
+    			var status = "";
+
+    		}
+    		//----------------
+
+    		//----------------
+    		// Habndler of precense
+    		function fnMessageHandler(message) {
+				var msg = JSON.parse(message);
+    			var from = msg.from;
+    			var body = msg.body;
+    			// Log message if body was present
+    			if(body) {
+    				fnLog(from + ": " + body);
+    			}
+    			// Indicate that handler should be called repeatedly
+    			return true;
+    		}
+    		//----------------
+    		
+    		//----------------
+    		// Public API
+    		this.fnInit = fnInit;
+    		this.fnLog = fnLog;
+    		//----------------
+    	}).apply(j.fnAddNS("chat"));
+	</script>
+</head>
+<body style="">
+	<div id="content">
+		<section>
+			<header>
+				<h1 class="center">WebSocket Chat with NodeJs</h1>
+				<!-- connect -->
+				<div id="login" class="form active">
+	  				<header>
+	  					<h4><i class="fa fa-chevron-right"></i>Login</h4>
+	  				</header>
+					<fieldset>
+						<ul>
+							<li><label>Username:</label><input type="text" id="username" placeholder="username" required=""></li>
+							<li><label>Password:</label><input type="password" id="password" placeholder="password" required=""></li>
+						</ul>
+					</fieldset>
+					<div class="buttons center">
+						<button id="connectButton" class="button">Connect</button>
+					</div>
+				</div>
+			</header>
+			<article>
+				<div id="presenceArea" class="form">
+					<header>
+						<h4><i class="fa fa-chevron-right"></i>Presence Area</h4>	
+					</header>
+					<fieldset>
+						<ul></ul>
+					</fieldset>
+				</div>
+				<div id="chatArea" class="panel">
+					
+				</div>
+				<output id="output"></output>
+			</article>
+		</section>
+	</div>
+</body>
+</html>

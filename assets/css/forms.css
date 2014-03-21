@@ -157,6 +157,7 @@ a.back { float: right; }
 .separator { border-bottom: 1px dashed; display: block; margin: 0 auto 25px; padding-bottom: 5px; width: 65%; }
     .separator.left { width: 95%; }
 .tCenter { text-align: center !important; }
+.center { display: block; margin-left: auto; margin-right: auto; }
 .width60p { width: 60% !important; }
 .width70px { width: 70px !important; }
 .width80px { width: 80px !important; }

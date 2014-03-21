@@ -46,16 +46,18 @@
     //---------------------------------
     function fnInit(fnAdd) {
         var popup = document.getElementById(identifier);
-        // Se agrega la función de ocultar el lightbox al botón x
-        popup.getElementsByClassName(classBg)[0].addEventListener('click', function () { fnLightboxFade(); });
-        // Se agrega la función de ocultar el lightbox al botón x
-        popup.getElementsByClassName(classClose)[0].addEventListener('click', function () { fnLightboxFade(); });
-        // Cuando se presione ecs y el lighbox este activo este se ocultara
-        $("body").keydown(function (e) {
-            if (e.keyCode == 27 && activeLightbox) {
-                fnLightboxFade();
-            } // end if
-        }); // key down
+        if (popup) {
+            // Se agrega la función de ocultar el lightbox al botón x
+            popup.getElementsByClassName(classBg)[0].addEventListener('click', function () { fnLightboxFade(); });
+            // Se agrega la función de ocultar el lightbox al botón x
+            popup.getElementsByClassName(classClose)[0].addEventListener('click', function () { fnLightboxFade(); });
+            // Cuando se presione ecs y el lighbox este activo este se ocultara
+            $("body").keydown(function (e) {
+                if (e.keyCode == 27 && activeLightbox) {
+                    fnLightboxFade();
+                } // end if
+            }); // key down
+        } // end if lightbox
         // Se agrega funcionalidad de acordion a los formularios
         $(".form h4").click(function () { fnShowForm(this); });
         $(".form ul").click(function () { fnShowForm(this,true); });

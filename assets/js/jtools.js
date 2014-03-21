@@ -222,3 +222,30 @@ $.extend(j, {
 }).apply(j.fnAddNS("tools"));
 $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2014-01-27', Page: 'http://jerc91.github.io/', Title: 'Common Tools' });
 //---------------------------------
+
+(function () {
+    // Method to load a select with an object json with properties Pk, Name
+    //---------------------------------
+    function fnGetNewWS(data) {
+        // parameter obligatory url
+        if(!data.url) return;
+
+        // Create websocket
+        var sw = new WebSocket(data.url);
+        if(!data.open) data.open = function (e) {}; sw.onopen = data.open;
+        if(!data.message) data.message = function (e) {}; sw.onmessage = data.message;
+        if(!data.error) data.error = function (e) {}; sw.onerror = data.error;
+        if(!data.send) data.send = function (e) {}; sw.dosend = data.send;
+        
+        data.fnAddHandler = function(fn, id, name) {
+            message
+            data[name] = fn;
+        };
+        return sw;
+    } // end method
+
+    //---------------------------------
+    // Public API
+    this.fnGetNewWS = fnGetNewWS;
+    //---------------------------------
+}).apply(j.fnAddNS("ws"));
