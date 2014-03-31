@@ -8,6 +8,7 @@ body > header { position: fixed; width: 100%; z-index: 2; }
     #menu ul { list-style: none; text-align: center; }
         #menu ul li { display: inline-block; cursor: pointer; height: 40px; padding: 0 10px; vertical-align: top; width: auto; }
             #menu ul li a { display: block; font-size: 1.2em; line-height: 40px; text-decoration: none; }
+            	#menu ul li a img { height: 35px; vertical-align: middle; }
 
 /* Publicidad */
 aside { position: fixed; width: 40px; }

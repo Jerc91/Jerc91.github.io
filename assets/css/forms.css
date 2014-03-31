@@ -149,6 +149,10 @@ a.back { float: right; }
 
 #spnMessage { line-height: 34px; color: #444; text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
+/* Utilidades para elementos flotantes */
+.bClear { clear: both; }
+.bLeft { float: left; }
+.bRight {float: right; }
 /* Medida para el elemento 70% */
 .marginb30 { margin-bottom: 30px !important; }
 .marginb20 { margin-bottom: 20px !important; }
