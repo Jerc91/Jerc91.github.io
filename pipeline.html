@@ -2,14 +2,87 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>jerc.js</title>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="jerc, javascript, jquery, programming, julian, estiven, ruiz, castañeda" />
+    <meta name="description" content="jerc's javascript programming" />
+    <meta name="author" content="julian ruiz" />
+    <meta name="layout" content="main" />
+    <link rel="icon" type="image/ico" href="assets/img/html5.ico">
+    <!-- Open Graph -->
+    <meta property="og:title" content="jtools.js" />
+    <meta property="og:image" content="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" />
+    <meta property="og:description" content="jerc's javascript programming" />
 	<!-- JavaScript -->
-	<script src="assets/js/jtools.js"></script>
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.0.3.min.js">\x3C/script>')</script>
+    <!--Controles css, js-->
+    <script src="assets/js/jtools.js"></script>
+	<script src="assets/js/controls/ui.js"></script>
     <script src="assets/js/controls/pipeline.js"></script>
 	<!-- Estilos -->
     <link href="assets/css/controls/pipeline.css" rel="stylesheet" />
+    <link href="assets/css/sinquehacer.css" rel="stylesheet" />
 </head>
 <body>
-	
+	<header>
+        <nav id="menu">
+            <ul class="menu">
+                <li><a class="fa fa-globe active" data-index="1">&nbsp;Pipeline</a></li>
+                <li>
+                    <a href="http://www.w3.org/html/logo/">
+                        <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div id="content">
+		<section id="statics">
+            <div class="content">
+                <article class="description">
+                    <header>
+                        <h1><i class="fa fa-globe"></i>Estadísticos</h1>
+                    </header>
+                    <p>
+                        <a href="https://github.com/Jerc91/Pipeline" target="_blank">Pipeline: </a>este control tiene como finaldad mostrar el seguimientos de cifras las cuales se reducen en cada etapa del proceso que se este llevando. El ejemplo es acerca de los días que faltan para terminar el año, y con esto se evidencia que las cifras se reducen tras pasar los meses.
+                    </p>
+                    <div id="contentPipeline" class="contentPipeline">
+                    </div>
+                    <!--Templates-->
+                    <script id="templatePipeline" type="text/html">
+                        <a class="btnLeft fa fa-chevron-left fa-2x"></a>
+                        <a class="btnRight fa fa-chevron-right fa-2x"></a>
+                        <ul class="pipeline">
+                            {{#list}}
+                            <li>
+                                <div class="content">
+                                    <span>{{Name}}</span>
+                                    <a class="add" data-lb="true" href="{{ActionLink}}{{Id}}">+</a>
+                                </div>
+                                <div class="second">
+                                    <span>{{Total}}</span>
+                                    <i class="panel"></i>
+                                </div>
+                            </li>
+                            {{/list}}
+                        </ul>
+                    </script>
+                </article>
+            </div>
+        </section>
+    </div>
+    <!-- Sección para el Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <div class="content">
+            <a class="close" title="Cerrar">X</a>
+            <div>
+                <article class="description">
+                    <p>...</p>
+                </article>
+            </div>
+        </div>
+        <a class="bg"></a>
+    </div>
 </body>
 </html>

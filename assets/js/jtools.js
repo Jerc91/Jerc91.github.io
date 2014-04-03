@@ -77,6 +77,9 @@ $.extend(j, {
     // Private members
     var j = fnImport(company);
     if (!fnDepenciesTrue(j)) return;
+    // Var for get querystrings
+    var qs = {};
+
     //---------------------------------
     // Color string to hexadecimal color
     function fnStrToHex(str) {
@@ -163,9 +166,21 @@ $.extend(j, {
     //---------------------------------
     function fnThread(e) {
         var worker = new Worker(e.WorkerJs);
-
         // se envia la plantilla y se envian los datos JSON
         worker.postMessage({ compile: e.Template, data: e.Data });
+        // Agregar función para cuando responde el hilo
+        worker.addEventListener("message", function (i) {
+            return e.Success(i);
+        }); // end worker
+    } // End method
+    //---------------------------------
+
+    // Function that used the Web Workers when it create new get request
+    //---------------------------------
+    function fnThreadURL(e) {
+        var worker = new Worker(e.WorkerJs);
+        // se envia la url
+        worker.postMessage({url: e.Data});
         // Agregar función para cuando responde el hilo
         worker.addEventListener("message", function (i) {
             return e.Success(i);
@@ -206,23 +221,52 @@ $.extend(j, {
     } // end method
     //---------------------------------
 
+    // Method to get all queryString and values
     //---------------------------------
-    // Public API
+    (function (a) {
+        if (a == "") return {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=');
+            if (p.length != 2) continue;
+            qs[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+    })(window.location.search.substr(1).split('&'));
+    //---------------------------------
+
+    function fnGetHTMLFromIframe() {
+        var loaded = false;
+        var iframe = document.createElement('iframe');
+        iframe.src = qs['urliframe'];
+        document.body.appendChild(iframe);
+        iframe.addEventListener('load', function(){
+            document.body.innerHTML = this.contentWindow.document.body.innerHTML;
+        }, false);
+    };
+
+    //---------------------------------
+    // Public API methods
     this.fnGradientColors = fnGradientColors;
     this.fnInsertAfter = fnInsertAfter;
     this.fnFindWord = fnFindWord;
     this.fnGetERNumberRange = fnGetERNumberRange;
-    this.fnGetTextPreBrowsers = fnGetTextPreBrowsers;
-    this.fnIsFunction = fnIsFunction;
+    this.fnGetTextPreBrowsers = fnGetTextPreBrowsers;    this.fnIsFunction = fnIsFunction;
     this.fnThread = fnThread;
+    this.fnThreadURL = fnThreadURL;
     this.fnParseJsonDate = fnParseJsonDate;
     this.fnImportHTML = fnImportHTML;
     this.fnFillDataSelect = fnFillDataSelect;
+    this.fnGetHTMLFromIframe = fnGetHTMLFromIframe;
+    // Public properties
+    this.queryString = qs;
     //---------------------------------    
 }).apply(j.fnAddNS("tools"));
 $.extend(j.tools, { Author: 'Julian Ruiz', Created: '2014-01-27', Page: 'http://jerc91.github.io/', Title: 'Common Tools' });
 //---------------------------------
 
+
+//---------------------------------
+// Namespacing for the funtionality of WebSockets
 (function () {
     // Method to load a select with an object json with properties Pk, Name
     //---------------------------------

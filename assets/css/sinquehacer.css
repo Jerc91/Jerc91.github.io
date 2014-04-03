@@ -13,8 +13,9 @@ body > header { position: fixed; width: 100%; z-index: 2; }
 /* Publicidad */
 aside { position: fixed; width: 40px; }
 
+section, #content { height: 100%; }
 /* En donde esta el contenido de la página */
-section { z-index: 1; overflow: hidden; }
+section { overflow: hidden; z-index: 1; }
     section > .content { padding: 40px; min-height: 600px; width: 100%; }
 section { padding: 40px; min-height: 600px; width: 100%; }
     /* Header de la página */

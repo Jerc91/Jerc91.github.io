@@ -21,7 +21,6 @@
     <script src="assets/js/jtools.js"></script>
     <script src="assets/js/controls/controlDate.js"></script>
     <script src="assets/js/controls/ui.js"></script>
-    <script src="assets/js/vendor/jquery.onepage-scroll.js"></script>
     <script src="assets/js/home/home.js"></script>
     <!-- Analytics -->
     <script>
@@ -44,12 +43,11 @@
         <nav id="menu">
             <ul class="menu">
                 <li><a class="fa fa-list-alt active" data-index="1">&nbsp;Formularios</a></li>
-                <li><a class="fa fa-table" data-index="2">&nbsp;Listas</a></li>
+                <!--<li><a class="fa fa-table" data-index="2">&nbsp;Listas</a></li>
                 <li><a class="fa fa-print" data-index="3">&nbsp;Reportes</a></li>
-                <li><a class="fa fa-globe" data-index="4">&nbsp;Estadísticos</a></li>
-                <li><a class="fa fa-gamepad" data-index="5">&nbsp;Entrenimiento</a></li>
-                <!--<li><a class="fa fa-user" data-index="6">&nbsp;Yo</a></li>-->
-                <li class="bRight">
+                <li><a class="fa fa-gamepad" data-index="4">&nbsp;Entrenimiento</a></li>-->
+                <li><a class="fa fa-user" data-index="2" data-lb="true">&nbsp;Author</a></li>
+                <li>
                     <a href="http://www.w3.org/html/logo/">
                         <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics">
                     </a>
@@ -124,7 +122,7 @@
                 </form>
             </div>
         </section>
-        <section id="list">
+        <!--<section id="list">
             <div class="content">
                 <article class="description">
                     <header>
@@ -156,39 +154,6 @@
                 </article>
             </div>
         </section>
-        <section id="statics">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-globe"></i>Estadísticos</h1>
-                    </header>
-                    <p>
-                        <mark><a href="https://github.com/Jerc91/Pipeline" target="_blank">Pipeline: </a></mark>este control tiene como finaldad mostrar el seguimientos de cifras las cuales se reducen en cada etapa del proceso que se este llevando. El ejemplo es acerca de los días que faltan para terminar el año, y con esto se evidencia que las cifras se reducen tras pasar los meses.
-                    </p>
-                    <div id="contentPipeline" class="contentPipeline">
-                    </div>
-                    <!--Templates-->
-                    <script id="templatePipeline" type="text/html">
-                        <a class="btnLeft fa fa-chevron-left fa-2x"></a>
-                        <a class="btnRight fa fa-chevron-right fa-2x"></a>
-                        <ul class="pipeline">
-                            {{#list}}
-                            <li>
-                                <div class="content">
-                                    <span>{{Name}}</span>
-                                    <a class="add" data-lb="true" href="{{ActionLink}}{{Id}}">+</a>
-                                </div>
-                                <div class="second">
-                                    <span>{{Total}}</span>
-                                    <i class="panel"></i>
-                                </div>
-                            </li>
-                            {{/list}}
-                        </ul>
-                    </script>
-                </article>
-            </div>
-        </section>
         <section id="triqui">
             <div class="content">
                 <article class="description">
@@ -201,7 +166,7 @@
                 </article>
             </div>
         </section>
-        <!--<section id="yo">
+        <section id="yo">
             <div class="content">
                 <article class="description">
                     <header>

@@ -39,7 +39,7 @@
     function fnShowForm(e, form) {
         $form = $(e).parent().parent();
         if ($form.hasClass("active") && form) $form.removeClass("active");
-        ($form.hasClass("active") && !form) ? $form.removeClass("active") : $form.addClass("active");
+        if ($form.hasClass("active") && !form) $form.removeClass("active"); else $form.addClass("active");
     } // end function
 
     // Start of control
