@@ -234,14 +234,12 @@ $.extend(j, {
     })(window.location.search.substr(1).split('&'));
     //---------------------------------
 
-    function fnGetHTMLFromIframe() {
-        var loaded = false;
+    function fnGetIframe(url) {
         var iframe = document.createElement('iframe');
-        iframe.src = qs['urliframe'];
-        document.body.appendChild(iframe);
-        iframe.addEventListener('load', function(){
-            document.body.innerHTML = this.contentWindow.document.body.innerHTML;
-        }, false);
+        iframe.src = url;
+        iframe.setAttribute('frameborder',"0");
+        iframe.setAttribute('scrolling',"no");
+        return iframe;
     };
 
     //---------------------------------
@@ -256,7 +254,7 @@ $.extend(j, {
     this.fnParseJsonDate = fnParseJsonDate;
     this.fnImportHTML = fnImportHTML;
     this.fnFillDataSelect = fnFillDataSelect;
-    this.fnGetHTMLFromIframe = fnGetHTMLFromIframe;
+    this.fnGetIframe = fnGetIframe;
     // Public properties
     this.queryString = qs;
     //---------------------------------    

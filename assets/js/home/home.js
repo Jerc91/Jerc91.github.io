@@ -5,10 +5,18 @@ var j = window.j || fnImport("j");
 
 // Module of home
 (function () {
-    var textCard;
+    var card;
 
     // Load text into lightbox
-    function fnShowCard() { var lb = document.querySelector('#lightbox .description'); lb.textContent = textCard; }
+    function fnShowCard() { 
+        if(!card) {
+            var lb = document.querySelector('#lightbox .description');
+            card = j.tools.fnGetIframe('http://www.mcpvirtualbusinesscard.com/VBCServer/jerc/card');
+            card.addEventListener('load', function () { j.ui.fnLightboxShow(); });
+            lb.textContent = "";
+            lb.appendChild(card); 
+        } else j.ui.fnLightboxShow();
+    }
 
     // Funcion que carga todos los datos de la página
     function fnLoadData() {
@@ -27,19 +35,12 @@ var j = window.j || fnImport("j");
     // función de inicio
 
     function fnInit() {
-        // Load the card
-        j.tools.fnThreadURL({
-            Data: 'https://www.mcpvirtualbusinesscard.com/VBCServer/jerc/card',
-            WorkerJs: 'assets/js/workers/workerUrl.js',
-            Success: function (i) { textCard = i.data; console.log(i.data); }
-        });
-
         // Init control date
         j.controlDate.fnInit('anio', 'mes', 'dia');
         // Load countries
         fnLoadData();
         // Init ui controls
-        var links = document.querySelectorAll('a[data-lb=true]');
+        var links = document.querySelectorAll('a[data-lb="true"]');
         for(var i = 0; i < links.length; i++) {
             links[i].setAttribute('href','javascript:void(0)');
             links[i].addEventListener("click", fnShowCard, false);
