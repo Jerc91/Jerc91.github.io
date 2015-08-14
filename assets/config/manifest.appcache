@@ -1,0 +1,32 @@
+CACHE MANIFEST
+
+# V 0.01 Última modificación: 2015-08-13
+
+CACHE:
+# Estilos
+../css/no-save.css
+
+# Documentos html
+../../index.html
+
+# Imagenes
+../../favicon.ico
+
+# Scripts
+../js/main.js
+../js/workers/worker-import.js
+
+# Fonts
+../fonts/Roboto/Light/Roboto-Light.ttf
+../fonts/Roboto/Regular/Roboto-regular.ttf
+../fonts/fontawesome-webfont.ttf
+
+NETWORK:
+# Controllers
+../../controllers
+# Views
+../../views
+# Assets
+../
+# Models
+../../models

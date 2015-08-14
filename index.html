@@ -1,195 +1,57 @@
-﻿<!DOCTYPE html>
-<html lang="es">
-<head>
-    <title>jerc.js</title>
-    <meta charset="utf-8" />
-    <meta name="keywords" content="jerc, javascript, jquery, programming, julian, estiven, ruiz, castañeda" />
-    <meta name="description" content="jerc's javascript programming" />
-    <meta name="author" content="julian ruiz" />
-    <meta name="layout" content="main" />
-    <link rel="icon" type="image/ico" href="assets/img/html5.ico">
-    <!-- Open Graph -->
-    <meta property="og:title" content="jtools.js" />
-    <meta property="og:image" content="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" />
-    <meta property="og:description" content="jerc's javascript programming" />
-    <!--Estilos-->
-    <link href="assets/css/sinquehacer.css" rel="stylesheet" />
-    <!-- Javascript -->
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.0.3.min.js">\x3C/script>')</script>
-    <!--Controles css, js-->
-    <script src="assets/js/jtools.js"></script>
-    <script src="assets/js/controls/controlDate.js"></script>
-    <script src="assets/js/controls/ui.js"></script>
-    <script src="assets/js/home/home.js"></script>
-    <!-- Analytics -->
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!DOCTYPE html><html lang="es" manifest="assets/config/manifest.appcache"><head><meta charset="utf-8"><meta name="author" content="Julian Ruiz"><meta name="description" content="JMain es un script, para carga de archivos de forma sincronos, junto con la funcionalidad de crear espacios de nombre para JavaScript."><meta name="author" content="julian ruiz"><meta name="layout" content="main"><meta property="og:title" content="Jerc - Utils"><meta property="og:image" content="https://avatars3.githubusercontent.com/u/5846455?v=3&s=230"><meta property="og:description" content="jerc's javascript programming"><title>JMain :: JERC</title><!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /><![endif]--><link rel="shortcut icon" href="favicon.ico"><link href="assets/css/no-save.css" rel="stylesheet" type="text/css"></head><body style="overflow: hidden"><div id="blockUI" class="blockUI"><div class="spinner"></div></div><script>// Se toma un número aleatorio
+        var theme, blockUI, spinner, fragment;
+        theme = Math.floor(Math.random() * 14) + 1;
+        blockUI = document.querySelector('#blockUI');
+        blockUI.classList.add('a' + theme);
+        spinner = blockUI.querySelector('.spinner');
+        spinner.classList.add('a' + theme);
+        // Se crea el tema al azar
+        switch (theme) {
+            case 1: fragment = fnGetHTML('double-bounce', 2, true); break;
+            case 2: fragment = fnGetHTML('rect', 5, true); break;
+            case 3: fragment = fnGetHTML('cube', 2, true); break;
+            case 4: fragment = fnGetHTML('dot', 2, true); break;
+            case 5: fragment = fnGetHTML('bounce', 3, true); break;
+            case 6: fragment = fnGetHTML('cube', 9); break;
+            default: fragment = fnGetHTML('circle', 1); break;
+        } // end switch
+        spinner.appendChild(fragment);
+        // Función para crear los diferentes divs por cada tema
+        function fnGetHTML(clase, elementos, incrementable) {
+            var frag, div;
+            frag = document.createDocumentFragment();
+            for (var i = 0; i < elementos; i++) {
+                div = document.createElement('div');
+                div.classList.add(clase + (incrementable ? (i + 1) : ''));
+                frag.appendChild(div);
+            } // end for
+            return frag;
+        } // end funciton</script><header id="header"></header><div id="wrapper"></div><script src="assets/js/main.js"></script><script>/*
+            //------------------------------------------
+            // Se carga el json con la información de los archivos que seran actualizados.
+            // Cada item del json debe tener la siguiente estructura:
+            // { name: string, date: 'yyyy-MM-dd-hh' }
+            //------------------------------------------
+        */
+        fnInitJMain(function () {
+            // Espacio de nombres para la compañia
+            window.myApp = new Assembly();
+            fnGetFile([
+                { src: 'assets/js/jtools.js' },
+                { src: 'controllers/controller-main.js' }
+            ], function () {
+                myApp.main.fnInit();
 
-        ga('create', 'UA-47762731-1', 'jerc91.github.io');
-        ga('send', 'pageview');
-    </script>
-    <!--Javascript soporte para internet explorer versiones antiguas-->
-    <!--[if IE]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <![endif]-->
-</head>
-<body>
-    <header>
-        <nav id="menu">
-            <ul class="menu">
-                <li><a class="fa fa-list-alt active" data-index="1">&nbsp;Formularios</a></li>
-                <!--<li><a class="fa fa-table" data-index="2">&nbsp;Listas</a></li>
-                <li><a class="fa fa-print" data-index="3">&nbsp;Reportes</a></li>
-                <li><a class="fa fa-gamepad" data-index="4">&nbsp;Entrenimiento</a></li>-->
-                <li><a class="fa fa-user" data-index="2" data-lb="true">&nbsp;Author</a></li>
-                <li>
-                    <a href="javascript:void(0);">
-                        <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics">
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div id="content">
-        <section id="forms">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-list-alt"></i>Formularios</h1>
-                    <header>
-                    <p>Crea formularios profesionales para tus webs, controles con validación inmediata con la posibilidad de poner ayuda para cada control. formularios hechos con HTML5 y CSS3</p>
-                </article>
-                <form action="#" id="form">
-                    <article class="form active">
-                        <header>
-                            <h4><i class="fa fa-chevron-right"></i>Registro</h4>    
-                        </header>
-                        <fieldset>
-                            <ul>
-                                <li>
-                                    <label for="nacionalidad">Nacionalidad:</label>
-                                    <select id="nacionalidad" name="nacionalidad" required="required">
-                                        <option value="">Seleccione un País</option>
-                                    </select>
-                                    <span class="tooltipForm">Selecciona tu país de nacionalidad</span>
-                                </li>
-                                <li>
-                                    <label for="nombre">Nombres:</label>
-                                    <input id="nombre" maxlength="60" name="nombre" placeholder="Ingresa tus nombre" required="required" size="60" type="text" />
-                                    <span class="tooltipForm">Ejemplo: Julian</span>
-                                </li>
-                                <li>
-                                    <label for="apellidos">Apellidos:</label>
-                                    <input id="apellidos" maxlength="60" name="apellidos" placeholder="Ingresa tus apellidos" required="required" size="60" type="text" />
-                                    <span class="tooltipForm">Ejemplo: Ruiz</span>
-                                </li>
-                                <li>
-                                    <label for="correo">Correo:</label>
-                                    <input id="correo" maxlength="60" name="correo" placeholder="Ingresa tu correo" required="required" size="60" type="email" />
-                                    <span class="tooltipForm">usuario@dominio.com</span>
-                                </li>
-                                <li>
-                                    <label for="sitioWeb">Sitio web:</label>
-                                    <input id="sitioWeb" maxlength="60" name="sitioWeb" placeholder="http://www.tusitio.com" required="required" size="60" type="url" />
-                                    <span class="tooltipForm">http://www.tusitio.com</span>
-                                </li>
-                                <li>
-                                    <label for="anio">Fecha de nacimiento:</label>
-                                    <select id="anio" class="widthAut" required="required">
-                                        <option value="">Año</option>
-                                    </select>
-                                    -
-                                <select id="mes" class="widthAut" required="required">
-                                    <option value="">Mes</option>
-                                </select>
-                                    -
-                                <select id="dia" class="width70px" required="required">
-                                    <option value="">Día</option>
-                                </select>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </article>
-                    <div class="buttons col2 center">
-                        <input type="submit" value="Guardar" class="submit" />
-                        <input id="show" type="button" value="Cancelar" />
-                    </div>
-                </form>
-            </div>
-        </section>
-        <!--<section id="list">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-list-alt"></i>Listas</h1>
-                    </header>
-                    <p>Nuevos tipos de tablas para mostrar información en diferentes tamaños de pantalla, al reducir su tamaño la tabla se convertira en un acordeón</p>
-                    <div class="grid">
-                        <div class="hrow">
-                            <span class="td"></span>
-                            <span class="td"></span>
-                        </div>
-                        <div class="trow">
-                            <span class="td"></span>
-                            <span class="td"></span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-        <section id="reports">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-print"></i>Reportes</h1>
-                    </header>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
-                </article>
-            </div>
-        </section>
-        <section id="triqui">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-table"></i>Triqui</h1>
-                    </header>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
-                </article>
-            </div>
-        </section>
-        <section id="yo">
-            <div class="content">
-                <article class="description">
-                    <header>
-                        <h1><i class="fa fa-user"></i>Julian Ruiz</h1>
-                    </header>
-                    <p>
-                        Soy desarrollador web, gamer, algo de otaku, un poco come libros, amante a la tecnología. <address>jerc.691@gmail.com</address>
-                    </p>
-                </article>
-            </div>
-        </section>-->
-    </div>
-    <!-- Sección para el Lightbox -->
-    <div id="lightbox" class="lightbox">
-        <div class="content">
-            <a class="close" title="Cerrar">X</a>
-            <div>
-                <article class="description">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </article>
-            </div>
-        </div>
-        <a class="bg"></a>
-    </div>
-</body>
-</html>
+                // Inicio Analytics
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-47762731-1', 'jerc91.github.io');
+                ga('send', 'pageview');
+                // Fin Analytics
+            });
+        });  // fin método
+        //----------------------------------------------</script></body></html>
