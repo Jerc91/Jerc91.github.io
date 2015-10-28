@@ -18,7 +18,7 @@ CACHE:
 
 # Fonts
 ../fonts/Roboto/Light/Roboto-Light.ttf
-
+../fonts/Roboto/Regular/Roboto-Regular.ttf
 ../fonts/fontawesome-webfont.ttf
 
 NETWORK:
