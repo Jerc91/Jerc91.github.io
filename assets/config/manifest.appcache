@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# V 0.01 Última modificación: 2015-10-27 
+# V 0.01 Última modificación: 2015-11-30
 
 CACHE:
 # Estilos
@@ -20,6 +20,11 @@ CACHE:
 ../fonts/Roboto/Light/Roboto-Light.ttf
 ../fonts/Roboto/Regular/Roboto-Regular.ttf
 ../fonts/fontawesome-webfont.ttf
+
+# Images
+../img/shared/invalid.png
+../img/shared/red_asterisk.png
+../img/shared/valid.png
 
 NETWORK:
 # Controllers

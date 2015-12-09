@@ -1,4 +1,13 @@
-<li><h3 class="main">Arreglos</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnSortBy()</h3><div class="content"><p>Los arreglos nativos ya contienen una función de ordenar <i>sort</i>, pero esta solo trabaja con tipos de datos nativos, cuando tenemos un arreglo con objetos complejos se empieza a complicar un poco el trabajo, esta función se usa para que ordenar sea algo sencillo de hacer.</p><pre><code>function fnPrint() {
+<li>
+	<h3 class="main">Arreglos</h3>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnSortBy()</h3>
+	<div class="content">
+		<p>
+			Los arreglos nativos ya contienen una función de ordenar <i>sort</i>, pero esta solo trabaja con tipos de datos nativos, cuando tenemos un arreglo con objetos complejos se empieza a complicar un poco el trabajo, esta función se usa para que ordenar sea algo sencillo de hacer.
+		</p>
+<pre><code>function fnPrint() {
 	Array.prototype.slice.call(arguments).forEach(function(item) {
 		console.log(JSON.stringify(item));
 	});
@@ -32,7 +41,19 @@ nuevoArreglo.fnSortBy(function() { return this.nombre });
 
 fnPrint({ m: 'Ordenados por nombre' });
 fnPrint(nuevoArreglo);
-fnPrint({ m: '' });</code></pre></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnFind()</h3><div class="content"><p>Encontrar elementos simples en un arreglo es facil, cuando debemos trabajar con objetos complejos empieza el trabajo duro, podremos usar esta función para hacerlo más rápido, como parametro recibirá una función, que a su vez recibirá como parametro el elemento que se evalará dentro de la función para así retornar el resultado de una expressión.</p><p>El resultado traerá el primer objeto que coincida con la expresíón dentro de la función, para obtener todos los elementos de deberá pasar otro parámetro un 1 o un true, para que con ellos se retornen los elementos.</p><pre><code>function fnPrint() {
+fnPrint({ m: '' });</code></pre>
+	</div>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnFind()</h3>
+	<div class="content">
+		<p>
+			Encontrar elementos simples en un arreglo es facil, cuando debemos trabajar con objetos complejos empieza el trabajo duro, podremos usar esta función para hacerlo más rápido, como parametro recibirá una función, que a su vez recibirá como parametro el elemento que se evalará dentro de la función para así retornar el resultado de una expressión.
+		</p>
+		<p>
+			El resultado traerá el primer objeto que coincida con la expresíón dentro de la función, para obtener todos los elementos de deberá pasar otro parámetro un 1 o un true, para que con ellos se retornen los elementos.
+		</p>
+<pre><code>function fnPrint() {
 	Array.prototype.slice.call(arguments).forEach(function(item) {
 		console.log(JSON.stringify(item));
 	});
@@ -59,4 +80,6 @@ nuevoArreglo = arreglo.fnFind(function(e) { return e.apellido.indexOf('Belmont')
 
 fnPrint({ m: 'Con apellildo Belmont' });
 fnPrint(nuevoArreglo);
-fnPrint({ m: '' });</code></pre></div></li>
+fnPrint({ m: '' });</code></pre>			
+	</div>
+</li>
