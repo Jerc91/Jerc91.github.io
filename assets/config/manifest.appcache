@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# V 0.01 Última modificación: 2015-11-30
+# V 0.02 Última modificación: 2015-12-1
 
 CACHE:
 # Estilos
@@ -15,6 +15,7 @@ CACHE:
 # Scripts
 ../js/main.js
 ../js/workers/worker-import.js
+../js/workers/worker-searcher-of-array.js
 
 # Fonts
 ../fonts/Roboto/Light/Roboto-Light.ttf
