@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# V 0.02 Última modificación: 2015-12-1
+# V 0.03 Última modificación: 2016-01-05
 
 CACHE:
 # Estilos
@@ -21,18 +21,17 @@ CACHE:
 ../fonts/Roboto/Light/Roboto-Light.ttf
 ../fonts/Roboto/Regular/Roboto-Regular.ttf
 ../fonts/fontawesome-webfont.ttf
+../fonts/fontawesome-webfont.ttf?v=4.3.0
 
 # Images
 ../img/shared/invalid.png
 ../img/shared/red_asterisk.png
 ../img/shared/valid.png
+../img/shared/loading.gif
 
 NETWORK:
-# Controllers
-../../controllers
-# Views
-../../views
-# Assets
-../
-# Models
-../../models
+# Analytics
+*
+
+FALLBACK:
+filesToUpdate.json	filesToUpdateClean.json
