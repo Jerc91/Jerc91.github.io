@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# V 0.03 Última modificación: 2016-01-05
+# V 0.04 Última modificación: 2016-01-12
 
 CACHE:
 # Estilos
@@ -18,7 +18,9 @@ CACHE:
 ../js/workers/worker-searcher-of-array.js
 
 # Fonts
+../fonts/Roboto/Light/Roboto-Light.woff
 ../fonts/Roboto/Light/Roboto-Light.ttf
+../fonts/Roboto/Regular/Roboto-Regular.woff
 ../fonts/Roboto/Regular/Roboto-Regular.ttf
 ../fonts/fontawesome-webfont.ttf
 ../fonts/fontawesome-webfont.ttf?v=4.3.0
