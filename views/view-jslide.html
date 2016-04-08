@@ -1,34 +1,4 @@
-<!-- Inicio contenido principal -->
-<section class="content">
-
-	<!-- Inicio artículo principal -->
-	<article class="jmain">
-
-		<!-- Inicio encabezado principal -->
-		<header>
-			<h1>JSlide</h1>
-		</header>
-		<!-- Fin encabezado principal -->
-
-		<!-- Inicio contenido -->
-		<div class="content">
-
-			<!-- Inicio de slide -->
-			<div class="wrapperMovies">
-				<ul class="movies jslide"></ul>
-				<a class="btnLeft fa fa-chevron-left disabled"></a>
-				<a class="btnRight fa fa-chevron-right"></a>
-			</div>
-			<!-- Fin de slide -->
-		
-			<p>
-				Plugin para generar un slide con la posibilidad de mostrar uno o varios items por slide, para su uso se debe contar con el plugin JMain. Se deberá usar un elemento contenedor del JSlide junto con una lista no ordenada que será el JSlide, cada li es un item que podrá contener un slide.
-			</p>
-			<p>
-				La instancia del plugin recibe como parámetro un objeto con los siguientes atributos:
-			</p>
-			<div class="contentJSlide">
-<pre><code>// Objeto para inicializar el JSlide
+<section class="content"><article class="jmain"><header><h1>JSlide</h1></header><div class="content"><div class="wrapperMovies"><ul class="movies jslide"></ul><a class="btnLeft fa fa-chevron-left disabled"></a> <a class="btnRight fa fa-chevron-right"></a></div><p>Plugin para generar un slide con la posibilidad de mostrar uno o varios items por slide, para su uso se debe contar con el plugin JMain. Se deberá usar un elemento contenedor del JSlide junto con una lista no ordenada que será el JSlide, cada li es un item que podrá contener un slide.</p><p>La instancia del plugin recibe como parámetro un objeto con los siguientes atributos:</p><div class="contentJSlide"><pre><code>// Objeto para inicializar el JSlide
 var configJSlide = {
 	buttons: true,
     fnCall: function() { } // end fnCall
@@ -39,116 +9,8 @@ var configJSlide = {
     qWrapper: '.wrapperMovies',
     width: 600,
     withTouch: true
-}; // End object Slide</code></pre>
-				<table class="definitions">
-					<thead>
-						<tr>
-							<th>Propiedad</th>
-							<th>Proposito</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td data-th="Propiedad"><span>buttons</span></td>
-							<td data-th="Proposito"><span>Sirve para asignar funciones a los eventos clic de los botones que deben estar enseguida del contenedor del JSlide, para identificar los botones estos deben tener las clases: btnLeft y btnRight, para el botón de la izquierda y para la derecha respectivamente.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>fnCall</span></td>
-							<td data-th="Proposito"><span>Función de callback, esta se ejecutará una vez el JSlide se ha creado.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>list</span></td>
-							<td data-th="Proposito"><span>Indica el total de items del JSlide, éste campo puede ser númerico o un arreglo.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>maxElementsShow</span></td>
-							<td data-th="Proposito"><span>Indica el total de items a mostrar por cada slide en el JSlide.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>name</span></td>
-							<td data-th="Proposito"><span>Las animaciones del JSlide son creadas por una hoja de estilos en tiempo real, que se crea cuando se inicia éste, esta se referencia con una etiquieta link. El "name" sirve para eliminar la etiqueta una vez se necesite reemplezar o eliminar la tag.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>qSlide</span></td>
-							<td data-th="Proposito"><span>Es el selector que identifica al JSlide para ser configurado.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>qWrapper</span></td>
-							<td data-th="Proposito"><span>Es el selector que identifica al contenedor del JSlide, y al contenedor de los botones con las clases: btnLeft y btnRight.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>width</span></td>
-							<td data-th="Proposito"><span>Ancho que se establece para el JSlide, el contenedor de éste puede tener diferente tamaño, la propiedad solo afecta al JSlide.</span></td>
-						</tr>
-						<tr>
-							<td data-th="Propiedad"><span>withTouch</span></td>
-							<td data-th="Proposito"><span>Cuando se usa en un dispositivo con touch, esta propiedad brinda la posibilidad de cambiar de slides con los eventos de touch.</span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<p>
-				Enseguida se muestran los eventos que tiene el JSlide:
-			</p>
-
-			<!-- Inicio métodos -->
-			<div class="methods">
-
-				<!-- Inicio lista métodos -->
-				<ul>
-					<li>
-						<h3 class="main">API</h3>
-					</li>
-					<li>
-						<h3 class="title"><i class="fa fa-chevron-right "></i> fnGetInstance()</h3>
-
-						<!-- Inicio content -->
-						<div class="content">
-							<p>
-								Función para obtener la instancia del JSlide, es el único método que tiene el espacio de nombres j.jslide, los métodos que contiene el plugin se usarán en la instancia.
-							</p>
-							<p>
-								El siguiente ejemplo muestra como usar la instancia.
-							</p>
-<pre><code>var jslide = j.jslide.fnGetInstance();
-console.log(jslide);</code></pre>
-
-						</div>
-						<!-- Fin content -->
-					</li>
-					<li>
-						<h3 class="title"><i class="fa fa-chevron-right "></i> fnInit()</h3>
-
-						<!-- Inicio content -->
-						<div class="content">
-							
-							<p>
-								Función para generar el JSlide, la función recibe el objeto explicado al principio de esta página.
-							</p>
-							<p>
-								El siguiente ejemplo muestra como generar el JSlide.
-							</p>
-
-							<div id='fnInit'>
-								<ul class="jslide listExample">
-									<li class='ins1'>1</li>
-									<li class='ins2'>2</li>
-									<li class='ins3'>3</li>
-									<li class='ins4'>4</li>
-									<li class='ins5'>5</li>
-									<li class='ins1'>6</li>
-									<li class='ins2'>7</li>
-									<li class='ins3'>8</li>
-									<li class='ins4'>9</li>
-									<li class='ins5'>10</li>
-									<li class='ins1'>11</li>
-									<li class='ins2'>12</li>
-								</ul>
-								<a class="btnLeft fa fa-chevron-left disabled"></a>
-								<a class="btnRight fa fa-chevron-right"></a>
-							</div>
-
-<pre><code>var slide = j.jslide.fnGetInstance();
+}; // End object Slide</code></pre><table class="definitions"><thead><tr><th>Propiedad</th><th>Proposito</th></tr></thead><tbody><tr><td data-th="Propiedad"><span>buttons</span></td><td data-th="Proposito"><span>Sirve para asignar funciones a los eventos clic de los botones que deben estar enseguida del contenedor del JSlide, para identificar los botones estos deben tener las clases: btnLeft y btnRight, para el botón de la izquierda y para la derecha respectivamente.</span></td></tr><tr><td data-th="Propiedad"><span>fnCall</span></td><td data-th="Proposito"><span>Función de callback, esta se ejecutará una vez el JSlide se ha creado.</span></td></tr><tr><td data-th="Propiedad"><span>list</span></td><td data-th="Proposito"><span>Indica el total de items del JSlide, éste campo puede ser númerico o un arreglo.</span></td></tr><tr><td data-th="Propiedad"><span>maxElementsShow</span></td><td data-th="Proposito"><span>Indica el total de items a mostrar por cada slide en el JSlide.</span></td></tr><tr><td data-th="Propiedad"><span>name</span></td><td data-th="Proposito"><span>Las animaciones del JSlide son creadas por una hoja de estilos en tiempo real, que se crea cuando se inicia éste, esta se referencia con una etiquieta link. El "name" sirve para eliminar la etiqueta una vez se necesite reemplezar o eliminar la tag.</span></td></tr><tr><td data-th="Propiedad"><span>qSlide</span></td><td data-th="Proposito"><span>Es el selector que identifica al JSlide para ser configurado.</span></td></tr><tr><td data-th="Propiedad"><span>qWrapper</span></td><td data-th="Proposito"><span>Es el selector que identifica al contenedor del JSlide, y al contenedor de los botones con las clases: btnLeft y btnRight.</span></td></tr><tr><td data-th="Propiedad"><span>width</span></td><td data-th="Proposito"><span>Ancho que se establece para el JSlide, el contenedor de éste puede tener diferente tamaño, la propiedad solo afecta al JSlide.</span></td></tr><tr><td data-th="Propiedad"><span>withTouch</span></td><td data-th="Proposito"><span>Cuando se usa en un dispositivo con touch, esta propiedad brinda la posibilidad de cambiar de slides con los eventos de touch.</span></td></tr></tbody></table></div><p>Enseguida se muestran los eventos que tiene el JSlide:</p><div class="methods"><ul><li><h3 class="main">API</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnGetInstance()</h3><div class="content"><p>Función para obtener la instancia del JSlide, es el único método que tiene el espacio de nombres j.jslide, los métodos que contiene el plugin se usarán en la instancia.</p><p>El siguiente ejemplo muestra como usar la instancia.</p><pre><code>var jslide = j.jslide.fnGetInstance();
+console.log(jslide);</code></pre></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnInit()</h3><div class="content"><p>Función para generar el JSlide, la función recibe el objeto explicado al principio de esta página.</p><p>El siguiente ejemplo muestra como generar el JSlide.</p><div id="fnInit"><ul class="jslide listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li><li class="ins1">6</li><li class="ins2">7</li><li class="ins3">8</li><li class="ins4">9</li><li class="ins5">10</li><li class="ins1">11</li><li class="ins2">12</li></ul><a class="btnLeft fa fa-chevron-left disabled"></a> <a class="btnRight fa fa-chevron-right"></a></div><pre><code>var slide = j.jslide.fnGetInstance();
 var width = document.querySelector('#fnInit .jslide').offsetWidth;
 slide.fnInit({
 	buttons: true,
@@ -158,47 +20,7 @@ slide.fnInit({
     qSlide: ".jslide",
     qWrapper: '#fnInit',
     width: width
-});</code></pre>
-
-						</div>
-						<!-- Fin content -->
-					</li>
-					<li>
-						<h3 class="title"><i class="fa fa-chevron-right "></i> fnMoveLeft()</h3>
-
-						<!-- Inicio content -->
-						<div class="content">
-							
-							<p>
-								Función para mover hacia la derecha el Slide
-							</p>
-							<p>
-								El siguiente ejemplo muestra como generar el JSlide.
-								<button id="btnMoveLeft" class="button">Mover a la derecha</button>
-							</p>
-
-							<div id='fnMoveLeft'>
-								<ul class="jslide listExample">
-									<li class='ins1'>1</li>
-									<li class='ins2'>2</li>
-									<li class='ins3'>3</li>
-									<li class='ins4'>4</li>
-									<li class='ins5'>5</li>
-									<li class='ins1'>6</li>
-									<li class='ins2'>7</li>
-									<li class='ins3'>8</li>
-									<li class='ins4'>9</li>
-									<li class='ins5'>10</li>
-									<li class='ins1'>11</li>
-									<li class='ins2'>12</li>
-								</ul>
-								<a class="btnLeft fa fa-chevron-left disabled"></a>
-								<a class="btnRight fa fa-chevron-right"></a>
-
-							</div>
-
-
-<pre><code>var slide = j.jslide.fnGetInstance();
+});</code></pre></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnMoveLeft()</h3><div class="content"><p>Función para mover hacia la derecha el Slide</p><p>El siguiente ejemplo muestra como generar el JSlide. <button id="btnMoveLeft" class="button">Mover a la derecha</button></p><div id="fnMoveLeft"><ul class="jslide listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li><li class="ins1">6</li><li class="ins2">7</li><li class="ins3">8</li><li class="ins4">9</li><li class="ins5">10</li><li class="ins1">11</li><li class="ins2">12</li></ul><a class="btnLeft fa fa-chevron-left disabled"></a> <a class="btnRight fa fa-chevron-right"></a></div><pre><code>var slide = j.jslide.fnGetInstance();
 var width = document.querySelector('#fnInit .jslide').offsetWidth;
 slide.fnInit({
 	buttons: true,
@@ -212,46 +34,7 @@ slide.fnInit({
 var button = document.querySelector('#btnMoveLeft');
 button.addEventListener('click', function() {
 	slide.fnMoveLeft();
-}, false);</code></pre>
-
-						</div>
-						<!-- Fin content -->
-					</li>
-					<li>
-						<h3 class="title"><i class="fa fa-chevron-right "></i> fnMoveRight()</h3>
-
-						<!-- Inicio content -->
-						<div class="content">
-							
-							<p>
-								Función para mover hacia la izquierda el Slide
-							</p>
-							<p>
-								El siguiente ejemplo muestra como generar el JSlide.
-								<button id="btnMoveRight" class="button">Mover a la izquierda</button>
-							</p>
-
-							<div id='fnMoveRight'>
-								<ul class="jslide listExample">
-									<li class='ins1'>1</li>
-									<li class='ins2'>2</li>
-									<li class='ins3'>3</li>
-									<li class='ins4'>4</li>
-									<li class='ins5'>5</li>
-									<li class='ins1'>6</li>
-									<li class='ins2'>7</li>
-									<li class='ins3'>8</li>
-									<li class='ins4'>9</li>
-									<li class='ins5'>10</li>
-									<li class='ins1'>11</li>
-									<li class='ins2'>12</li>
-								</ul>
-								<a class="btnLeft fa fa-chevron-left disabled"></a>
-								<a class="btnRight fa fa-chevron-right"></a>
-
-							</div>
-
-<pre><code>var slide = j.jslide.fnGetInstance();
+}, false);</code></pre></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnMoveRight()</h3><div class="content"><p>Función para mover hacia la izquierda el Slide</p><p>El siguiente ejemplo muestra como generar el JSlide. <button id="btnMoveRight" class="button">Mover a la izquierda</button></p><div id="fnMoveRight"><ul class="jslide listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li><li class="ins1">6</li><li class="ins2">7</li><li class="ins3">8</li><li class="ins4">9</li><li class="ins5">10</li><li class="ins1">11</li><li class="ins2">12</li></ul><a class="btnLeft fa fa-chevron-left disabled"></a> <a class="btnRight fa fa-chevron-right"></a></div><pre><code>var slide = j.jslide.fnGetInstance();
 var width = document.querySelector('#fnInit .jslide').offsetWidth;
 slide.fnInit({
 	buttons: true,
@@ -265,59 +48,7 @@ slide.fnInit({
 var button = document.querySelector('#btnMoveRight');
 button.addEventListener('click', function() {
 	slide.fnMoveRight();
-}, false);</code></pre>
-
-						</div>
-						<!-- Fin content -->
-					</li>
-					<li>
-						<h3 class="title"><i class="fa fa-chevron-right "></i> fnMoveTo()</h3>
-
-						<!-- Inicio content -->
-						<div class="content">
-							
-							<p>
-								Función para mover los slides hasta el indicado, como parámetro se solicita que se envie el número del item a mover en el slide, éste indice es similar al de los arreglos ya que inicia desde cero y no desde uno.
-							</p>
-							<p>
-								El siguiente ejemplo muestra como generar el JSlide. Seleccione el slide que desea ver
-								<select id="slOption">
-									<option value="0">1</option>
-									<option value="1">2</option>
-									<option value="2">3</option>
-									<option value="3">4</option>
-									<option value="4">5</option>
-									<option value="5">6</option>
-									<option value="6">7</option>
-									<option value="7">8</option>
-									<option value="8">9</option>
-									<option value="9">10</option>
-									<option value="10">11</option>
-									<option value="11">12</option>
-								</select>
-							</p>
-
-							<div id='fnMoveTo'>
-								<ul class="jslide listExample">
-									<li class='ins1'>1</li>
-									<li class='ins2'>2</li>
-									<li class='ins3'>3</li>
-									<li class='ins4'>4</li>
-									<li class='ins5'>5</li>
-									<li class='ins1'>6</li>
-									<li class='ins2'>7</li>
-									<li class='ins3'>8</li>
-									<li class='ins4'>9</li>
-									<li class='ins5'>10</li>
-									<li class='ins1'>11</li>
-									<li class='ins2'>12</li>
-								</ul>
-								<a class="btnLeft fa fa-chevron-left disabled"></a>
-								<a class="btnRight fa fa-chevron-right"></a>
-
-							</div>
-
-<pre><code>var slide = j.jslide.fnGetInstance();
+}, false);</code></pre></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnMoveTo()</h3><div class="content"><p>Función para mover los slides hasta el indicado, como parámetro se solicita que se envie el número del item a mover en el slide, éste indice es similar al de los arreglos ya que inicia desde cero y no desde uno.</p><p>El siguiente ejemplo muestra como generar el JSlide. Seleccione el slide que desea ver<select id="slOption"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option><option value="6">7</option><option value="7">8</option><option value="8">9</option><option value="9">10</option><option value="10">11</option><option value="11">12</option></select></p><div id="fnMoveTo"><ul class="jslide listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li><li class="ins1">6</li><li class="ins2">7</li><li class="ins3">8</li><li class="ins4">9</li><li class="ins5">10</li><li class="ins1">11</li><li class="ins2">12</li></ul><a class="btnLeft fa fa-chevron-left disabled"></a> <a class="btnRight fa fa-chevron-right"></a></div><pre><code>var slide = j.jslide.fnGetInstance();
 var width = document.querySelector('#fnInit .jslide').offsetWidth;
 slide.fnInit({
 	buttons: true,
@@ -331,20 +62,4 @@ slide.fnInit({
 var select = document.querySelector('#slOption');
 select.addEventListener('change', function() {
 	slide.fnMoveTo(this.value);
-}, false);</code></pre>
-
-						</div>
-						<!-- Fin content -->
-					</li>
-
-				</ul>
-				<!-- Fin lista métodos -->
-
-		</div>
-		<!-- Fin contenido -->
-
-	</article>
-	<!-- Fin artículo principal -->
-
-</section>
-<!-- Fin contenido principal -->
+}, false);</code></pre></div></li></ul></div></div></article></section>
