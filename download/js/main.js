@@ -188,7 +188,7 @@
 
     /*
         //---------------------------------
-        // Valida que el objeto herede de la función Assembly
+        // Valida que el objeto herede de la función Namespace
         //---------------------------------
         // Parámetros:
         //---------------------------------
@@ -199,7 +199,7 @@
     */
     function fnDepenciesTrue(dependencies) {
         if (!dependencies) return false;
-        if (dependencies.constructor === Assembly) if (!dependencies) return false;
+        if (dependencies.constructor === Namespace) if (!dependencies) return false;
         if (dependencies.constructor === Array) for (var i in dependencies) if (!dependencies[i]) return false;
         return true;
     } // end method
