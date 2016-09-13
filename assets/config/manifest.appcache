@@ -20,7 +20,7 @@ CACHE:
 ../js/polyfills/fetch.js
 ../../service-worker.js
 
-# Fonts 
+# Fonts
 ../fonts/Roboto-Light.eot
 ../fonts/Roboto-Light.svg
 ../fonts/Roboto-Light.ttf
