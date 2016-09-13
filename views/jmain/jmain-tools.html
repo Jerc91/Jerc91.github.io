@@ -1,13 +1,4 @@
-<li>
-	<h3 class="main">Herramientas</h3>
-</li>
-<li>
-	<h3 class="title"><i class="fa fa-chevron-right "></i> fnExtend()</h3>
-	<div class="content">
-		<p>
-			Nos permite combinar multiples objetos, manteniendo referencias a los objetos originales.
-		</p>
-<pre><code>var extremidadSuperior = {
+<li><h3 class="main">Herramientas</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnExtend()</h3><div class="content"><p>Nos permite combinar multiples objetos, manteniendo referencias a los objetos originales.</p> <pre><code>var extremidadSuperior = {
 	hombro: {},
 	brazo: {},
 	codo: {},
@@ -29,17 +20,6 @@ var extremidadInferior = {
 var cuerpo = {};
 fnExtend(cuerpo, extremidadSuperior, extremidadInferior);
 console.log(cuerpo);
-</code></pre>
-	</div>
-</li>
-<li>
-	<h3 class="title"><i class="fa fa-chevron-right "></i> fnIsFunction()</h3>
-	<div class="content">
-		<p>
-			Valida si el párametro es un tipo de objeto function.
-		</p>
-<pre><code>var fn = eval('(function (a,b) { return a + b; });');
+</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnIsFunction()</h3><div class="content"><p>Valida si el párametro es una function.</p> <pre><code>var fn = eval('(function (a,b) { return a + b; });');
 if(fnIsFunction(fn)) console.log(fn(1,1));
-</code></pre>
-	</div>
-</li>
+</code></pre> </div></li>
