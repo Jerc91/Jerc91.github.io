@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# V 2.0 Última modificación: 2016-09-13
+# Versión: 0.1.2333 Última modificación: 26/02/2018, 3:26:10 pm
  
 CACHE:
 # Estilos
@@ -14,27 +14,16 @@ CACHE:
 
 # Scripts
 ../js/jmain.js
-../js/workers/worker-import.js
-../js/workers/worker-searcher-of-array.js
-../js/workers/worker-tools.js
-../js/polyfills/fetch.js
+../js/workers/filesystem-worker.js
+../js/workers/requester-tools.js
 ../../service-worker.js
 
 # Fonts
-../fonts/Roboto-Light.eot
-../fonts/Roboto-Light.svg
 ../fonts/Roboto-Light.ttf
-../fonts/Roboto-Light.woff
 ../fonts/Roboto-Light.woff2
-../fonts/Roboto-Regular.eot
-../fonts/Roboto-Regular.svg
 ../fonts/Roboto-Regular.ttf
-../fonts/Roboto-Regular.woff
 ../fonts/Roboto-Regular.woff2
-../fonts/fontawesome-webfont.eot
-../fonts/fontawesome-webfont.svg
 ../fonts/fontawesome-webfont.ttf
-../fonts/fontawesome-webfont.woff
 ../fonts/fontawesome-webfont.woff2
 
 # Images

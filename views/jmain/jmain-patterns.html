@@ -1,82 +1,126 @@
-<li><h3 class="main">Patrones de Diseño</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> Command()</h3><div class="content"><p>Patrón para administrar métodos y ejecutarlos dinámicamente, hemos usado éste patrón en jquery cuando registramos un litener de eventos con el método on, para elimiar el listener usamos el método off, y trigger para ejecutar el evento que queremos.</p><p>Para obtener la instancia del patrón debemos ir al espacio de nombres: patterns.command.instance;</p><p>En nuestro ejemplo vamos a simular una petición al servidor, donde se enviará servidor (simulado) la cadena de texto "I Like" en el evento request, y éste concatenará "Music, " y la fecha de la respuesta, esto en el evento serverWork, y finalmente se imprimira la cadena de texto resultante "I Like Music, Date()" en el evento response.</p> <pre><code>
-	var command = patterns.command.instance,
-		METHODS = { request: 'peticion', serverWork: 'trabajoServidor', response: 'respuesta' },
-		TEXT = 'I Like';
+<li><h3 class="main">Patrones de Diseño</h3></li><li><div class="content static"><p>En el desarrollo de software en general nos encontramos con problemas comunes, gran parte ya están solucionados, a esto le llamamos patrones de diseño, implementación que se ha creado tiempo atrás bajo ciertas condiciones (contexto) para su uso. <i>No inventes la rueda</i> (¡Si puedes crea una mejor!).</p></div></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.patterns.command</summary><div class="content"><p>Administra métodos y los ejecuta dinámicamente; es decir mediante una instrucción como "imprimir" podemos ejecutar una acción (método) previamente registro. Hemos usado éste patrón en JQuery cuando registramos un listener de eventos con el método .on('', () => {}) que recibe el nombre de la instrucción y la acción, éste como el método para eliminar .off('instrucción'), y .trigger('instrucción', argumentos) para ejecutar la instrucción pasando argumentos si se quiere.</p><p>Para obtener la instancia del patrón debemos ir al espacio de nombres: jr.patterns.command;</p><p>En nuestro ejemplo vamos a simular una petición al servidor, donde se enviará servidor (simulado) la cadena de texto "I Like" en el evento request, y éste concatenará "Music, " y la fecha de la respuesta, esto en el evento serverWork, y finalmente será notificada la cadena de texto resultante "I Like Music, Date()" en el evento response.</p> <pre><code>var command = jr.patterns.command,
+	METHODS = { request: 'peticion', serverWork: 'trabajoServidor', response: 'respuesta' },
+	TEXT = 'I Like';
 
-	// Petición
-	command.on(METHODS.request, function(textToSend) {
-		command.trigger(METHODS.serverWork, textToSend);
+// Petición
+command.on(METHODS.request, function(textToSend) {
+	command.trigger(METHODS.serverWork, textToSend);
+});
+
+// Trabajo del Servidor
+command.on(METHODS.serverWork, function(textOnRequest) {
+	var ENDTEXT = ' Music, ';
+	command.trigger(METHODS.response, textOnRequest + ENDTEXT, Date());
+});	
+
+// Respuesta
+command.on(METHODS.response, function(textToPrint, date) {
+	// Se eliminan los liteners
+	command.off(METHODS.request);
+	command.off(METHODS.serverWork);
+	console.log(textToPrint, date);
+});	
+
+// Se incia la petición
+command.trigger(METHODS.request, TEXT);</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.patterns.observer</summary><div class="content"><p>Patrón que ante un cambio del observado notifica a quien actúa cuando estos cambios suceden. Una versión más completa del patrón se puede encontrar en el API Object.Observe o MutationObserver (Notificacion del DOM). Esta versión tiene un administrador (Subject) de observados (Observer). Dentro de la cual solo se expone el Subject y los métodos que contiene son los siguientes:</p><table class="definitions"><thead><tr><th>Método</th><th>Explicación</th></tr></thead><tbody><tr><td data-th="Método"><span>Subject.add(cbListener)</span></td><td data-th="Explicación"><span>Agrega un observer el cual tiene el comportamiento de reacciónar o ejecutar la función de callback, una vez el Subject notifique un cambio al observado, el método retorna el id del observer.</span></td></tr><tr><td data-th="Método"><span>Subject.remove(idObserved)</span></td><td data-th="Explicación"><span>Elimina al observado mediante su id.</span></td></tr><tr><td data-th="Método"><span>Subject.notify(idObserved, ...)</span></td><td data-th="Explicación"><span>Notifica un cambio al observado mediante su id, los argumentos que se pasen se enviarán al callback(cbListener) que se registro en el método add</span></td></tr></tbody></table><p></p><p>Para obtener la instancia del patrón debemos ir al espacio de nombres: jr.patterns.observer;</p><p>En nuestro ejemplo tenemos dos objetos quienes serán los observados, se envian al servidor (simulado) para que éste cambie al observado y luego notifique al observador que lo cambió.</p><p>Para agregar un nuevo observado se deberá dar el método quien será ejecutado en cada cambio, para esta versión del observer se debe notificar al observador que cambió el observado y el ejecutará el método registrado.</p> <pre><code>var METHODS = { serverWork: 'trabajoServidor' },
+	TEXT = 'I Like ',
+	command = jr.patterns.command,
+	observador = jr.patterns.observer;
+	
+var observadoLikeMusic = { name: 'Music', likes: '' }, 
+	observadoLikeGames = { name: 'Games', likes: '' };
+
+// Se agregan los observador
+observadoLikeMusic.id = observador.add(fnPrint);
+observadoLikeGames.id = observador.add(fnPrint);
+
+// Trabajo del Servidor
+command.on(METHODS.serverWork, function(observed) {
+	observed.likes = TEXT + observed.name;
+	// Se notifica al observador que el observado cambio
+	observador.notify(observed.id, observed);
+});	
+
+// Imprimir
+function fnPrint(objectToPrint) {
+	console.log(objectToPrint);
+}
+
+// Se incia el trabajo del servidor
+command.trigger(METHODS.serverWork, observadoLikeMusic);
+command.trigger(METHODS.serverWork, observadoLikeGames);</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.patterns.singleton()</summary><div class="content"><p>Patrón que solo permite una instancia en memoria, aquí simplificamos su uso para no tener que hacer una validación si ya esta creado o no un objeto, similar a esto: <i>var objeto = objeto || {}</i>.</p><p>Para usarlo debemos ir al espacio de nombres: jr.patterns.singleton, éste método recibe la referencia del cual queremos solo una instancia en memoria, y una función encargada de crear esa instancia;</p><p>En nuestro ejemplo crearemos un objeto con un contador de instancias por si se llega a instanciar más de una vez el mismo objeto.</p> <pre><code>var contadorInstancias = 0,
+	referenciaObjeto;
+
+function ObjetoAInstanciar() {
+	this.numeroInstancias = ++contadorInstancias;
+}
+
+function getInstance() {
+	return new ObjetoAInstanciar();
+}
+
+// 1
+referenciaObjeto = getInstance();
+console.log(referenciaObjeto.numeroInstancias);
+// 2
+referenciaObjeto = getInstance();
+console.log(referenciaObjeto.numeroInstancias);
+// 3
+referenciaObjeto = patterns.singleton(referenciaObjeto, getInstance);
+console.log(referenciaObjeto.numeroInstancias);
+// 3
+referenciaObjeto = patterns.singleton(referenciaObjeto, getInstance);
+console.log(referenciaObjeto.numeroInstancias);
+// 4
+referenciaObjeto = getInstance();
+console.log(referenciaObjeto.numeroInstancias);</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.patterns.serviceLocator()</summary><div class="content"><p>Un problema común es el manejo de dependencias, por ejemplo tienes un componente que usa el plugin de JQuery ya tenemos 3 dependencias, 1 de la página que use el componente, 2 del plugin de JQuery y por último el mismo JQuery. Existen varias soluciones a éste problema como la inyección de dependencias o un contenedor de dependecias, junto con el serviceLocator.</p><p>El service locator a diferencia de otras soluciones crea instancias por demanda y verifica que no se hayan cargado antes. Está implementación se puede usar como complemento de la función jr.get(), con ella podemos cargar archivos como scripts y hojas de estilos, en la sección de Peticiones Asíncronas cuando se usa jr() se recibe un objeto para la configuración, tenemos la propiedad packages, esta indica la ruta en la que podemos obtener un json con la estructura de las dependencias. La estructura es la siguiente:</p> <pre><code>[
+	{ 
+		"name": "base", 
+		"paths": [
+			"assets/css/master.css", 
+			"assets/js/controls/jlightbox.js",
+			"assets/js/controls/jslide.js",
+			"assets/js/controls/jspinner.js",
+
+			"assets/css/movil/movil-screen.css?media=(max-width: 575px)",
+			"assets/css/movil/tablet-screen.css?media=(max-width:767px)",
+			"assets/css/movil/middle-screen.css?media=(max-width:991px)",
+			"assets/css/movil/large-screen.css?media=(max-width:1199px)"
+		], 
+		"namespaces": ["jr.jslide", "jr.jspinner", "jr.jlightbox"] 
+	},
+	{ 
+		"name": "jmain", "paths": ["controllers/controller-jmain.js"], 
+		"namespaces": ["myApp.jmain"], "dependencies": ["base"] 
+	},
+	{ ... }, { ... }, ... 
+]</code></pre> <p>Tenemos entonces un arreglo de objetos, donde cada objeto es un package (dependencia) y donde sus propiedades definen su información:</p><table class="definitions"><thead><tr><th>Propiedad</th><th>Explicación</th></tr></thead><tbody><tr><td data-th="Propiedad"><span>name</span></td><td data-th="Explicación"><span>Indica el nombre del paquete.</span></td></tr><tr><td data-th="Propiedad"><span>paths</span></td><td data-th="Explicación"><span>Indica la ruta de los archivos a solicitar para su funcionamiento.</span></td></tr><tr><td data-th="Propiedad"><span>namespaces</span></td><td data-th="Explicación"><span>Indica los espacios de nombres que se usan, por ejemplo: (JQuery, $).</span></td></tr><tr><td data-th="Propiedad"><span>dependencies</span></td><td data-th="Explicación"><span>Indica los paquetes que deberán ser cargadas previo a la cargar los archivos del paquete actual.</span></td></tr></tbody></table><p>Para obtener la instancia debemos ir al espacio de nombres: jr.patterns.serviceLocator, una vez se tenga se puede usar para cargar el archivo con la estructura, para agregar un paquete con la estructura anterior, o para obtener un paquete, para la carga del archivo se usa de la siguiente forma:</p> <pre><code>var PATH_PACKAGES = 'assets/config/packages.json',
+	serviceLocator = jr.patterns.serviceLocator;
+	serviceLocator(PATH_PACKAGES).then(() => console.log('Se cargo la estructura'));</code></pre> <p>En nuestro ejemplo verificaremos si tenemos la variable "$", si no solicitaremos al serviceLocater que cargue el paquete de JQuery. Primero debemos generar la estructura como el ejemplo anterior.</p> <pre><code>var PATH_PACKAGES = 'assets/config/packages.json',
+	serviceLocator = jr.patterns.serviceLocator;
+	
+serviceLocator(PATH_PACKAGES)
+	.then(cargarJQuery)
+	.spread((_jQuery, _$)  => console.log(_jQuery, _$));
+
+function cargarJQuery() {
+	if(!window.hasOwnProperty('jQuery')) return serviceLocator('jquery');
+	else Promise.resolve();
+}</code></pre> <p>Cuando usamos la propiedad packages en la configuración de jr() activamos la propiedad jr.service(), esta será nuestro service locator y cuando jr() finalice ya tendremos la estructura justo para usarla.</p></div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.patterns.serviceLocator.remove()</summary><div class="content"><p>Ahora cuando cambiemos de pantalla y no necesitemos el controlador o ya no necesitemos un componente, debemos evaluar si es necesario ayudar al garbage collector y retirar esta información de la memoria. Para ello usamos el método remove donde podemos pasar un package o el nombre de éste para eliminar su funcionalidad.</p> <pre><code>var PATH_PACKAGES = 'assets/config/packages.json',
+	serviceLocator = jr.patterns.serviceLocator;
+
+serviceLocator(PATH_PACKAGES)
+	.then(cargarJQuery)
+	.spread((_jQuery, _$) => {
+		console.log('JQuery Cargado');
+		eliminarJQuery().then(() => console.log('JQuery Eliminado'));
 	});
 
-	// Trabajo del Servidor
-	command.on(METHODS.serverWork, function(textOnRequest) {
-		var ENDTEXT = ' Music, ';
-		command.trigger(METHODS.response, textOnRequest + ENDTEXT, Date());
-	});	
+function cargarJQuery() {
+	if(!window.hasOwnProperty('jQuery')) return serviceLocator('jquery');
+	else Promise.resolve();
+}
 
-	// Respuesta
-	command.on(METHODS.response, function(textToPrint, date) {
-		// Se eliminan los liteners
-		command.off(METHODS.request);
-		command.off(METHODS.serverWork);
-		console.log(textToPrint, date);
-	});	
-
-	// Se incia la petición
-	command.trigger(METHODS.request, TEXT);
-</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> Observer()</h3><div class="content"><p>Patrón que ante un cambio del observado notfica a quien actua cuando estos cambios suceden. Una versión más completa del patrón se puede encontrar en el API MutationObserver.</p><p>Para obtener la instancia del patrón debemos ir al espacio de nombres: patterns.observer.instance;</p><p>En nuestro ejemplo tenemos dos objetos quienes serán los observados, se envian al servidor(simulado) para que éste cambie al observado y luego notifique al observador que lo cambio.</p><p>Para agregar un nuevo observado se debera dar un nombre y un método quien sera ejecutado en cada cambio, para esta versión del observer se debe notificar al observador que cambio el observado y el ejecutara el método registrado.</p> <pre><code>
-	var command = patterns.command.instance,
-		METHODS = { serverWork: 'trabajoServidor' },
-		TEXT = 'I Like ',
-		observador = patterns.observer.instance;
-		
-	var observadoLikeMusic = { name: 'Music', likes: '' }, 
-		observadoLikeGames = { name: 'Games', likes: '' };
-
-	// Se agregan los observador
-	observador.add(observadoLikeMusic.name, fnPrint);
-	observador.add(observadoLikeGames.name, fnPrint);
-
-	// Trabajo del Servidor
-	command.on(METHODS.serverWork, function(observed) {
-		observed.likes = TEXT + observed.name;
-		// Se notifica al observador que el observado cambio
-		observador.notify(observed.name, observed);
-	});	
-
-	// Imprimir
-	function fnPrint(objectToPrint) {
-		console.log(objectToPrint);
-	}
-
-	// Se incia el trabajo del servidor
-	command.trigger(METHODS.serverWork, observadoLikeMusic);
-	command.trigger(METHODS.serverWork, observadoLikeGames);
-</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> Singleton()</h3><div class="content"><p>Patrón que solo permite una instancia en memoria, aquí simplificamos su uso para no tener que hacer una validación si ya esta creado o no un objeto, similar a esto: <i>var objeto = objeto || {}</i>.</p><p>Para obtener usarlo debemos ir al espacio de nombres: patterns.singleton, éste método recibe la referencia del cual queremos solo una instancia en memoria, y una función encargada de crear esa instancia;</p><p>En nuestro ejemplo crearemos un objeto con un contados de instancias por si se llega a instanciar más de una vez el mismo objeto.</p> <pre><code>
-	var contadorInstancias = 0,
-		referenciaObjeto;
-
-	function ObjetoAInstanciar() {
-		this.numeroInstancias = ++contadorInstancias;
-	}
-
-	function getInstance() {
-		return new ObjetoAInstanciar();
-	}
-
-	// 1
-	referenciaObjeto = getInstance();
-	console.log(referenciaObjeto.numeroInstancias);
-	// 2
-	referenciaObjeto = getInstance();
-	console.log(referenciaObjeto.numeroInstancias);
-	// 3
-	referenciaObjeto = patterns.singleton(referenciaObjeto, getInstance);
-	console.log(referenciaObjeto.numeroInstancias);
-	// 3
-	referenciaObjeto = patterns.singleton(referenciaObjeto, getInstance);
-	console.log(referenciaObjeto.numeroInstancias);
-	// 4
-	referenciaObjeto = getInstance();
-	console.log(referenciaObjeto.numeroInstancias);
-</code></pre> </div></li>
+function eliminarJQuery() {
+	return serviceLocator.remove('jquery').then(() => console.log(window.hasOwnProperty('jQuery')));
+}</code></pre> </div></details></li>

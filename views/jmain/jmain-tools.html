@@ -1,25 +1,74 @@
-<li><h3 class="main">Herramientas</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnExtend()</h3><div class="content"><p>Nos permite combinar multiples objetos, manteniendo referencias a los objetos originales.</p> <pre><code>var extremidadSuperior = {
-	hombro: {},
-	brazo: {},
-	codo: {},
-	antebrazo: {},
-	muneca: {},
-	mano: {}
-}; // end 
-
-var extremidadInferior = {
-	ingle: {},
-	cadera: {},
-	muslo: {},
-	rodilla: {},
-	pierna: {},
-	tobillo: {},
-	pie: {}
+<li><h3 class="main">Herramientas</h3></li><li><div class="content static"><p>Estan son funcionalidades comunes como si una variable es una función y de ser así que se ejecute esta, o obtener la lista de parámetros sin el primero, para ello es esta sección.</p></div></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.isFunction()</summary><div class="content"><p>Valida si el parámetro es una función y retorna verdadero o falso.</p> <pre><code>var fn = eval('(function (a,b) { return a + b; });');
+if(jr.isFunction(fn)) console.log(fn(1,1));
+</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.parametersWithoutFirst()</summary><div class="content"><p>Obtiene elementos de un arreglo excluyendo el primero.</p> <pre><code>function imprimir(factory, arg1, arg2) {
+	factory(jr.parametersWithoutFirst(...arguments));
 }
 
-var cuerpo = {};
-fnExtend(cuerpo, extremidadSuperior, extremidadInferior);
-console.log(cuerpo);
-</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnIsFunction()</h3><div class="content"><p>Valida si el párametro es una function.</p> <pre><code>var fn = eval('(function (a,b) { return a + b; });');
-if(fnIsFunction(fn)) console.log(fn(1,1));
-</code></pre> </div></li>
+imprimir(console.log, 'Hola', 'Mundo');</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.execFunction()</summary><div class="content"><p>Ejecuta una variable si esta es función.</p> <pre><code>function imprimir(factory, arg1, arg2) {
+	jr.execFunction(factory, jr.parametersWithoutFirst(...arguments));
+}
+
+imprimir(console.log, 'Hola', 'Mundo');
+imprimir(console, 'Hola', 'Mundo');</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.errorHandler()</summary><div class="content"><p>Imprime en consola un elemento que se genere. Si llegas a captar errores en un método único se puede llegar a dar un apropiado manejo a estos.</p> <pre><code>new Promise((resolve, reject) => resolve(variableNoDefinida)).then(console.log).catch(jr.errorHandler);</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.getQuerys()</summary><div class="content"><p>Obtiene las querys string de una cadena con formato "..?..=..". En donde se obtiene un objeto con propiedades de los valores que tengan una llave y valor. Se evalúa el location.pathname si no se envia un parámetro si se envia uno se evalúa tal.</p> <pre><code>console.log(jr.getQuerys());
+console.log(jr.getQuerys('assets/css/movil/movil-screen.css?media=(max-width: 575px)'));</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.insertAfter()</summary><div class="content"><p>Se puede insertar un elemento enseguida de otro, sin tener que agregarlo siempre al final del elmento contenedor, los parámetros que recibe son: el elemento de referencia, y el nuevo elemento.</p><p>Para el siguiente ejemplo se moverá un elemento enseguida de otro.</p><div>Seleccione el elemento de referencia<select id="slReferencia"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>y el elemento que debe ir enseguida:<select id="slNuevo"><option value="1">1</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div><ul id="contentInsert" class="listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li></ul> <pre><code>document.querySelector('#slNuevo').addEventListener('change', fnInsertAfter, false);
+document.querySelector('#slReferencia').addEventListener('change', fnInsertAfter, false);
+
+//---------------------------------
+// Función de ejemplo, fnInsertAfter
+function fnInsertAfter(e) {
+    var seleccionado = this;
+    var referencia = document.querySelector(this.id == 'slReferencia' ? '#slNuevo' : '#slReferencia');
+
+    // Se crea el elemento option en el select no seleccionado
+    for(var i = 1; i < 6; i++) {
+        if(Array.prototype.fnFind.call(referencia.childNodes, function(e) { return e.value == i.toString(); })) 
+            continue;
+        
+        var elemento = document.createElement('option');
+        elemento.value = i; 
+        elemento.textContent = i;
+        
+        if(i == 5) referencia.appendChild(elemento);
+        else referencia.insertBefore(elemento, referencia.childNodes[i - 1]);
+    } // end for
+
+    // Se agrega el elemento option en el select no seleccionado
+    var antiguo = referencia.querySelector('[value="' + seleccionado.selectedOptions[0].value + '"]');
+    if(antiguo) referencia.removeChild(antiguo);
+
+    // Se obtiene el valor de referencia y el valor del elemento nuevo
+    var content = document.querySelector('#contentInsert');
+    var nuevo = content.querySelector('.ins' + document.querySelector('#slNuevo').selectedOptions[0].value);
+    referencia = content.querySelector('.ins' + document.querySelector('#slReferencia').selectedOptions[0].value);
+    
+    // Se mueve el elemento
+    jr.insertAfter(referencia, nuevo);
+} // end function
+//---------------------------------</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.deleteTag()</summary><div class="content"><p>Función para eliminar un elemento del HTML seleccionado.</p><p>El siguiente ejemplo muestra como usar esta función, de clic en el elemento de la lista y éste será eliminado.</p><ul id="ulDeleteTag" class="listExample"><li class="ins1">1</li><li class="ins2">2</li><li class="ins3">3</li><li class="ins4">4</li><li class="ins5">5</li></ul> <pre><code>// fnDeleteTag
+var delTags = document.querySelectorAll('#ulDeleteTag li');
+Array.prototype.map.call(delTags, function(tag) {
+    tag.addEventListener('click', fnDeleteTag, false);
+});
+
+//--------------------------------
+// Función de ejemplo, fnDeleteTag
+function fnDeleteTag() {
+    // Se elimina el elemento (this) en donde se hace clic
+    jr.deleteTag(this);
+
+    // Una vez se eliminen todos los elementos se crean de nuevo
+    var delTags = document.querySelector('#ulDeleteTag');
+    if(delTags.children.length != 0) return;
+    for(var i = 1; i < 6; i++) {
+        var li = document.createElement('li');
+        li.classList.add('ins' + i);
+        li.textContent = i;
+        li.addEventListener('click', fnDeleteTag, false);
+        delTags.appendChild(li);
+    } // end for
+} // end function
+//--------------------------------</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.parseJsonDate()</summary><div class="content"><p>Crea un objeto Date, como parámetro recibe una fecha en formato json.</p><p>El siguiente ejemplo muestra como usar esta función, se crea un onjeto Date a partir de la fecha /Date(1335205592410)/.</p> <pre><code>// Fecha que es convertida al serializar un DateTime de .Net
+var jsonDate = /Date(1335205592410)/;
+var objetoDate = jr.parseJsonDate(jsonDate);
+console.log(objetoDate.getFullYear() + '-' + objetoDate.getMonth() + '-' + objetoDate.getDay());
+</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.now()</summary><div class="content"><p>Toma la fecha y hora actual y retorna esta información como una cadena de texto. (yyyy-MM-dd hh:mm)</p><p>El siguiente ejemplo muestra como usar esta función, se obtiene la fecha del sistema.</p> <pre><code>console.log(jr.now());</code></pre> </div></details></li>

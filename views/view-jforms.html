@@ -1,0 +1,97 @@
+<section class="content"><article class="jmain"><header><h1>JForms <button class="button2"><i class="fa fa-download"></i> Descargar</button></h1></header><div class="content"><p>Los formularios son un elemento escencial en la web, esta sección tiene el propoosito de ayudar un poco con las tareas comunes para estos elementos. Además de los métodos para formularios se tienen expresiones regulares para la identificación de ciertos patrones en los textos, como por ejemplo isDate, para validar si es una fecha la cadena de texto evaluada.</p><div class="methods"><ul class="list"><li><h3 class="main">API</h3></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.jforms.form()</summary><div class="content"><p>Función para agregar un conjunto de herramientas para la captura de información dentro del formulario, dentro de estas se encuentra limpiar el formulario, validarlo, obtener los datos, y agregar datos ingresados en los formularios.</p><p>El siguiente código muestra como adicionar las funciones de ayuda para los formularios.</p> <pre><code>var formulario = document.querySelector('form#fmEjemplo');
+jr.jforms.form(formulario);</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.jforms.clean()</summary><div class="content"><p>Función para limpiar los controles del formulario, para usar esta función se debe usar la función fnForm sobre el formulario con anterioridad. Cuando es usada esta función se elimina el atributo data-state el cual indica el estado del formulario, lo mismo sucede con la clase .validate, que indica si el formulario ha sido validado.</p><p>El texto de los controles que no son de captura de información span y output se limpian, los controles que tengan la propiedad data-disabled se les agregará el atributo disabled, para los controles con atributo data-not-disabled, se eliminara éste atributo, para los elementos hidden con el atributo data-block se mantendrá el valor del elemento.</p><p>El primer botón del formulario que tenga el atributo data-accion, será eliminado éste atributo cuando se limpie el formulario.</p><p>El atributo data-bind de los elementos, input, select, textarea, span y output, será eliminado una vez se limpie el formulario.</p><p>El siguiente ejemplo muestra como funciona la función fnClean en un formulario.</p><form id="fmfnForm"><article class="form two active"><header><h4><i class="fa fa-chevron-right"></i>Formulario de Ejemplo</h4></header><fieldset><ul><li class="fade"><input type="hidden" data-bind="id"></li><li><label for="itNombre">Nombre:</label><input data-bind="nombres" id="itNombre" placeholder="Ingrese los nombres" required> <span class="tooltipForm">Ingrese los nombres</span></li><li><label for="slPais">Nacionalidad:</label><select data-bind="pais" id="slPais" required><option value="">Seleccione un páis</option><option value="CO">Colombia</option><option value="EU">Estados Unidos</option></select><span class="tooltipForm">Seleccione un país</span></li><li><label for="slCiudad">Ciudad de nacionalidad:</label><select data-bind="ciudad" id="slCiudad" required disabled="disabled" data-disabled><option value="">Seleccione una ciudad</option><option value="01">Bogotá D.C.</option></select><span class="tooltipForm">Seleccione un país</span></li><li class="lineal"><label for="irDesarrollador">¿Eres desarrollador?:</label><input data-bind="esDesarrollador" name="EsDesarrollador" type="radio" value="Si"> Si <input data-bind="esDesarrollador" name="EsDesarrollador" type="radio" value="No"> No</li><li class="fade" data-fade><label for="icLenguaje">Lenguaje de programación preferido:</label><input data-bind="lenguaje" type="checkbox" value="JavaScript"> JavaScript <input data-bind="lenguaje" type="checkbox" value="C#"> C# <input data-bind="lenguaje" type="checkbox" value="Java"> Java <input data-bind="lenguaje" type="checkbox" value="VB"> VB</li></ul></fieldset></article><div class="buttons"><button id="btnCleanfnForm" class="button" formnovalidate>Limpiar</button> <button id="btnFillfnForm" class="button" formnovalidate>Llenar</button></div></form> <pre><code>// fnForm
+fnInitFormClean();
+
+//--------------------------------
+// Función de ejemplo, fnForm.fnClean
+function fnInitFormClean() {
+    // Se inicia el forrmulario-
+    var form = document.querySelector('#fmfnForm');
+    jr.jforms.form(form);
+
+    // Se agrega comportamiento del select Ciudad.
+    var ciudad = document.querySelector('#slCiudad');
+    document.querySelector('#slPais').addEventListener('change', function () {
+        if (this.value == 'CO') ciudad.removeAttribute('disabled');
+        else {
+            ciudad.setAttribute('disabled', '');
+            ciudad.value = '';
+        } // end else
+    }, false);
+
+    // Se agrega comportamiento del readio EsDesarrollador.
+    var checks = document.querySelectorAll('input[name="EsDesarrollador"]');
+    var lenguajes = document.querySelector('label[for="icLenguaje"]').parentNode;
+    checks[0].addEventListener('click', function () {
+        if(this.checked) lenguajes.classList.remove('fade');
+    }, false); // end if
+    checks[1].addEventListener('click', function () {
+        if(this.checked) lenguajes.classList.add('fade');
+    }, false); // end if
+
+    // Se agrega comportamiento en los botones de Limpiar.
+    document.querySelector('#btnCleanfnForm').addEventListener('click', function(e) {
+        e.preventDefault();
+        this.form.clean();
+    });
+
+    // Se agrega comportamiento en los botones de Llenar.
+    document.querySelector('#btnFillfnForm').addEventListener('click', function(e) {
+        e.preventDefault();
+        fnSet.call(this, ciudad, lenguajes);
+    });
+
+    // Se llena el formulario
+    fnSet.call(null, ciudad, lenguajes, form);
+} // end function
+//--------------------------------
+
+//--------------------------------
+// Función para llenar el formulario con datos.
+function fnSet(ciudad, lenguajes, form) {
+    var formulario = form || this.form
+    formulario.set({
+        nombres: 'Julian Ruiz',
+        pais: 'CO',
+        ciudad: '01',
+        esDesarrollador: 'Si',
+        lenguaje: ['JavaScript', 'C#']
+    }); // end fnSet
+    ciudad.removeAttribute('disabled');
+    lenguajes.classList.remove('fade');
+} // end function
+//--------------------------------</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.jforms.isValid()</summary><div class="content"><p>Función para validar la información del formulario, para usar esta función se debe usar la función fnForm sobre el formulario con anterioridad. Cuando es usada esta función se agregará la clase .validated en el formulario, retorna verdadero o false si es correcto o tiene errores el formulario respectivamente.</p><p>El siguiente código muestra como verificar si la información del formulario es correcta.</p><form id="fmfnIsValid"><article class="form one active"><header><h4><i class="fa fa-chevron-right"></i>Validar Formulario</h4></header><fieldset><ul><li class="fade"><input type="hidden" data-bind="id"></li><li><label for="itNombre">Nombre:</label><input id="itNombre" placeholder="Ingrese su nombre" required> <span class="tooltipForm">Ingrese su nombre</span></li><li><label for="ieCorreo">Correo:</label><input id="ieCorreo" type="email" placeholder="ejemplo@dominio.com" required> <span class="tooltipForm">Ingrese su correo electrónico</span></li></ul></fieldset></article><div class="buttons"><button id="btnfnValidate" class="button" formnovalidate>Validar</button></div></form> <pre><code>// fnIsValidity
+fnInitIsValidity();
+
+//--------------------------------
+// Función para usar el método j.tools.fnIsValidity
+function fnInitIsValidity() {
+     // Se inicia el forrmulario-
+    var form = document.querySelector('#fmfnIsValid');
+    jr.jform.form(form);
+    
+    // Se valida ek formulario
+    document.querySelector('#btnfnValidate').addEventListener('click', function(e) {
+        e.preventDefault();
+        var correcto = this.form.isValid();
+        if(correcto) console.log({ text: 'Formulario correcto.', type: 'success' });
+        else console.log({ text: 'Formulario incorrecto.', type: 'error' });
+    }, false);
+} // end function
+//--------------------------------</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.jforms.get()</summary><div class="content"><p>Función para obtener la información del formulario, para usar esta función se debe usar la función fnForm sobre el formulario con anterioridad. Como parámetro recibe verdadero o falso para determinar la forma en como retornará la información si como un objeto o como un arreglo.</p><p>El siguiente código muestra como obtener la información de un formulario.</p> <pre><code>// Se inicia el forrmulario
+var form = document.querySelector('#fmfnForm');
+jr.jforms.form(form);
+// Obtener información en objeto
+console.log(form.get());
+// Obtener información en array
+console.log(form.get(true));</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.set()</summary><div class="content"><p>Función para agregar información dentro del formulario, para usar esta función se debe usar la función fnForm sobre el formulario con anterioridad. Como parámetro recibe un objeto, con los atributos iguales al name de cada control en el formulario.</p><p>El siguiente código muestra como agregar información en un formulario.</p> <pre><code>// Se inicia el forrmulario
+var form = document.querySelector('#fmfnForm');
+jr.jforms.form(form);
+form.set({
+	id: 20,
+    nombres: 'Julian Ruiz',
+    pais: 'CO',
+    ciudad: '01',
+    esDesarrollador: 'Si',
+    lenguaje: ['JavaScript', 'C#']
+}); </code></pre> </div></details></li></ul></div></div></article></section>

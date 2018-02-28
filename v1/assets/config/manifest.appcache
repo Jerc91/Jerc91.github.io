@@ -1,0 +1,51 @@
+CACHE MANIFEST
+
+# V 2.0 Última modificación: 2016-09-13
+ 
+CACHE:
+# Estilos
+../css/no-save.css
+
+# Documentos html
+../../index.html
+
+# Imagenes
+../../favicon.ico
+
+# Scripts
+../js/jmain.js
+../js/workers/worker-import.js
+../js/workers/worker-searcher-of-array.js
+../js/workers/worker-tools.js
+../js/polyfills/fetch.js
+../../service-worker.js
+
+# Fonts
+../fonts/Roboto-Light.eot
+../fonts/Roboto-Light.svg
+../fonts/Roboto-Light.ttf
+../fonts/Roboto-Light.woff
+../fonts/Roboto-Light.woff2
+../fonts/Roboto-Regular.eot
+../fonts/Roboto-Regular.svg
+../fonts/Roboto-Regular.ttf
+../fonts/Roboto-Regular.woff
+../fonts/Roboto-Regular.woff2
+../fonts/fontawesome-webfont.eot
+../fonts/fontawesome-webfont.svg
+../fonts/fontawesome-webfont.ttf
+../fonts/fontawesome-webfont.woff
+../fonts/fontawesome-webfont.woff2
+
+# Images
+../img/shared/invalid.png
+../img/shared/red_asterisk.png
+../img/shared/valid.png
+../img/shared/loading.gif
+
+NETWORK:
+# Analytics
+*
+
+FALLBACK:
+filesToUpdate.json	filesToUpdateClean.json

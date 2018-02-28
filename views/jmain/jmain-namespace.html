@@ -1,65 +1,57 @@
-<li><h3 class="main">Espacio de Nombres</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> Namespace()</h3><div class="content"><p>Nuestro código puede estar mejor estructurado con espacios de nombres, así podemos dividir funcionalidades dentro de la aplicación. Hay diferentes formas de crearlos, por ejemplo:</p> <pre><code>var myApp = {};
+<li><h3 class="main">Espacio de Nombres</h3></li><li><div class="content static"><p>Nuestro código puede estar mejor estructurado con espacios de nombres, así podemos dividir funcionalidades dentro de la aplicación. Hay diferentes formas de crearlos, por ejemplo:</p> <pre><code>var myApp = {};
 myApp.tools = {};
 myApp.tools.fnPrint = function (text) {
 	console.log(text);
 };
 myApp.tools.fnPrint('¡Hola Luna!');
-</code></pre> <p>La solución propuesta para crear un espacio de nombres, es dentro de una única función, dentro de <b>jmain.js</b> se encuentra la función Namespace. La cual crea un espacio de nombres, por cada instancia, ésta tendrá una función fnAddNS para crear un nuevo espacio de nombres, esta función recibe el nombre para el espacio de nombres y retorna un objeto vacio.</p> <pre><code>var myApp = new Namespace();
-myApp.fnAddNS('tools');
+</code></pre> <p>La solución propuesta para crear un espacio de nombres es la función Namespace. La cual crea un espacio de nombres por cada instancia, tendrá una función addNS para crear un nuevo espacio de nombres, para ello recibe el nombre del espacio de nombres y retorna dicho objeto.</p></div></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.namespace</summary><div class="content"><p>Namespace crea una estructura para seguir agregando espacios de nombres mediante el uso de addNS.</p> <pre><code>var myApp = new jr.namespace();
+myApp.addNS('tools');
 myApp.tools.fnPrint = function (text) {
 	console.log(text);
 };
-myApp.tools.fnPrint('¡Hola Luna!');</code></pre> <p>Otra característica de usar espacio de nombres, es encapsular tanto variables como métodos, para esto se puede usar el patrón de diseño modular, para la creación de esta técnica se usa una función anónima autoejecutable, que retorne la funcionalidad.</p> <pre><code>var myApp = new Namespace();
+myApp.tools.fnPrint('¡Hola Luna!');</code></pre> <p>Otra característica de usar espacio de nombres, es encapsular tanto variables como métodos, para esto se puede usar el patrón de diseño modular, para la creación de esta técnica se usa una función anónima autoejecutable, que retorne la funcionalidad.</p> <pre><code>var myApp = new jr.namespace();
 (function () {
 	this.fnPrint = function (text) {
 		console.log(text);
 	};
-}).call(myApp.fnAddNS('tools'));
+}).call(myApp.addNS('tools'));
 myApp.tools.fnPrint('¡Hola Luna!');
 
 // Otra forma de usar el plugin es pasando el espacio de nombre
 var nsMyApp = new Namespace('tools.printer');
 nsMyApp.tools.printer = myApp.tools;
-nsMyApp.tools.printer.fnPrint('¡Hola de nuevo!');</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnImport()</h3><div class="content"><p>Busca en la variable window el espacio de nombres ingresado como parámetro, se retornará el objecto que coincida con el valor buscado.</p> <pre><code>var myApp = new Namespace();
+nsMyApp.tools.printer.fnPrint('¡Hola de nuevo!');</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.namespace.addNS()</summary><div class="content"><p>Se agrega un espacio de nombres al namespace, recibe dos parámetros el primero el nombre del espacio de nombre para adicionar, y el segundo como opcional que puede ser un objeto o una función.</p> <pre><code>var myApp = new jr.namespace();
+myApp.addNS('$', query => document.querySelectorAll(query));
+console.log(myApp.$('.title')[0].textContent);
+
+myApp = new jr.namespace();
+myApp.addNS('selector', {
+	unico: query => document.querySelector(query),
+	multiple: query => document.querySelectorAll(query)
+});
+console.log(myApp.selector.unico('.title').textContent, myApp.selector.multiple('.title')[0].textContent);
+</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.import()</summary><div class="content"><p>Busca en la variable window el espacio de nombre ingresado como parámetro, se retornará el objeto que coincida con el valor buscado, o se asigna null y se elimina (solo si se puede eliminar la propiedad), si se pasa en el segundo parámetro un true.</p> <pre><code>var myApp = new jr.namespace();
 (function () {
-	this.fnPrint = function (text) {
+	this.print = function (text) {
 		console.log(text);
-	}; // end function
-}).call(myApp.fnAddNS('tools'));
+	};
+}).call(myApp.addNS('tools'));
 
 (function() {
-	var fnPrint = fnImport('myApp.tools.fnPrint');
+	var fnPrint = jr.import('myApp.tools.print');
 
-	this.fnSum = function() {
-		var total = 0;
-		for(var i in arguments)
+	this.sum = function() {
+		var total = 0,
+			tamanioArreglo = arguments.length;
+
+		for(var i = 0; i < tamanioArreglo; i++)
 			total += arguments[i]; 
 		
 		fnPrint(total);
-	}; // end function
-}).call(myApp.fnAddNS('calc'));
+	};
+}).call(myApp.addNS('calc'));
 
-myApp.calc.fnSum(1,1,1);</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnDepenciesTrue()</h3><div class="content"><p>Verifica si los elementos ingresados como parámetros son diferentes de: <i>null, undefined y 0</i>. Esto para verificar que los elementos importados sean validos.</p> <pre><code>var myApp = new Namespace();
-/*
-(function () {
-	this.fnPrint = function (text) {
-		console.log(text);
-	}; // end function
-}).call(myApp.fnAddNS('tools'));
-*/
-
-(function() {
-	var fnPrint = fnImport('myApp.tools.fnPrint');
-	if(!fnDepenciesTrue(fnPrint)) {
-		console.log('Se requiere el nombre de espacio myApp.tools.fnPrint');
-		return;
-	} // end if
-
-	this.fnSum = function() {
-		var total = 0;
-		for(var i in arguments)
-			total += arguments[i]; 
-		
-		fnPrint(total);
-	}; // end function
-}).call(myApp.fnAddNS('calc'));</code></pre> </div></li>
+myApp.calc.sum(1, 1, 1);
+jr.import('myApp.calc.sum', true);
+myApp.tools.print(myApp.calc.hasOwnProperty('sum'));
+</code></pre> </div></details></li>

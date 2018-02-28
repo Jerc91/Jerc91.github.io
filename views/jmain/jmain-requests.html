@@ -1,68 +1,105 @@
-<li><h3 class="main">Peticiones Asíncronas</h3></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> get()</h3><div class="content"><p>Éste método combina varias tecnologías, AJAX (XHR), WebWorkers, FileSystem (Para Chrome), Promise, Fetch y Service Worker, una función muy útil para darle mayor provecho a nuetro navegador, los navegadores tienen un límite de peticiones hacia un mismo dominio, haciendo uso de los Web Workers podemos hacer peticiones simultaneas.</p><p>Cuando ralizamos nuestra página web usamos <i>scripts o links</i>, para cargar funcionalidad o modificar la presentación de nuestra página, al realizar dichas peticiones estas se harán secuencialmente; es decir una tras de otra (la forma tradicional de hacerlo). Para nuestro caso, vamos a cambiar un poco la perspetiva que tenemos frente a las aplicaciones web (páginas web).</p><p>El uso de Callbacks será esencial, estos se ejecutarán una vez el servidor responda la petición al WebWorker, y él a la aplicación principal, un problema al trabajar con tareas asíncronas es saber cual termina primero. Con la interfaz de Promise podremos ejecutar un callback una vez se realizan todas las peticiones.</p><p>Hasta aquí hemos hablado ya de dos tecnologías AJAX (Fetch) y WebWorkers, es hora de sacarle provecho a Google Chrome con el API de FileSystem, Chrome permite usar esta API dentro de los WebWorkers, y la combinación de estas tecnologías optimizará el uso de nuestra red, el rendimiento del servidor y la percespción del usuario.</p><p>Ahora debemos darle paso a usar nuevas tecnologías y acogerlas, por eso también podemos usar el API de Service Worker, con File System se trata de emular un cache gaurdando las peticiones en el navegador, esto mismo hacemos con la nueva API usando el CacheStorage como repositorio.</p><p>El flujo de la red cambiará ya que las peticiones del servidor si queremos serán guardas en nuestro navegador o en el CacheStorage, algo similar al <i>appChache (que puede ser mejor opción)</i>, con la diferencia que este proceso es completamente manual, nosotros decidimos que peticiones guardar y cuales se actualizan.</p><p>La versión anterior emulaba el uso del objeto Promise, y su método .all, ahora usa éste objeto de forma nativa para los navegadores que lo soporten, cada respuesta devolverá un objeto Promise, por ende se deberá usar el método then para realizar el callback.</p><p>Éste método depende que la siguiente estructura esté dentro del servidor en la carpeta <i>assets</i>:</p><table class="definitions"><thead><tr><th>Carpeta/Archivo</th><th>Proposito</th></tr></thead><tbody><tr><td data-th="Carpeta/Archivo"><span>service-worker.js</span></td><td data-th="Proposito"><span>Es nuestro trabajador(Worker), que hará las peticiones al servidor y guardará dichas peticiones de ser necesario en el cache storage, para el caso de los navegadores que no soporten hará la petición con fetch y retornará la aplicación la respuesta del servidor.</span></td></tr><tr><td data-th="Carpeta/Archivo"><span>config/filesToUpdate.json</span></td><td data-th="Proposito"><span>En éste archivo se guardarán todas los archivos a actualizar; la estructura de los objetos es la siguiente:<br>{ name: "Nombre de la petición", date: "Fecha de comparación entre el archivo local y en el servidor (yyyy-MM-dd hh:mm)" }</span></td></tr><tr><td data-th="Carpeta/Archivo"><span>js/workers/worker-import.js</span></td><td data-th="Proposito"><span>Es nuestro trabajador(Worker), que hará las peticiones al servidor y guardará dichas peticiones de ser necesario en nuestro navegador, para el caso de los demás navegadores hará la petición y retornará a la aplicación la respuesta del servidor.</span></td></tr><tr><td data-th="Carpeta/Archivo"><span>js/workers/worker-tools.js</span></td><td data-th="Proposito"><span>Como podemos elegir que tecnología usar, si FileSytem o ServiceWorker, debemos centralizar nuestro código que se pueda repetir.</span></td></tr><tr><td data-th="Carpeta/Archivo"><span>js/jmain.js</span></td><td data-th="Proposito"><span>Encargado de realizar las peticiones al trabajador para que éste se las haga al servidor.</span></td></tr></tbody></table><p>Para el siguiente ejemplo se cargarán 10 imágenes de colores diferentes, solo una de ellas se actualizzará constantemente, para hacer el seguimiento de las peticiones abrimos Chrome Development Tools con F12 y vamos a la sección Network, limpiaremos las peticiones realizadass (si se han hecho) y enseguida clic en: <button id="btnColors" class="button block">Obtener imágenes</button></p><div class="colors"></div> <pre><code>/*
+<li><h3 class="main">Peticiones Asíncronas</h3></li><li><div class="content static"><p>Recuerda la forma en como se realizan y se guardan las peticiones son de dos formas, la primera usando el Service Worker y CacheStorage, y la segunda solo para Chrome usando Web Workers y FileSystem.</p><p>Es importante almacenar las respuestas del servidor para ganar un mayor rendimiento en nuestra aplicación con ello lo liberamos de responder peticiones que no se han modificado.</p><p>Todas las respuestas del servidor se guardan en el navegador si se usa el método <i>get</i>, la información de la petición (src) y la fecha en que se guarda la respuesta se usa para comparar la versión del navegador y del servidor. Esta información se guarda en la base de datos jrTable dentro de IndexedDB.</p><p>Para comparar la versión del servidor y del navegador se realiza la petición a la ruta por defecto <i>/assets/config/filesToUpdate.json</i>, la cual debe responder una estructura json de { "ruta del archivo": "fecha del servidor (DD/MM/YYYY, h:mm:ss a)" }, esta información la mantiene en memoria y se compara cada vez que se realice la petición al servidor, se identifica si la versión del navegador es inferior a ka del servidor, de ser así se realiza la petición de lo contrario se usa la versión del navegador.</p><p>Si quieres sacar un mayor beneficio usa la siguiente etiqueta solo cambia las rutas. El atributo data-init asigna el archivo a cargar una vez se haya cargado la librería y el atributo async se usa para no bloquear las etapas de renderizado de la página.</p> <pre><code>&lt;script src=&quot;assets/js/jmain.js&quot; data-init=&quot;controllers/controller-main.js&quot; async&gt;&lt;/script&gt;</code></pre> </div></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr()</summary><div class="content"><p>Esta sección es para nuestro controlador o script que se ejecute una vez se haya cargado el archivo <i>jmain.js</i>, y elegir si se usa Service Worker, o Web Workers, además de esta elección podemos configurar funciones para ser ejecutadas antes y después de que se realicen las peticiones y estas sean respondidas, ser recibe un objeto con sus propiedades como parámetros.</p><p> <pre><code>{
+	useFS: false,
+	workersCount: 0,
+	requesterWorkerPath: "assets/js/workers/requester-worker.js",
+	serviceWorkerPath: "./service-worker.js",
+	filesUpdatePath: "assets/config/filesToUpdate.json",
+	cbErrorRequest: undefined,
+	cbStartRequest: undefined,
+	cbEndRequest: undefined,
+	getToWindow: true,
+	packages: undefined
+}</code></pre> </p><p>Por último se hace una mezcla de las propiedades personalizadas del currentScript que es la tag donde se hace la petición al archivo <i>jmain.js</i> y con ello podemos usar el atributo data-init para hacer la petición de nuestro controlador. La explicación de las propiedades es la siguiente:</p><table class="definitions"><thead><tr><th>Propiedad</th><th>Explicación</th></tr></thead><tbody><tr><td data-th="Propiedad"><span>useFS</span></td><td data-th="Explicación"><span>Indica si utilizar FyleSytem y los web worker, en conjunto con la propiedad workersCount.</span></td></tr><tr><td data-th="Propiedad"><span>workersCount</span></td><td data-th="Explicación"><span>Indica la cantidad de Web Workers que realizarán las peticiones.</span></td></tr><tr><td data-th="Propiedad"><span>requesterWorkerPath</span></td><td data-th="Explicación"><span>Indica la ruta del worker que crea para realizar las peticiones al servidor y guardar la respuesta dentro del FileSystem.</span></td></tr><tr><td data-th="Propiedad"><span>serviceWorkerPath</span></td><td data-th="Explicación"><span>Indica la ruta del Service Worker.</span></td></tr><tr><td data-th="Propiedad"><span>filesUpdatePath</span></td><td data-th="Explicación"><span>Indica la ruta del archivo que contiene la información de las versiones de los archivos.</span></td></tr><tr><td data-th="Propiedad"><span>cbErrorRequest</span></td><td data-th="Explicación"><span>Recibe una función que será ejecutada cada vez que se genere un error dentro de la función get</span></td></tr><tr><td data-th="Propiedad"><span>cbStartRequest</span></td><td data-th="Explicación"><span>Recibe una función que será ejecutada cada vez que se realice una petición al servidor</span></td></tr><tr><td data-th="Propiedad"><span>cbEndRequest</span></td><td data-th="Explicación"><span>Recibe una función que será ejecutada cada vez que se obtenga la respuesta del servidor</span></td></tr><tr><td data-th="Propiedad"><span>getToWindow</span></td><td data-th="Explicación"><span>Se usa como atajo window.get para no usar el espacio de nombres window.jr.get</span></td></tr><tr><td data-th="Propiedad"><span>packages</span></td><td data-th="Explicación"><span>Indica la estructura de paquetes que se requieran dentro de la aplicación esto para el uso de Service Locator</span></td></tr></tbody></table><p>Cuando se asigna true en la propiedad useFS, se agrega la funcionalidad del API AppCache, actualizando así los archivos listados dentro del manifiesto y cambiando la cache al actualizarlos, cuando la actualización se realiza la página se recarga para obtener la última versión de los archivos en cache. Cuando se ejecuta dicha función se hará la petición del archivo filesToUpdate.json y se asignará el valor de la respuesta a la variable window.filesToUpdate.</p><p>Se usa Promise para manejar trabajo paralelo al configurar la funcionalidad de peticiones asíncronas y con ello se puede usar el método <i>then</i> para cuando se termine dicha tarea.</p> <pre><code>jr({
+    cbErrorRequest: result => console.log(result.error, result.request.src),
+    cbStartRequest: result => console.log(result.response); },
+    packages: 'assets/config/packages.json'
+}).then(function () {
+    myApp.ctrMain.fnInit();
+});
+</code></pre> </div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.get()</summary><div class="content"><p>Es el encargado de realizar las peticiones hacia el servidor, y tratar la respuesta de ser necesario, la ventaja esté método es transformar las peticiones que se realicen y manipular estas; es decir para cargar un archivo js, se debe crear la etiqueta script y referencia el archivos.js, con la <i>get</i> solo debo agregar la url, y el ya se encarga de generar la etiqueta y manejar su evento load. Está lógica aplica tambien para las peticiones de las css, el creará la tag link, y para las demás peticiones será una tarea fácil manipular dichas respuestas ya que usan los métodos de Response, .text(), .json(), .blob().</p><p>El uso de callbacks será esencial, estos se ejecutarán una vez el servidor responda la petición al WebWorker, y él a la aplicación principal, un problema al trabajar con tareas asíncronas es saber cual termina primero. Con la interfaz de Promise podremos ejecutar un callback una vez se realicen todas las peticiones.</p><p>Podemos sacarle provecho a Google Chrome con el API de FileSystem, Chrome permite usar esta API dentro de los Web Workers, y la combinación de estas tecnologías optimizará el uso de nuestra red, el rendimiento del servidor junto con la percepción del usuario.</p><p>El resultado de la petición se debe serializarse o convertirse en un elemento, lo recomendado es usar un documentFragment, para realizar diferentes tareas antes de modificar el DOM, para ello éste método convierte el texto a un fragment por defecto.</p><p>Una vez cargada nuestra ruta crítica se puede configurar el uso de workers para realizar las peticiones, con la propiedad jr.workersCount. Una vez sea asignado un valor superior a 0 se creará un worker en la siguiente petición que use el método get, de lo contrario se terminarán los workers.</p><p>Se recibe como parámetros string, objetos con una estructura semi formal o un arreglo con items anteriormente mencionados, veamos de qué se trata (F12 y ejecuta en la consola):</p> <pre><code>// Peticiones con strings
+get('assets/img/color-0.jpg').then(result => console.log(`Ruta retornada de get: ${result.response}`));
+get('assets/img/color-0.jpg', 'assets/img/color-1.jpg').then(([result1, result2]) => console.log(`Ruta No.1: ${result1.response}, No.2: ${result2.response}`));
+
+// Peticiones con arrays
+get(['assets/img/color-0.jpg', 'assets/img/color-1.jpg']).spread((result1, result2) => console.log(result1.response, result2.response));
+get(['assets/img/color-0.jpg']).spread(console.log);
+
+// Peticiones con objetos
+get({ src: 'assets/img/color-0.jpg', idimg: 1, then: console.log });
+get({ src: 'assets/img/color-0.jpg', idimg: 1 }).then(console.log);
+
+// Transformación de respuesta
+get({ src: 'assets/img/color-0.jpg', mime: 'blob', idimg: 1 }).then(console.log);
+get([
+	{ src: 'assets/img/color-0.jpg', mime: 'blob', idimg: 2 },
+	'assets/img/color-0.jpg',
+	{ src: 'assets/img/color-0.jpg', idimg: 3 },
+]).spread(console.log);</code></pre> <p>Con los ejemplos anteriores podemos ver un poco de cómo se envían las peticiones y como se transforman las respuestas, en la primera sección mediante strings, luego con arrays, objetos que deben tener el atributo src, y por último la combinación de lo anterior, en éste vemos la primera petición con la propiedad <i>mime</i> la cual indica la transformación de la respuesta éste mime retorna un blob, y la propiedad idimg, que dicha propiedad es una propiedad extra de la petición y que se usará en la respuesta de ser necesario, y el último objeto no tiene mime, con ello la transformación de la respuesta se da a la url del Blob.</p><p>Los atributos que se reciben dentro de <i>get</i> serán llamados como request son:</p><table class="definitions"><thead><tr><th>Propiedad</th><th>Explicación</th></tr></thead><tbody><tr><td data-th="Propiedad"><span>src</span></td><td data-th="Explicación"><span>Indica la dirección de la petición a realizar.</span></td></tr><tr><td data-th="Propiedad"><span>mime</span></td><td data-th="Explicación"><span>Indica la información de la petición si esta es texto, script, json, hoja de estilos o un blob. Mediante la extensión de la ruta si esta llega a tener se evalua que tipo de transformación se debe hacer a la respuesta</span></td></tr><tr><td data-th="Propiedad"><span>cache</span></td><td data-th="Explicación"><span>Indica si la respuesta se debe guardar en el navegador. Su valor por defecto es true.</span></td></tr><tr><td data-th="Propiedad"><span>method</span></td><td data-th="Explicación"><span>Indica el verbo que se enviará la petición. Por defecto es GET.</span></td></tr><tr><td data-th="Propiedad"><span>then</span></td><td data-th="Explicación"><span>Recibe una función que se ejecutará cuando responda el servidor. Es de gran utilidad cuando en <i>get</i> se realizan varias peticiones.</span></td></tr><tr><td data-th="Propiedad"><span>catch</span></td><td data-th="Explicación"><span>Recibe una función que se ejecutará cuando ocurra un error dentro de la petición. Es de gran utilidad cuando en <i>get</i> se realizan varias peticiones.</span></td></tr><tr><td data-th="Propiedad"><span>... demás atributos del objeto (get)</span></td><td data-th="Explicación"><span>Al objeto mencionado como request se el hará una copia simple del objeto y este se retornará cuando sea resulta la promesa del get con una estructura: .request y .response.</span></td></tr></tbody></table><p>De esta manera tenemos la siguiente estructura:</p> <pre><code>// Estructura petición
+{
+	src: 'ruta',
+	mime: 'opcional',
+	then: () => console.log('Callback petición resuelta'),
+	catch: () => console.log('Callback error durante la petición'),
+	parms1: 'Atributo opcional',
+	parms1: 'Atributo opcional'
+}
+
+// Estructura Resultado de Get
+{
+	request: { src: 'ruta', ...: 'Demás parámetros que se especifiquen ' },
+	response: 'url blob' | { ... } 'Cuando el mime es un json' | Blob 'Cuando el mime es un 'Blob'
+}</code></pre> <p>Cuando se realizan peticiones de tipo script(.js) o link(.css), se crean las etiquetas respectivas pero no se retornan valor para la función <i>then</i>. Para el siguiente ejemplo se cargarán 10 imágenes de colores diferentes, solo una de ellas se actualizará constantemente, para hacer el seguimiento de las peticiones abrimos Chrome Development Tools con F12 y vamos a la sección Network, limpiaremos las peticiones realizadas (si se han hecho) y enseguida clic en: <button id="btnColors" class="button block">Obtener imágenes</button></p><div class="colors"></div> <pre><code>/*
     //---------------------------------
     // Función para obtener las imágenes de colores
     //---------------------------------
 */
 function fnGetImages() {
     // Ruta de las imagenes
-    var path = 'assets/img/color-';
-    var contenedor = document.querySelector('.colors');
-    var imgs = new Array(10);
-    var imgsLoaded = 0;
+    var PATH = 'assets/img/color-',
+    	SIZE_IMAGES = 10,
+    	contenedor = document.querySelector('.colors'),
+    	imgs = new Array(SIZE_IMAGES),
+    	imgsLoaded = 0,
+    	fragment = document.createDocumentFragment();
 
     // Se limpia elcontenedor
-    contenedor.innerHTML = '';
+    while (contenedor.firstChild) {
+		contenedor.removeChild(contenedor.firstChild);
+	}
     
     // Se crean 10 objetos para pedir por cada uno una petición al servidor
-    for(var i = 0; i < imgs.length; i++) {
-        // Se crea el objeto a solicitar
-        var img = { 
-            src: path + i + '.jpg',
-            // Función callback
-            then: function(response) {
+    for(var i = 0; i < SIZE_IMAGES; i++) {
+        imgs[i] = { 
+            src: PATH + i + '.jpg',
+            then: function(result) {
                 var img = document.createElement('img');
-                img.src = response.data;
-                img.dataset.name = response.name;
-                // Cuando todas las imágenes sean cargadas se eliminarán los workers
+                img.src = result.response;
+                img.dataset.name = result.request.src;
                 img.addEventListener('load', fnCountImagesLoaded, false);
-
-                contenedor.appendChild(img);
-            } // end function
-        }; // end objeto para petición
-        imgs[i] = img;
-    } // end forEach
+                fragment.appendChild(img);
+            }
+        };
+    }
 
     // Imagen que siempre será actualizada
     imgs[5].cache = false;
 
-    // se inicia las peticiones al servidor
+    // Se inicia las peticiones al servidor
     get(imgs);
 
-    // Función para eliminar los workers, cuando sean cargadas
-    // las 10 imágenes
+    // Cuando todas las imágenes sean cargadas se agregan al contenedor
     function fnCountImagesLoaded() {
-        imgsLoaded += 1;
-        if(imgsLoaded == 10){
+        ++imgsLoaded;
+        if(imgsLoaded == SIZE_IMAGES){
             imgsLoaded = 0;
-            myApp.main.fnResizeContent(true);
-        } // end if
-    } // end function
-} // end function
-//---------------------------------</code></pre> <p>El ejemplo solo funcionará dentro de un servidor web, una vez guardadas nuestras imágenes en el navegador, se podrán mover las imágenes y dejar el directorio vacio, únicamente con la imágen <i>color-5.jpg</i>, ya que indicamos que siempre se actualice con la propiedad <i>cache = false</i>, F5(refrescar) y nuestras imágenes seguirán cargando común y corriente.</p><p>Si hemos cambiado alguna imagen conservando el mismo nombre y no se nos ve reflejado el cambio, debemos ingresar esa información en el archivo <i>assets/config/filesToUpdate.json</i>.</p><p>Las imágenes no tienen un orden especifico para ser cargadas, ¡la petición que primero responda será el ganador!.</p></div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnInitJMain()</h3><div class="content"><p>Esta función agrega la funcionalidad del API AppCache, actualizando así los archivos listados dentro del manifiesto y cambiando la cache al actualizarlos, cuando la actualización se realiza la página se recarga para obtener la última versión de los archivos en cache. Cuando se ejecuta dicha función se hará la petición del archivo filesToUpdate.json y se asignará el valor de la respuesta a la variable window.filesToUpdate.</p><p>Como parámetro recibe un objeto, dentro de los atributos se configura el número de workers activos, la ruta del archivo filesToUpdate.json. Esta función retorna una promesa una función cuando responda la petición del archivo filesToUpdate.json se ejecutará dicha función. El siguiente ejemplo muestra como usar la función fnInitJMain, como parámetro se le pasa una funcipon anónima la cual cargará un controlador nuevo.</p><p>Otro parámetro que se puede configurar es el useSW, esto indica a la libreria si usar el service worker.</p> <pre><code>fnInitJMain({ workersCount: 5, useSW: true }).then(function () {
-    // Espacio de nombres para la compañia
-    window.myApp = new Namespace();
-    get([ { src: 'assets/js/jtools.js' }, { src: 'controllers/controller-main.js' } ]).then(function () {
-        myApp.main.fnInit();
-    }); // end function
-});  // fin método
-</code></pre> </div></li><li><h3 class="title"><i class="fa fa-chevron-right"></i> fnCreateScriptTemp()</h3><div class="content"><p>Fnución para complementar las peticiones asíncronas, cada vez que solicitemos un script o una hoja de estilos dentro de la función get(), se ejecutará automaticamente esta función y con ello creará una tag script o link para el caso de los css.</p><p>Se puede usar para la creación de scripts o links, sin usar la función get.</p><p>Dentro del parámetro que recibe esta función se debe asignar el nombre del archivo solicitado ya que las url's que se agregan cuando la función get() responde, son aleatorias y no contienen una extesión que identifique que archivo es, por ejemplo: <i>blob:http%3A//localhost%3A8888/56b9ecf5-df3b-45db-900c-59ead761073e</i>, para hacer seguimiento en nuestro código es necesario agregar dicho nombre.</p> <pre><code>var estilos = {
+            contenedor.appendChild(fragment);
+        }
+    }
+}
+//---------------------------------</code></pre> <p>El ejemplo solo funcionará dentro de un servidor web, una vez guardadas nuestras imágenes en el navegador, se podrán mover las imágenes y dejar el directorio vacio, únicamente con la imágen <i>color-5.jpg</i>, ya que indicamos que siempre se actualice con la propiedad <i>cache = false</i>.</p><p>Si hemos cambiado alguna imagen conservando el mismo nombre y no se ve reflejado el cambio, debemos ingresar esa información en el archivo <i>assets/config/filesToUpdate.json</i>. Que es quien nos da la información de la versión del servidor.</p><p>Las imágenes no tienen un orden específico para ser cargadas cuando se usa FileSystem, ¡la petición que primero responda será el ganador!.</p></div></details></li><li><details><summary class="title"><i class="fa fa-chevron-right"></i> jr.tagScriptLink()</summary><div class="content"><p>Función para complementar las peticiones asíncronas, cada vez que solicitamos un script o una hoja de estilos dentro de la función get(), se ejecutará automaticamente esta función y con ello creará una tag script o link para el caso de los css. los query string que contenga la url se adicionarán como propiedad a la tag que se cree.</p><p>Se puede usar para la creación de scripts o links, sin usar la función get.</p> <pre><code>var estilos = {
 	href: 'assets/css/master.css',
 	type: 'css',
-	name: 'Estilos de la página web',
-	fnCall: function() {
-		console.log('Ya carga la hoja de estilos');
-	} // end function loaded
-}; // end object
+	name: 'Estilos de la página web'
+};
 
-fnCreateScriptTemp(estilos);
-</code></pre> </div></li>
+tagScriptLink(estilos).then(() >= 'Ya carga la hoja de estilos');</code></pre> <table class="definitions"><thead><tr><th>Propiedad</th><th>Explicación</th></tr></thead><tbody><tr><td data-th="Propiedad"><span>href</span></td><td data-th="Explicación"><span>Indica la dirección de la petición a realizar.</span></td></tr><tr><td data-th="Propiedad"><span>type</span></td><td data-th="Explicación"><span>Indica si se crea un 'js' on un 'css'</span></td></tr><tr><td data-th="Propiedad"><span>name</span></td><td data-th="Explicación"><span>Agrega un atributo con la propiedad data-name</span></td></tr><tr><td data-th="Propiedad"><span>repeatTag</span></td><td data-th="Explicación"><span>Se verifica que no haya una tag con el mismo atributo data-name para no realizar de nuevo la petición. Por defecto esta en false.</span></td></tr><tr><td data-th="Propiedad"><span>referenceTag</span></td><td data-th="Explicación"><span>Agrega un data-name para identificar la tag. Por defecto esta en false</span></td></tr></tbody></table></div></details></li>
