@@ -1,0 +1,170 @@
+<li>
+	<h3 class="main">Peticiones Asíncronas</h3>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnGetFile()</h3>
+	<div class="content">
+		<p>
+			Éste método combina varias tecnologías, AJAX (XHR), WebWorkers, FileSystem (Para Chrome), una función muy útil para darle mayor provecho a nuetro navegador, los navegadores tienen un límite de peticiones hacia un mismo dominio, Chrome por su parte permite realizar peticiones simultaneas mediante WebWorkers.
+		</p>
+		<p>
+			Cuando ralizamos nuestra página web usamos <i>scripts o links</i>, para cargar funcionalidad o presentación, al realizar dichas peticiones estas se harán secuencialmente; es decir una tras de otra (la forma tradicional de hacer peticiones). Para nuestro caso vamos a cambiar un poco la perspetiva que tenemos frente a las aplicaciones web (páginas web). 
+		</p>
+		<p>
+			El uso de Callbacks será esencial, estos se ejecutarán una vez el servidor responda la petición al WebWorker, y él a la aplicación principal, un problema al trabajar con tareas asíncronas es saber cual termina primero.
+		</p>
+		<p>
+			Hasta aquí hemos hablado ya de dos tecnologías AJAX y WebWorkers, es hora de sacarle provecho a Google Chrome con el API de FileSystem, Chrome permite usar esta API dentro de los WebWorkers, y la combinación de estas tecnologías optimizará el uso de nuestra red, el rendimiento del servidor y la persespción del usuario.
+		</p>
+		<p>
+			El flujo de la red cambiará ya que las peticiones del servidor si queremos serán guardas en nuestro navegador, algo similar al <i>appChache (que puede ser mejor opción)</i>, con la diferencia que este proceso es completamente manual, nosotros decidimos que peticiones guardar y cuales se actualizan.
+		</p>
+		<p>
+			Éste método depende que la siguiente estructura esté dentro del servidor en la carpeta <i>assets</i>:
+		</p>
+		<table class="definitions">
+			<thead>
+				<tr>
+					<th>Carpeta/Archivo</th>
+					<th>Proposito</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td data-th="Carpeta/Archivo"><span>config/filesToUpdate.json</span></td>
+					<td data-th="Proposito"><span>Dentro de éste archivo se guardarán todas las peticiones o archivos a actualizar; la estructura de los objetos es la siguiente: <br />{ name: "Nombre de la petición", date: "Fecha de comparación entre el archivo local y en el servidor (yyyy-MM-dd-hh)" }</span></td>
+				</tr>
+				<tr>
+					<td data-th="Carpeta/Archivo"><span>js/workers/worker-import.js</span></td>
+					<td data-th="Proposito"><span>Es nuestro trabajador, el que hará las peticiones al servidor y guardará dichas peticiones de ser necesario en nuestro navegador, para el caso de los demás navegatoderes él hará la petición y retornará a la aplicación la respuesta del servidor.</span></td>
+				</tr>
+				<tr>
+					<td data-th="Carpeta/Archivo"><span>js/main.js</span></td>
+					<td data-th="Proposito"><span>Encargado de enviar los archivos o solicitudes al trabajador para que éste haga las solicitudes al servidor.</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			Para el siguiente ejemplo se cargarán 10 imágenes de colores diferentes, solo una de ellas se actualizzará constantemente, para hacer el seguimiento de las peticiones abrimos Chrome Development Tools con F12 y vamos a la sección Network, limpiaremos las peticiones realizadass (si se han hecho) y enseguida clic en:
+			<button id="btnColors" class="button block">Obtener imágenes</button>
+		</p>
+		<div class="colors"></div>
+<pre><code>//---------------------------------
+// Función para obtener las imagenes de colores
+function fnGetImages() {
+    // Ruta de las imagenes
+    var path = 'assets/img/color-';
+    var contenedor = document.querySelector('.colors');
+    var imgs = new Array(10);
+    var imgsLoaded = 0;
+
+    // Se limpia elcontenedor
+    contenedor.innerHTML = '';
+    
+    // Se crean 10 objetos para pedir por cada uno una petición al servidor
+    for(var i = 0; i < imgs.length; i++) {
+        // Se crea el objeto a solicitar
+        var img = { 
+            src: path + i + '.jpg',
+            mime: 'img', 
+            // Función callback
+            fnCall: function() {
+                var img = document.createElement('img');
+                img.src = this.data;
+                img.dataset.name = this.name;
+                contenedor.appendChild(img);
+
+                // Cuando todas las imágenes sean cargadas se eliminarán 
+                // los workers
+                img.addEventListener('load', fnCountImagesLoaded, false);
+            } // end function
+        }; // end objeto para petición
+        imgs[i] = img;
+    } // end forEach
+
+    // Imagen que siempre será actualizada
+    imgs[5].cache = false;
+
+    // se inicia las peticiones al servidor
+    fnGetFile.call(jmain, imgs);
+
+    // Función para eliminar los workers, cuando sean cargadas
+    // las 10 imágenes
+    function fnCountImagesLoaded() {
+        imgsLoaded += 1;
+        if(imgsLoaded == 10){
+            fnDeleteWorkers(jmain.workers);
+            imgsLoaded = 0;
+        } // end if
+    } // end function
+} // end function
+//---------------------------------</code></pre>
+		<p>
+			El ejemplo solo funcionará dentro de un servidor web, una vez guardadas nuestras imágenes en el navegador, se podrán mover las imágenes y dejar el directorio vacio, únicamente con la imágen <i>color-5.jpg</i>, ya que indicamos que siempre se actualice con la propiedad <i>cache = false</i>, F5(refrescar) y nuestras imágenes seguirán cargando común y corriente.
+		</p>
+		<p>
+			Si hemos cambiado alguna imagen conservando el mismo nombre y no se nos ve reflejado el cambio, debemos ingresar esa información en el archivo <i>assets/config/filesToUpdate.json</i>.
+		</p>
+		<p>
+			Las imágenes no tienen un orden especifico para ser cargadas, el worker que primero responda será el ganador.
+		</p>
+	</div>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnInitJMain()</h3>
+	<div class="content">
+		<p>
+			Esta función agrega la funcionalidad del API AppCache, actualizando así los archivos listados dentro del manifiesto y cambiando la cache al actualizarlos, cuando la actualización se realiza la página se recarga para obtener. Cuando se ejecuta dicha función se hará la petición del archivo filesToUpdate.jsson y se asignara a la variable window.filesToUpdate.
+		</p>
+		<p>
+			Como parámetro recibe una función cuando responda la petición del archivo filesToUpdate.json se ejecutará dicha función. El siguiente ejemplo muestra como usar la función fnInitJMain, como parámetro se le pasa una funcipon anónima la cual cargará un controlador nuevo.
+		</p>
+<pre><code>fnInitJMain(function () {
+    // Espacio de nombres para la compañia
+    window.myApp = new Assembly();
+    fnGetFile.call(myApp, { src: 'controllers/controller-jmain.js' });
+});
+</code></pre>
+	</div>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnCreateScriptTemp()</h3>
+	<div class="content">
+		<p>
+			Fnución para complementar las peticiones asíncronas, cada vez que solicitemos un script o una hoja de estilos dentro de fnGetFile(), se ejecutará automaticamente esta función y con ello creará una tag script o link para el caso de los css.
+		</p>
+		<p>
+			Se puede usar para la creación de scripts o links, sin usar la función fnGetFile.
+		</p>
+		<p>
+			Dentro del parámetro que recibe esta función se debe asignar el nombre del archivo solicitado ya que las url's que se agregan cuando la función fnGetFile responde, son aleatorias y no contienen una extesión que identifique que archivo es, por ejemplo:
+			<i>blob:http%3A//localhost%3A8888/56b9ecf5-df3b-45db-900c-59ead761073e</i>, para hacer seguimiento en nuestro código es necesario agregar dicho nombre. 
+		</p>
+<pre><code>var estilos = {
+	href: 'assets/css/master.css',
+	type: 'css',
+	name: 'Estilos de la página web',
+	fnCall: function() {
+		console.log('Ya carga la hoja de estilos');
+	} // end function loaded
+}; // end object
+
+fnCreateScriptTemp(estilos);
+</code></pre>
+	</div>
+</li>
+<li>
+	<h3 class="title"><i class="fa fa-chevron-right "></i> fnDeleteWorkers()</h3>
+	<div class="content">
+		<p>
+			Los WebWorkers serán eliminados cuando ya no se necesiten automaticamente cada 30 segundo, o se pueden eliminar de forma manual cuando ya no se necesiten.  
+		</p>
+<pre><code>var wrapperWorkers = {};
+fnGetFile.call(wrapperWorkers, { src: 'assets/css/master.css', mime: 'css' }, fnCall: function() {
+	console.log(wrapperWorkers.workers.length);
+	fnDeleteWorkers(wrapperWorkers.workers);
+	console.log(wrapperWorkers.workers.length);
+}); // end fnGetFile
+</code></pre>
+	</div>
+</li>
