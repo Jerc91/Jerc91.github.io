@@ -1,1 +1,1366 @@
-'use strict';(function(){function v(c){function d(c){var d=this===window?{}:this;c&&c.indexOf('.')&&c.split('.').forEach((function(b){d=d.addNS(b)}))}return d.prototype.addNS=function(b,a){if(b)return b.match(window.validateNS)?('undefined'==typeof this[b]&&(a&&!a.hasOwnProperty('addNS')?(a.addNS=d.prototype.addNS,this[b]=a):this[b]=new d),this[b]):void 0},c?(c.hasOwnProperty('addNS')||(c.addNS=d.prototype.addNS),c):new d}function w(i,a){for(var j,c=window,d=i.split('.'),e=d.length,f=e-1,g=0;g<e;g++)j=c,c=c[d[g]];return a&&(j[d[f]]=null,delete j[d[f]]),c}function x(i){var a,b,k,d,e,f=i||location.search,g=f.indexOf('?');if(-1==f.indexOf('?'))return{};a=f.substr(g+1).split('&'),e=a.length,b={};for(var h=0;h<e;++h)k=a[h].substring(0,a[h].indexOf('=')),d=a[h].substring(a[h].indexOf('=')+1,a[h].length),b[k]=decodeURIComponent(d.replace(/\+/g,' '));return b}function c(){function h(){let b=arguments.length;for(let c=0;c<b;c++)arguments[c]=arguments[c]instanceof Array?Promise.all(arguments[c].map((a)=>a instanceof Array?h(...a):h(a))):a(arguments[c]);return 1==b?arguments[0]:Promise.all(arguments)}function a(c){return c instanceof Promise?c:(++f,i.sendRequest(c,b))}function b(h){let i,b,j;if(++g,h&&h.fragment&&(A(h,e,o),o=!1),e.hasChildNodes()&&g==f){i=e.querySelectorAll('[data-j-parent]'),b=i.length;for(let c=0;c<b;c++)j=document.querySelector(i[c].dataset.jParent),j&&(j.firstElementChild?j.firstElementChild.replaceWith(i[c]):j.appendChild(i[c]));n.appendChild(e)}}let c=arguments.length,l=arguments,e=document.createDocumentFragment(),f=0,g=0,o=!0;return new Promise(function(a,e){h(...l).then((function(){a(...arguments)}),(c)=>{let a={error:c.error};return d(m)&&j(m,a),e(a)})})}function y(i,a,k,c){var d=i.result instanceof Blob&&!/blob|text/.test(a.mime),m={request:a,response:d?URL.createObjectURL(i.result):i.result},f=/^css|js$/gi.exec(i.ext);if(f&&d)z({href:m.response,type:f[0],name:a.src,repeatTag:a.repeatTag,referenceTag:a.referenceTag,addFragment:(d)=>{let a=document.createDocumentFragment();a.appendChild(d),m.fragment=a,c(m)}}).then((function(){j(l,m),k(m)}));else{if((m.request.query||m.request.noAppend)&&!m.request.noFragment){let b=g(m.response);Object.assign(m,{fragment:b}),m.request.noAppend||c(m)}else c(m);j(l,m),k(m)}}function e(d,e){let b;return'string'==typeof d||d instanceof String?{src:d.toString(),useFS:jr.useFileSystem}:e?(b=JSON.parse(JSON.stringify(d)),b.useFS=jr.useFileSystem,b):(reqest.useFS=jr.useFileSystem,d)}function z(c={}){return new Promise(function(a,b){var d,e,f,g;if(!c.repeatTag&&c.referenceTag){var h=('js'==c.type?'script':'link')+'[data-name="'+c.name+'"]';document.querySelector(h)&&a({})}switch(c.type){case'js':d=document.createElement('script'),d.src=c.href,d.async=!0;break;case'css':d=document.createElement('link'),d.href=c.href,d.rel='stylesheet';}c.referenceTag&&(f=c.name,g=f.indexOf('?'),-1<g&&(f=f.substring(0,g)),d.dataset.name=f),c.name&&(e=x(c.name),Object.keys(e).forEach((b)=>d.setAttribute(b,e[b]))),d.addEventListener('load',a,!1),d.addEventListener('error',b,!1),c.addFragment?c.addFragment(d):n.appendChild(d)})}function A(f,a,b){var c=a?a.querySelector(f.request.query):void 0,g=f.request.query;f.fragment&&(c&&c.firstElementChild?currentNode.replaceWith(f.fragment):c&&!c.firstElementChild?c.appendChild(f.fragment):!c&&g&&b?(f.fragment.firstElementChild.dataset.jParent=g,a.appendChild(f.fragment)):c||!g||b?n.appendChild(f.fragment):(c=document.querySelector(g),c.firstElementChild?c.firstElementChild.replaceWith(f.fragment):c.appendChild(f.fragment)))}function g(b){return document.createRange().createContextualFragment(b)}function d(b){return'[object Function]'==Object.prototype.toString.call(b)}function f(){var d,a=arguments.length;if(1<a){d=[];for(var b=1;b<a;b++)d[d.length]=arguments[b]}return d}function j(c){var a=f(...arguments);if(d(c))return a?c(...a):c(a)}function h(){}var i,k,l,m,b='dvContainerJGet',n=document.querySelector(`#${b}`)||document.createElement('div'),o=new v,p=0;window.jr=new v(function(d){var a={getToWindow:!0,useFS:!1,workersCount:0};return Object.assign(a,d),jr.useFileSystem=a.useFS,jr.useFileSystem&&(i=jr.fileSystem,window.addEventListener('load',(function(){window.applicationCache.addEventListener('updateready',(function(){window.applicationCache.status==window.applicationCache.UPDATEREADY&&(window.applicationCache.swapCache(),window.location.reload())}),!1)}),!1)),k=a.cbStartRequest||k,l=a.cbEndRequest||l,m=a.cbErrorRequest||m,p=a.workersCount,Object.defineProperty(jr,'workersCount',{set:(b)=>{p=b,p||i.deleteWorkers()},get:()=>p}),a.getToWindow&&(window.get=c),i.init().then((function(){if(a.packages)return jr.service=o.serviceLocator,jr.service(a.packages)}))}),Promise.prototype.spread||(Promise.prototype.spread=function(c){return this.then((function(a){return a instanceof Array?c(...a):c(a)}))}),function(){function l(){function e(b){f.observador.notify(b.data.observedId,b).remove(b.data.observedId)}let f;return c.size<jr.workersCount&&(f=new Worker(jr.requesterWorkerPath),f.observador=o.observer,f.addEventListener('message',e,!1),f.addEventListener('error',e,!1),c.set(c.size,f)),d>=c.size&&(d=0),f=c.get(d),d++,f}function f(g,i){let c=e(g,!0);return new Promise(function(b,a){var d,e;d=o.command.on('message',y).on('error',a),e=l(),c.observedId=e.observador.add((function(c){d.trigger(c.type,c.data,g,b,i)})),j(k,c),e.postMessage(c)}).then((function(b){return j(g.then,b),b}),(function(b){return c.error=b,j(g.catch,c),Promise.reject(c)}))}function m(){return b?Promise.resolve(b):navigator.serviceWorker.getRegistration().then((c)=>b=c)}var b,c=new Map,d=0,a=!1;this.sendRequest=function(c,h){if(jr.workersCount)return f(c,h);let d=e(c,!0);return new Promise(function(e,a){m().then((function(b){var c=new MessageChannel;c.port1.onmessage=function(b){return'string'==typeof b.data?(h(),void a(b.data)):void y(b.data,d,e,h)},j(k,d),b.active.postMessage(d,[c.port2])}))}).then((function(a){return j(c.then,a),a}),(function(a){return d.error=a,j(c.catch,d),Promise.reject(d)}))},this.deleteWorkers=function(){if(c&&c.size){let d=c.keys();for(let a of d)c.get(a).terminate(),c.delete(a)}},this.init=function(){return a?Promise.resolve():(a=!0,Promise.all([navigator.serviceWorker.register(jr.serviceWorkerPath,{scope:'./'}),navigator.serviceWorker.ready]).then((function(b){return jr.dev&&void 0,navigator.onLine?b[0].update():Promise.resolve()}),h).then((function(){navigator.serviceWorker.addEventListener('message',(function(){}))}),h))}}.call(jr.addNS('serviceWorker')),Array.prototype.sortBy=function(d){for(var a,b=this.length;b;)a=this[--b],this[b]=[].concat(d.call(a,a,b),a);this.sort((function(e,c){for(var a=0,b=e.length;a<b;++a)if(e[a]!=c[a])return e[a]<c[a]?-1:1;return 0}));for(var b=this.length;b;)this[--b]=this[b][this[b].length-1];return this},(function(){window.addEventListener('beforeinstallprompt',(function(b){b.userChoice.then((function(b){'dismissed'==b.outcome}))}))})(),function(){var e=this;(function(){function a(){var e={},a=this;return a.on=function(b,c){return e[b]=function(){return j(c,...arguments),a},a},a.off=function(b){return delete e[b],a},a.trigger=function(b){let c=f(...arguments)||[];return j(e[b],...c),a},a}Object.defineProperty(e,'command',{get:()=>new a})})(),(function(){function a(){var e=new Map,a=this;return a.add=function(a){var b=new g(a);return e.set(b.id,b),b.id},a.remove=function(b){return e.delete(b),a},a.notify=function(b){return e.has(b)&&e.get(b).update(...f(...arguments)),a},a}function g(c){this.update=function(){return j(c,...arguments),this},this.id=++b}var b=0;Object.defineProperty(e,'observer',{get:()=>new a})})(),(function(){function b(){function d(a){var b='string'==typeof a?a:a.name,f=g.get(b)||a;if(!f.paths)throw'Package does not have any path: '+a;return new Promise(function(a,e){var i,j;n.has(b)?i=Promise.resolve({response:n.get(b)}):(j=[],f.dependencies&&f.dependencies.forEach((a)=>{h.has(a)||(h.set(a,d(a)),j.push(h.get(a)))}),!h.has(f.name)&&h.set(f.name,Promise.all(j).then(()=>c(f.paths))),i=h.get(f.name)),i.then((function(c){var e=[];(g.has(b)?Promise.resolve():k([c.response])).then((function(){f=g.get(b),f.namespaces.forEach((function(b){e.push(w(b))})),n.set(b,e),a(e)}))}),e)})}function k(d){var e='string'==typeof d?c(d):Promise.resolve({response:d});return e.then((function(b){b.response instanceof Array||(b.response=[b.response]),b.response.forEach((b)=>{g.has(b.name)||g.set(b.name,{name:b.name,paths:b.paths,namespaces:b.namespaces,dependencies:b.dependencies})})}))}function b(a){return'string'==typeof a?/.+(\.|\/).+/.test(a)?k(a):d(a):'object'==typeof a?k(a):a instanceof Array?k(a):void 0}var e=this,n=new Map,g=new Map,h=new Map;return b.remove=function(b){var e='string'==typeof b?b:b.name,c=g.get(e)||b;return c&&(c.namespaces&&c.namespaces.forEach((b)=>w(b,!0)),c.paths&&c.paths.forEach((c)=>{var a=document.querySelector(`[data-name="${c}"]`);a&&a.parentNode.removeChild(a)})),n.delete(b),h.delete(b),Promise.resolve()},b}Object.defineProperty(o,'serviceLocator',{get:()=>new b})})(),this.addNS('singleton',(function(c,a){return c&&c.singletonInstance?c:d(a)?(c=a(),Object.defineProperty(c,{value:!0}),c.singletonInstance=!0,c):void 0}))}.call(o),jr.isFunction=d,jr.parametersWithoutFirst=f,jr.execFunction=j,jr.errorHandler=h,jr.getQuerys=x,jr.insertAfter=function(c,a){c.parentNode.insertBefore(a,c.nextSibling)},jr.deleteTag=function(b){b&&b.parentNode.removeChild(b)},jr.parseJsonDate=function(d){var a=6e4*new Date().getTimezoneOffset(),b=/\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(d);return void 0==b[2]&&(b[2]=0),void 0==b[3]&&(b[3]=0),new Date(+b[1]+a+3.6e6*b[2]+6e4*b[3])},jr.now=function(){var b=new Date;return b.getFullYear()+'-'+(b.getMonth()+1)+'-'+(b.getDay()-1)+' '+b.getHours()+':'+b.getMinutes()},jr.namespace=v,jr.import=w,jr.replaceWith=A,jr.compileHTML=function(){function f(a){function b(d,a){var b='string'==typeof a.response;b?h[h.length]=a:Object.assign(d,a.response)}for(var h=[],c=jr.parametersWithoutFirst(...arguments)||[],d=c.length,e=0;e<d;e++)c[e]instanceof Array?c[e].forEach((b)=>{var c=f(a,b);c.length&&(h[h.length]=c)}):b(a,c[e]);return h}function e(c){var a=jr.parametersWithoutFirst(...arguments)||[],d=a.map((a)=>a instanceof Array?e(c,...a):b(c,a));return 1<a.length?Promise.all(d):d[0]}function b(e,f){return new Promise((b)=>{var c=new Worker('assets/js/workers/compiler-worker.js');c.addEventListener('message',(d)=>{c.terminate(),b(Object.assign(f,{response:d.data,fragment:g(d.data)}))},!1),c.postMessage({template:f.response,data:e})})}return get(...arguments).spread((function(){var a={};return e(a,...f(a,...arguments))}))},jr.get=c,jr.tagScriptLink=z,jr.patterns=o,jr.validateNS=/^[a-zA-Z]?[a-zA-z0-9]+$/,jr.countTags=0,jr.ssl=-1<location.origin.indexOf('https'),jr.dev='localhost'===location.hostname||'127.0.0.1'===location.hostname,jr.lang=document.querySelector('html').getAttribute('lang'),(function(){var c=document.currentScript,a={useSW:!0};Object.assign(a,document.currentScript.dataset),jr.useFileSystem=a.useFS,jr.requesterWorkerPath=a.requesterWorkerPath||'assets/js/workers/requester-worker.js',jr.serviceWorkerPath=a.serviceWorkerPath||'./service-worker.js',i=jr.serviceWorker,i.init().then((function(){n.id||(n.id=b),z({href:c.dataset.init,type:'js'}),document.body.hasChildNodes(n)||document.body.appendChild(n)}),h)})()})(window);
+// TODO:
+// Se creo proxy, la configuración para los spinners debe hacerce en una configuración personal, mostrar un spinner cada vez que haga una petición similar a angular
+// Validar como carga por que no toma apenas actualizo la información
+// Validar respuestas nulas y con errores
+// mejorar granja de workers línea // Se obtiene el worker y se aumenta contador
+// Validar catch con fallas en cada promise
+// Mejorar patrón observer, sería bueno investigar sobre como interpretar diagramas
+// Validar peticiones a cors o a host terceros
+// Crear para automatizar pruebas, leer sobre ello
+// Se puede causar un error en el worker import, con _cantidadWorkers = undefined
+// Agregar un límite de peticiones
+// Validar que el singleton con una variable sin valor mantega la referencia de la función de creación
+// Validar las despendencias del serviceLocator y como estas se pueden pedir, y como impedir un abrazo de oso
+// Validar eliminación de los ns
+// Luego usar configuración para PWA's https://developers.google.com/web/fundamentals/app-install-banners/
+// Cambiar fnTagScriptLink para que sea el quien identifique la extensión si esta no se envía
+// Quitar la información del plugin como objeto de js y dejarlo como comentario como todos los plugins
+// Replacewith con los css createTagLink
+
+// TODO: Performance
+// Ver cual es más rapido si includes o indexOf
+// Verificar si un [...arguments] es más rápido que un for(var i )
+
+// TODO: ServiceWorkers
+// https://play.google.com/store/books/details?id=lEdt-AKB3iQC&rdid=book-lEdt-AKB3iQC&rdot=1&source=gbs_vpt_read&pcampaignid=books_booksearch_viewport
+// http://craig-russell.co.uk/2016/01/29/service-worker-messaging.html#.WWJimog1_IU
+// https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message
+'use strict';
+
+//---------------------------------
+// Funciones globales, de uso común
+//---------------------------------
+(function () {
+
+    // Constantes
+    var REQUESTER_WORKER_PATH = 'assets/js/workers/requester-worker.js',
+        SERVICE_WORKER_PATH = './service-worker.js',
+        QUERY_CONTAINER_TAGS_GET = 'dvContainerJGet',
+        WRAPPER_TAGS_GET = document.querySelector(`#${QUERY_CONTAINER_TAGS_GET}`) || document.createElement('div');        
+
+    // Variables privadas de la función anonima autoejecutable
+    var _patterns = new Namespace(),
+        _workersCount = 0,
+        _iRequester;
+
+    // Configuración get
+    var _cbStartRequest,
+        _cbEndRequest,
+        _cbErrorRequest;
+
+    //---------------------------------
+    // Nombre de espacio principal Main for library
+    // Se crea el nombre de espacio j, este será usada para el resto de plugins
+    //---------------------------------
+    window.jr = new Namespace(fnInitConfigJMain);
+    
+    //---------------------------------
+    // inicio Métodos para Espaciones de Nombres
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Estructura para los nombre de espacios
+        // Ejemplo: var myApp = new Namespace();
+        //---------------------------------
+        // Namespace.addNS
+        //---------------------------------
+        // Función para crear el nuevo espacio de nombre
+        // Para crear un modulo myApp.addNS('modulA');
+        // myApp.modulA = {object}
+        //---------------------------------
+        // Parametros:
+        //---------------------------------
+        // @ns: Espacio de nombres
+        // @body?: Objeto o función que tomará el lugar de la instacia
+        //---------------------------------
+        // Retorna: Objeto o función con la propiedad fnAddNS
+        //---------------------------------
+    */
+    function Namespace(mainBody) {
+        function Instancia(ns) {
+            var ctx = this === window ? {} : this;
+
+            // Se genera un espacio de nombre por cada punto dentro de la variable ns
+            if (ns && ns.indexOf('.')) {
+                ns.split('.').forEach(function (name) {
+                    ctx = ctx.addNS(name);
+                }); // end forEach
+            } // end if
+        } // fin método
+
+        // Función para crear un nuevo nombre de espacio
+        Instancia.prototype.addNS = function (name, body) {
+            if (!name) return;
+            if (!name.match(window.validateNS)) return;
+            // Crea una propiedad si esta no existe
+            if (typeof this[name] == 'undefined') {
+                if (body && !body.hasOwnProperty('addNS')) {
+                    body.addNS = Instancia.prototype.addNS;
+                    this[name] = body;
+                }
+                else {
+                    this[name] = new Instancia();
+                }
+            }
+            return this[name];
+        }; // fin método AddNS
+
+        if (mainBody) {
+            if (!mainBody.hasOwnProperty('addNS')) mainBody.addNS = Instancia.prototype.addNS;
+            return mainBody;
+        }
+
+        return new Instancia();
+    } // fin método
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Función para encontrar la ruta de un nombre de espacios
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @ns:     Nombre de espacio el cual sera retornado   'miNombreEspacion.Tools' 
+        //---------------------------------
+        // return:  Retorna el nombre de espacion que conicida con el nombre indicado   {}
+        //---------------------------------
+    */
+    function fnImport(ns, assingNull) {
+        var currentNS = window,
+            parts = ns.split('.'),
+            size = parts.length,
+            penultimoEspacio = size - 1,
+            parentNS;
+
+        for (var i = 0; i < size; i++) {
+            parentNS = currentNS;
+            currentNS = currentNS[parts[i]];
+        } // fin for
+
+        if(assingNull) {
+            parentNS[parts[penultimoEspacio]] = null;
+            delete parentNS[parts[penultimoEspacio]];
+        } 
+
+        return currentNS;
+    } // fin método
+    //---------------------------------
+
+    //---------------------------------
+    // Fin Métodos para Espaciones de Nombres
+    //---------------------------------
+
+
+
+
+
+    //---------------------------------
+    // Inicio Métodos para peticiones Asincronas
+    //---------------------------------
+
+    if (!Promise.prototype.spread) {
+        Promise.prototype.spread = function (fn) {
+            return this.then(function (result) {
+                return result instanceof Array ? fn(...result) : fn(result);
+            });
+        };
+    }
+
+
+    /*
+        //---------------------------------
+        // Método para tomar todas las queryString de la URL.
+        //---------------------------------
+        // Retorna: {key:value}
+        //---------------------------------
+    */
+    function getQuerys(path) {
+        var ruta = path || location.search,
+            indiceQuery = ruta.indexOf('?'),
+            querys, qs, key, value, size;
+
+        if (ruta.indexOf('?') == -1) return {};
+
+        querys = ruta.substr(indiceQuery + 1).split('&');
+        size = querys.length;
+        qs = {};
+        for (var i = 0; i < size; ++i) {
+            key = querys[i].substring(0, querys[i].indexOf('='));
+            value = querys[i].substring(querys[i].indexOf('=') + 1, querys[i].length);
+            qs[key] = decodeURIComponent(value.replace(/\+/g, " "));
+        } // end for
+        return qs;
+    }
+
+    //---------------------------------
+    // Espacio para Requester
+    //---------------------------------
+    (function () {
+        var _workers = new Map(),
+            _indexWorkerActual = 0,
+            _registrationSW,
+            _singletonSW = false;
+
+        /*
+            //---------------------------------
+            // Obtiene un worker, esto se configura con un objeto observador.
+            //---------------------------------
+            // Retorna: {Worker} Retorna un WebWorker para realizar peticiones.
+            //---------------------------------
+        */
+        function fnGetWorker() {
+            let worker;
+
+            // Se genera un Worker y se obtiene un observador
+            if (_workers.size < jr.workersCount) {
+                worker = new Worker(jr.requesterWorkerPath);
+                worker.observador = _patterns.observer;
+                worker.addEventListener("message", fnListenerWoker, false);
+                worker.addEventListener("error", fnListenerWoker, false);
+                _workers.set(_workers.size, worker);
+            } // end if
+
+            // Se obtiene el worker y se aumenta contador
+            if (_indexWorkerActual >= _workers.size) _indexWorkerActual = 0;
+            worker = _workers.get(_indexWorkerActual);
+            _indexWorkerActual++;
+
+            return worker;
+
+            // listener event observer of worker, se notifica al observado y se elimina éste
+            function fnListenerWoker(e) {
+                worker.observador
+                    .notify(e.data.observedId, e)
+                    .remove(e.data.observedId);
+            } // end function
+        }
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Se obtiene la referencia de un worker, y se envian los 
+            // datos al servidor
+            //---------------------------------
+            // Parámetros:
+            //---------------------------------
+            // @data:   {object|string} Objeto con la información para cargar los archivos.
+            //---------------------------------
+            // Retorna: {Promise} Retorna un objeto Promise
+            //---------------------------------
+        */
+        function fnSendRequest(request, addResponse) {
+            // Variables para cuando retorne información el worker
+            let _copyRequest = fnGetRequest(request, true);
+
+            // Se crea una nueva promesa
+            return new Promise(function (resolve, reject) {
+                var command, worker;
+
+                // Se usa el patrón Command
+                command = _patterns.command
+                    .on('message', fnReseiver)
+                    .on('error', reject);
+
+                // Instancia del worker
+                worker = fnGetWorker();
+
+                // Se usa el patrón Observador
+                _copyRequest.observedId = worker.observador.add(function (e) {
+                    command.trigger(e.type, e.data, request, resolve, addResponse);
+                });
+
+                // Config Get
+                fnExecFunction(_cbStartRequest, _copyRequest);
+
+                // Se envia los datos al worker
+                worker.postMessage(_copyRequest);
+            }).then(function (result) {
+                fnExecFunction(request.then, result);
+                return result;
+            }, function (error) {
+                _copyRequest.error = error;
+                fnExecFunction(request.catch, _copyRequest);
+                return Promise.reject(_copyRequest);
+            });
+        }
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Función para eliminar un arreglo de _workers
+            //---------------------------------
+        */
+        function fnDeleteWorkers() {
+            if (!_workers) return;
+            if (!_workers.size) return;
+            
+            let keys = _workers.keys();
+            for(let srtKey of keys) {
+                _workers.get(srtKey).terminate();
+                _workers.delete(srtKey);
+            }
+        } // end function
+        //---------------------------------
+        
+        /*
+            //---------------------------------
+            // Se obtiene la referencia del service worker
+            //---------------------------------
+            // Retorna: {Promise} Retorna un objeto Promise con el parámetro {SW} service worker
+            //---------------------------------
+        */
+        function getRegistrationSW() {
+            if (!_registrationSW) return navigator.serviceWorker.getRegistration().then(sw => _registrationSW = sw);
+            return Promise.resolve(_registrationSW);
+        } // end function
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Se obtiene la referencia de un worker, y se envian los 
+            // datos al servidor
+            //---------------------------------
+            // Parámetros:
+            //---------------------------------
+            // @data:   {object} Objeto con la información para cargar los archivos.
+            //---------------------------------
+            // Retorna: {Promise} Retorna un objeto Promise
+            //---------------------------------
+        */
+        function fnSendRequestSW(request, addResponse) {
+            if(jr.workersCount) return fnSendRequest(request, addResponse);
+
+            // Variables para cuando retorne información el worker
+            let _copyRequest = fnGetRequest(request, true);
+
+            // Se crea una nueva promesa
+            return new Promise(function(resolve, reject) {
+                getRegistrationSW().then(function (sw) {
+                    var messageChannel = new MessageChannel();
+
+                    messageChannel.port1.onmessage = function (event) {
+                        if (typeof event.data == 'string') {
+                            addResponse();
+                            reject(event.data);
+                            return;
+                        }
+                        else fnReseiver(event.data, _copyRequest, resolve, addResponse);
+                    } // end function
+
+                    // Config Get
+                    fnExecFunction(_cbStartRequest, _copyRequest);
+
+                    // This sends the message data as well as transferring messageChannel.port2 to the service worker.
+                    // The service worker can then use the transferred port to reply via postMessage(), which
+                    // will in turn trigger the onmessage handler on messageChannel.port1.
+                    // See https://html.spec.whatwg.org/multipage/workers.html#dom-worker-postmessage
+                    sw.active.postMessage(_copyRequest, [messageChannel.port2]);
+                });
+            }).then(function(result) {
+                fnExecFunction(request.then, result);   
+                return result;
+            }, function (error) {
+                _copyRequest.error = error;
+                fnExecFunction(request.catch, _copyRequest);
+                return Promise.reject(_copyRequest);
+            });
+        } // end function
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Registra un service worker si el navegador lo soporta.
+            //---------------------------------
+            // Parámetros:
+            //---------------------------------
+            // @fnCallback: Función de callack cuando se registre el serviceworker.
+            //---------------------------------
+        */
+        function fnInitServiceWorker() {
+            if(_singletonSW) return Promise.resolve();
+            _singletonSW = true;
+
+            return Promise.all([
+                navigator.serviceWorker.register(jr.serviceWorkerPath, { scope: './' }), 
+                navigator.serviceWorker.ready
+            ]).then(function (registrations) {
+                if (jr.dev) console.log('Service Worker activado con el contexto:', registrations[0].scope);
+                return navigator.onLine ? registrations[0].update() : Promise.resolve();
+            }, fnErrorHandler).then(function () {
+                navigator.serviceWorker.addEventListener('message', function (event) {
+                    console.log('Mensaje recibido del SW: ', JSON.stringify(event.data));
+                    // event.ports[0].postMessage("Client 1 Says 'Hello back!'");
+                });
+            }, fnErrorHandler);
+
+            /* 
+                .then(function (registration) {
+                // TODO: implementar notificaciones push
+                    return navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {                
+                        return serviceWorkerRegistration.pushManager.getSubscription();
+                    });
+                })
+            */
+        } // end function
+        //---------------------------------
+
+        // Public API
+        this.sendRequest = fnSendRequestSW;
+        this.deleteWorkers = fnDeleteWorkers;
+        this.init = fnInitServiceWorker;
+    }).call(jr.addNS('serviceWorker'));
+
+
+    /*
+        //---------------------------------
+        // fnGet()
+        // Esta función usa hilos (webworkers), se cargan archivos mediante ajax, para el navegador Google Chrome.  
+        // Estos archivo se guardan en el navegador haciendo usao de la interfaz FileSystem.
+        // Con esto se logra menos peticiones al servidor y una carga más rápida de la página.
+        //
+        // Se debe cargar la primera vez un archivo .json con los nombre de los archivos que deban actualizarsen, los
+        // objetos del .json deberán tener las siguientes propiedades: nombre y la fecha de actualización.
+        // La estructura del json debe ser la siguiente:
+        //  [
+        //      { "name":"ui.js", "date":"2014-06-24-15" }
+        //  ]
+        //---------------------------------
+        // Parametros:
+        //---------------------------------
+        // @data:   Objeto con la información para cargar los archivos          [{},{}]
+        // @then:   Método que se ejecuta cuando carguen todos los archivos     (function (response, args) {})
+        //---------------------------------
+        // Retorna: Estructura de una objeto Promesa
+        //---------------------------------
+    */
+    function fnGet() {
+        let totalRequest = arguments.length,
+            pars = arguments,
+            fragment = document.createDocumentFragment(),
+            countRequest = 0,
+            countRequestCompleted = 0,
+            isParentElement = true;
+
+        return new Promise(function(resolve, reject) {
+            getRequests(...pars).then(function() {
+                resolve(...arguments);
+            }, request => {
+                let result = { error: request.error };
+                if (fnIsFunction(_cbErrorRequest)) fnExecFunction(_cbErrorRequest, result);
+                return reject(result);
+            });
+        });
+
+        // Se valida un parámetro, un arreglo un Promise.all
+        function getRequests() {
+            let size = arguments.length;
+            
+            for (let i = 0; i < size; i++) {
+                if(arguments[i] instanceof Array)
+                    arguments[i] = Promise.all(arguments[i].map(request => {
+                        if(request instanceof Array) return getRequests(...request);
+                        else return getRequests(request);
+                    }));
+                else
+                    arguments[i] = getPromise(arguments[i]);
+            }
+
+            return size == 1 ? arguments[0] : Promise.all(arguments);
+        }
+
+        // Se valida para que se use una estructura de varios parámetros
+        function getPromise(request) {
+            if(request instanceof Promise) return request;
+            else {
+                ++countRequest;
+                return _iRequester.sendRequest(request, addResponse);
+            }
+        }
+
+        // Valida la petición y maneja el árbol de nodos en el fragmento principal
+        function addResponse(result) {  
+            let jParent, size, query, wrapper;
+            ++countRequestCompleted;
+
+            if(result && result.fragment) {
+                fnReplaceWith(result, fragment, isParentElement);
+                isParentElement = false;
+            }
+
+            if(fragment.hasChildNodes() && countRequestCompleted == countRequest) {
+                jParent = fragment.querySelectorAll('[data-j-parent]');
+                size = jParent.length;
+                for(let i = 0; i < size; i++) {
+                    wrapper = document.querySelector(jParent[i].dataset.jParent);
+                    if(wrapper) {
+                        if(wrapper.firstElementChild) wrapper.firstElementChild.replaceWith(jParent[i]);
+                        else wrapper.appendChild(jParent[i]);
+                    }
+                }
+                WRAPPER_TAGS_GET.appendChild(fragment);
+            }
+        }
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Se encarga de recibir la información del observador, que a su vez
+        // recibe la información del worker, resuelve la promesa, y ejecuta
+        // la función de callback, si es unapetición para archivos js o css
+        // se crean sus respectivas tag en el documento.
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @reponse:          {object}    Información que se retorno desde el worker.
+        // @request:          {object}    Request que se realiza al servidor.
+        // @resolvePromise:   {function}  Función que resulve una promesa.
+        //---------------------------------
+    */
+    function fnReseiver(response, request, resolve, addResponse) {
+        // TODO: Agregar validación de request.mime y de result.mime
+        var notRequestBlob = response.result instanceof Blob && !/blob|text/.test(request.mime),
+            result = { 
+                request: request, 
+                response: notRequestBlob ? URL.createObjectURL(response.result) : response.result
+            },
+            type = /^css|js$/gi.exec(response.ext);
+
+        // Cuando el archivo es un script o un estilo se crea la tag respectiva y se agrega al documento
+        if (type && notRequestBlob) {
+            // Si es una archivo de tipo javascript o una hoja de estilos se crea una tag,
+            // si se tiene una función para hacer callback se ejecuta esta.
+            fnTagScriptLink({
+                href: result.response, type: type[0],
+                name: request.src, repeatTag: request.repeatTag,
+                referenceTag: request.referenceTag,
+                addFragment: tag => {
+                    let fragment = document.createDocumentFragment();
+                    fragment.appendChild(tag);
+                    result.fragment = fragment;
+                    addResponse(result);
+                }
+            }).then(function () {
+                // Config Get
+                fnExecFunction(_cbEndRequest, result);
+                resolve(result);
+            });
+        } else {
+            // genera un fragment si la petición tiene una propiedad query o noAppend
+            if((result.request.query || result.request.noAppend) && !result.request.noFragment) {
+                // TODO: https://github.com/whatwg/html/issues/2993
+                let resultElement = fnParseHTML(result.response);
+                Object.assign(result, { fragment: resultElement });
+                if(!result.request.noAppend) addResponse(result);
+            } else {
+                addResponse(result);
+            }
+            fnExecFunction(_cbEndRequest, result);
+            resolve(result);
+        }        
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Obtiene las propiedeades diferente entre una referencia (objeto) y un objeto.
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @source: {object} Objeto con la estructura a no tomar.
+        // @target: {object} Objeto con la información para obtener las.
+        //---------------------------------
+        // Retorna: {object} Retorna un objeto con las diferencias.
+        //---------------------------------
+    */
+    function fnGetDiferences(source, target) {
+        var diference = {};
+        Object.keys(target).forEach(name => {
+            if(!source.hasOwnProperty(name)) diference[name] = target[name];
+        });
+        return diference;
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // fnGetRequest()
+        // Función para evaluar si un objeto es un string con la ruta a solicitar
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @request:   Ínformación de un request.
+        //---------------------------------
+    */
+    function fnGetRequest(request, removeFunctions) {
+        let copyRequest;
+        if (typeof request === 'string' || request instanceof String) return { src: request.toString(), useFS: jr.useFileSystem };
+        if (removeFunctions) {
+            copyRequest = JSON.parse(JSON.stringify(request));
+            copyRequest.useFS = jr.useFileSystem;
+            return copyRequest;
+        }
+        reqest.useFS = jr.useFileSystem;
+        return request;
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Crea una tag script o una tag link(css) para asignar una url y ejecutar un callback
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @d:              Objeto con los parametro necesarios para la ejecución de la función
+        // @d.href:         Dirección del blob  'string'
+        // @d.type:         Tipo de tag a crear ('js' || 'css')
+        // @d.name:         Nombre del archivo para identificarlo en la tag
+        // @d.repeatTag:    Valor para saber si se salta la validación: si existe el 
+        //                  objeto en el DOM. (true || false)
+        // @d.referenceTag: Agrega un data-name para identificar la tag a crear
+        //---------------------------------
+        // Retorna: Promise
+        //---------------------------------
+    */
+    function fnTagScriptLink(d = {}) {
+        return new Promise(function (resolve, reject) {
+            var tag, attributesUrl, name, indiceFin;
+
+            /*
+                // Se valida si ya hay una tag con el data-name igual
+                // para no volverlo a crear
+            */
+            if (!d.repeatTag && d.referenceTag) {
+                var query = (d.type == 'js' ? 'script' : 'link') + '[data-name="' + d.name + '"]';
+                document.querySelector(query) && resolve({});
+            } // end if repeatTag
+
+            // Se elije que tipo de tag se va a crear
+            switch (d.type) {
+                case 'js':
+                    tag = document.createElement("script");
+                    tag.src = d.href;
+                    tag.async = true;
+                    break;
+                case 'css':
+                    tag = document.createElement("link");
+                    tag.href = d.href;
+                    tag.rel = 'stylesheet';
+                    break;
+            } // fin switch
+
+            if (d.referenceTag) {
+                name = d.name;
+                indiceFin = name.indexOf('?');
+                if(indiceFin > -1) name = name.substring(0, indiceFin);
+                tag.dataset.name = name;
+            }
+
+            // Se verifica querys si se requiere y se asignan al control
+            if(d.name) {
+                attributesUrl = getQuerys(d.name);
+                Object.keys(attributesUrl).forEach(name => tag.setAttribute(name, attributesUrl[name]));
+            }
+
+            // Cuando la tag se carga se ejecuta la funcion del item
+            tag.addEventListener('load', resolve, false);
+            tag.addEventListener('error', reject, false);
+
+            // Se agrega la nueva tag en el DOM
+            if(d.addFragment) d.addFragment(tag);
+            else WRAPPER_TAGS_GET.appendChild(tag);            
+        });
+    } // fin método
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Función para reemplazar un nodo
+        //---------------------------------
+    */
+    function fnReplaceWith(result, fragment, isParentElement) {
+        var wrapper = fragment ? fragment.querySelector(result.request.query) : undefined,
+            query = result.request.query;
+
+        if(result.fragment) {
+            if(wrapper && wrapper.firstElementChild) wrapper.firstElementChild.replaceWith(result.fragment);
+            else if(wrapper && !wrapper.firstElementChild) wrapper.appendChild(result.fragment);
+            else if(!wrapper && query && isParentElement) {
+                result.fragment.firstElementChild.dataset.jParent = query;
+                fragment.appendChild(result.fragment);
+            }
+            else if(!wrapper && query && !isParentElement) {
+                wrapper = document.querySelector(query);
+                if(wrapper.firstElementChild) wrapper.firstElementChild.replaceWith(result.fragment);
+                else wrapper.appendChild(result.fragment);
+            }
+            else WRAPPER_TAGS_GET.appendChild(result.fragment);
+        }
+    }
+
+    /*
+        //---------------------------------
+        // Función obtener un DocumentFragment de un string
+        //---------------------------------
+    */
+    function fnParseHTML(str) {
+        return document.createRange().createContextualFragment(str);
+    }
+
+    /*
+        //---------------------------------
+        // Función para realizar peticiones al servidor y crear un html dinámico mediante plantilla
+        //---------------------------------
+    */
+    function fnCompileHTML() {
+        return get(...arguments).spread(function() {
+            var data = {};            
+            return getResults(data, ...getData(data, ...arguments));
+        });
+        function getData(data) {
+            var _resultsHtml = [],
+                results = jr.parametersWithoutFirst(...arguments) || [],
+                size = results.length;
+
+            for(var i = 0; i < size; i++) {
+                if(results[i] instanceof Array) results[i].forEach(result => {
+                    var currentResult = getData(data, result);
+                    if(currentResult.length) _resultsHtml[_resultsHtml.length] = currentResult;
+                });
+                else validataData(data, results[i]);                
+            }
+
+            return _resultsHtml;
+
+            function validataData(data, result) {
+                var isText = typeof result.response == 'string';
+                if(isText) _resultsHtml[_resultsHtml.length] = result;
+                else Object.assign(data, result.response);
+            }
+        }
+        function getResults(data) {
+            var results = jr.parametersWithoutFirst(...arguments) || [],
+                promises = results.map(result => {
+                    if(result instanceof Array) return getResults(data, ...result);
+                    return compile(data, result);
+                });
+
+            return results.length > 1 ? Promise.all(promises) : promises[0];
+        }
+        function compile(data, result) {
+            return new Promise((resolve, reject) => {
+                var worker = new Worker('assets/js/workers/compiler-worker.js');
+                worker.addEventListener("message", e => {
+                    worker.terminate();
+                    resolve(Object.assign(result, { response: e.data, fragment: fnParseHTML(e.data) }));
+                }, false);
+                worker.postMessage({ template: result.response, data: data });
+            });
+        }
+    }
+
+    /*
+        //---------------------------------
+        // fnInitJMain()
+        // Función para inicializar el service worker o el filesystem
+        //---------------------------------
+    */
+    function fnInitJMain() {
+        var currentTag = document.currentScript,
+            configuracion = { useSW: true};
+
+        // Configuración defecto
+        Object.assign(configuracion, document.currentScript.dataset);        
+        jr.useFileSystem = configuracion.useFS;
+
+        // Configuración paths
+        jr.requesterWorkerPath = configuracion.requesterWorkerPath || REQUESTER_WORKER_PATH;
+        jr.serviceWorkerPath = configuracion.serviceWorkerPath || SERVICE_WORKER_PATH;
+
+        _iRequester = jr.serviceWorker;
+        _iRequester.init().then(function() {
+            // Para agrupar las tags generadas con el get
+            if(!WRAPPER_TAGS_GET.id) WRAPPER_TAGS_GET.id = QUERY_CONTAINER_TAGS_GET;
+            fnTagScriptLink({ href: currentTag.dataset.init, type: 'js' });
+            !document.body.hasChildNodes(WRAPPER_TAGS_GET) && document.body.appendChild(WRAPPER_TAGS_GET);
+        }, fnErrorHandler);
+    }
+
+    /*
+        //---------------------------------
+        // fnInitJMain()
+        // Función para mejorar la funcionalidad de las
+        // peticiones asincronas
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @opciones:   Valores de configuración.
+        //---------------------------------
+        // @.workersCount:  Cantidad de workers que realizaran las peticiones.
+        // @.useSW:         Bandera para identificar si se debe usa un service worker.
+        //---------------------------------
+        // Configuración get()
+        //---------------------------------
+        // @.cbStartRequest:    Callback para ejecutar antes de hacer las peticiones al servidor 
+        // @.cbEndRequest:      Callback para ejecutar cuando el servidor responda las peticiones
+        //---------------------------------
+    */
+    function fnInitConfigJMain(opciones) {
+        var configuracion = {
+            getToWindow: true,
+            useFS: false,                
+            workersCount: 0,
+        };
+
+        // Configuración defecto
+        Object.assign(configuracion, opciones);
+        jr.useFileSystem = configuracion.useFS;
+        
+        // Asignación de interface para realizar las peticiones y guardar las respuestas
+        if (jr.useFileSystem) {
+            _iRequester = jr.fileSystem;
+
+            window.addEventListener('load', function (e) {
+                window.applicationCache.addEventListener('updateready', function () {
+                    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+                        window.applicationCache.swapCache();
+                        window.location.reload();
+                    } // end if
+                }, false); // end function updaterady
+            }, false); // end function load
+        }
+
+        // Configuración de funcón globales
+        _cbStartRequest = configuracion.cbStartRequest || _cbStartRequest;
+        _cbEndRequest = configuracion.cbEndRequest || _cbEndRequest;
+        _cbErrorRequest = configuracion.cbErrorRequest || _cbErrorRequest;
+
+        // Configuración de hilos para solicitudes
+        _workersCount = configuracion.workersCount;
+        Object.defineProperty(jr, 'workersCount', {
+            set: value => {
+                _workersCount = value;
+                !_workersCount && _iRequester.deleteWorkers();
+            },
+            get: () => _workersCount
+        });
+
+        // Variablesa windows
+        if (configuracion.getToWindow) window.get = fnGet;
+        return _iRequester.init().then(function() {
+            if(configuracion.packages) {
+                jr.service = _patterns.serviceLocator;
+                return jr.service(configuracion.packages);
+            }
+        });
+    } // end function
+    //---------------------------------
+
+    //---------------------------------
+    // Fin Métodos para peticiones Sincronos
+    //---------------------------------
+
+
+
+
+
+    //---------------------------------
+    // Inicio Funciones Comunes
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Valida si el parametro es una tipo de objeto function
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @x:  {object} Valor a validar
+        //---------------------------------
+        // Retorna: Si el parámetro x es una función o no
+        //---------------------------------
+    */
+    function fnIsFunction(x) {
+        return Object.prototype.toString.call(x) == '[object Function]';
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Obtiene los parametros excepto el primero y retorna un array
+        //---------------------------------
+    */
+    function fnParametersWithoutFirst() {
+        var pars,
+            size = arguments.length;
+        if (size > 1) {
+            pars = [];
+            for(var i = 1; i < size; i++) pars[pars.length] = arguments[i];
+        }
+        return pars;
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Valida si el parametro es una función y la ejecuca pasandole los parámetros que se indiquen
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @cb:     {function}  Función a ejecutar
+        // @arg1:   {any}       Parámetro a ejecutar
+        // @arg2:   {any}       Parámetro a ejecutar
+        // @arg...: {any}       Parámetro a ejecutar
+        //---------------------------------
+        // Retorna: El resultado de la función
+        //---------------------------------
+    */
+    function fnExecFunction(cb) {
+        var pars = fnParametersWithoutFirst(...arguments);
+        if(fnIsFunction(cb)) return pars ? cb(...pars) : cb(pars);
+    } // end fnExecFunction
+    //---------------------------------
+
+    //---------------------------------
+    // Inicio Métodos para Arrays
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Función para ordenar
+        //---------------------------------
+        // Ejemplo array.sortBy(function () { return this.index })
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // @f:       Función anonima en la que se retorna la propiedad
+        //           por la que se quiere ordenar    {function}
+        //---------------------------------
+        // return:   Retorna el Array ordenado
+        //---------------------------------
+    */
+    Array.prototype.sortBy = function (f) {
+        for (var i = this.length; i;) {
+            var o = this[--i];
+            this[i] = [].concat(f.call(o, o, i), o);
+        } // fin for
+        this.sort(function (a, b) {
+            for (var i = 0, len = a.length; i < len; ++i) {
+                if (a[i] != b[i]) return a[i] < b[i] ? -1 : 1;
+            } // fin for
+            return 0;
+        }); // fin método sort
+        for (var i = this.length; i;) {
+            this[--i] = this[i][this[i].length - 1];
+        } // fin for
+        return this;
+    } // fin método
+    //---------------------------------
+
+    //---------------------------------
+    // Fin Métodos para Arrays
+    //---------------------------------
+
+    // Public API
+    //---------------------------------
+    // HTML
+
+    /*
+        //---------------------------------
+        // Inserta un elemento enseguida del valor referenciado.
+        // referencenode:   Elemento siguiente al nuevo nodo, o
+        //                  al nodo de referencia   {ELEMENT}
+        // newNode:         Elemento que va ser insertado antes que
+        //                  el referenciado         {ELEMENT}
+        //---------------------------------
+    */
+    function fnInsertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------    
+        // Función para eliminar una tag
+        //---------------------------------    
+        // Parámetros:
+        //---------------------------------    
+        // object:  Objeto que será eliminado   {< />}
+        //---------------------------------    
+    */
+    function fnDeleteTag(object) {
+        if (!object) return;
+        object.parentNode.removeChild(object);
+    } // end method
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Crea un objeto Date y recibe una fecha en formato json
+        //---------------------------------
+        // Parámetros:
+        //---------------------------------
+        // jsonDate:    Fecha que es convertida al serializar un DateTime de .Net
+        //              {/Date(1335205592410)/}
+        //---------------------------------
+    */
+    function fnParseJsonDate(jsonDate) {
+        var offset = new Date().getTimezoneOffset() * 60000;
+        var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+        if (parts[2] == undefined) parts[2] = 0;
+        if (parts[3] == undefined) parts[3] = 0;
+        return new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Toma la fecha y hora actual para retornar esta información como una cadena de texto. (yyyy-MM-dd hh:mm)
+        //---------------------------------
+    */
+    function fnNow() {
+        var date = new Date();
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDay() - 1) + ' ' + date.getHours() + ':' + date.getMinutes();
+    } // end function
+    //---------------------------------
+
+    /*
+        //---------------------------------
+        // Agrega texto dentro de la consola, para el manejo de errores
+        //---------------------------------
+    */
+    function fnErrorHandler(e) {
+        console.log('Error: ', e.message || e);
+    } // end function
+    //---------------------------------
+
+    //---------------------------------
+    // Fin Funciones Comunes
+    //---------------------------------
+
+
+    //---------------------------------
+    // Inicio PWA's
+    //---------------------------------
+
+    (function() {
+        var _eventoPrompt;
+
+        window.addEventListener('beforeinstallprompt', function(e) {
+            // beforeinstallprompt Event fired
+            e.userChoice.then(function(choiceResult) {
+                console.log(choiceResult.outcome);
+
+                if(choiceResult.outcome == 'dismissed') {
+                    console.log('User cancelled home screen install');
+                }
+                else {
+                    console.log('User added to home screen');
+                }
+            });
+        });
+    })();
+
+    //---------------------------------
+    // Fin PWA's
+    //---------------------------------
+
+
+    //---------------------------------
+    // Inicio Patrones de Diseño
+    //---------------------------------
+
+    (function () {
+        // Variables privadas
+        var _selfPatterns = this,
+            _observer;
+
+        //---------------------------------
+        // Inicio Patrón Command
+        //---------------------------------
+
+        (function () {
+            // Constructor quien administra los observados
+            function Command() {
+                var _commands = {},
+                    _api = this;
+
+                _api.on = function (command, fnCallback) {
+                    _commands[command] = function () {
+                        fnExecFunction(fnCallback, ...arguments);
+                        return _api;
+                    };
+                    return _api;
+                }
+                _api.off = function (command) {
+                    delete _commands[command];
+                    return _api;
+                }
+                _api.trigger = function (command) {
+                    let pars = fnParametersWithoutFirst(...arguments) || [];
+                    fnExecFunction(_commands[command], ...pars);
+                    return _api;
+                } // end function
+
+                // Public API
+                return _api;
+            } // emnd constructor
+
+            // Public API
+            Object.defineProperty(_selfPatterns, 'command', { get: () => new Command() });
+        })();
+
+        //---------------------------------
+        // Fin Patrón Command
+        //---------------------------------
+
+
+        //---------------------------------
+        // Inicio Patrón Observer
+        //---------------------------------
+
+        (function () {
+            var _currentId = 0;
+
+            // Constructor quien administra los observados
+            function Subject() {
+                var _observers = new Map(),
+                    _api = this;
+
+                _api.add = function (cbListener) {
+                    var observed = new Observer(cbListener);
+                    _observers.set(observed.id, observed);
+                    return observed.id;
+                }
+                _api.remove = function (id) {
+                    _observers.delete(id);
+                    return _api;
+                }
+                _api.notify = function (id) {
+                    if (_observers.has(id)) _observers.get(id).update(...fnParametersWithoutFirst(...arguments));
+                    return _api;
+                } // end function
+
+                return _api;
+            } // end constructor
+
+            // Constructor observado, key, listenNotify
+            function Observer(cbListener) {
+                this.update = function () {
+                    fnExecFunction(cbListener, ...arguments);
+                    return this;
+                };
+                this.id = ++_currentId;
+            } // end function
+
+            // Public API
+            Object.defineProperty(_selfPatterns, 'observer', { get: () => new Subject() });
+        })();
+
+        //---------------------------------
+        // Fin Patrón Observer
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Se obtiene una instancia única del objeto a evaluar
+            //---------------------------------
+            // Parámetros
+            //---------------------------------
+            // @referencia:         {object}    Referencia al objeto que se quiere evaluar.
+            // @funcionInstancia:   {object}    Función que retorna la instancia del objeto a evaluar.
+            //---------------------------------
+            // Retorna: Objeto resultante de la funcion de instancia, más la propiedad de singletonInstance.
+            //---------------------------------
+        */
+        function fnSingleton(referencia, funcionInstancia) {
+            if (referencia && referencia.singletonInstance) return referencia;
+            if (!fnIsFunction(funcionInstancia)) return;
+
+            referencia = funcionInstancia();
+            Object.defineProperty(referencia, { value: true });
+            referencia.singletonInstance = true;
+            return referencia;
+        } // end function
+        //---------------------------------
+
+        /*
+            //---------------------------------
+            // Patrón para el manejo de dependencias, usa get para solicitar los archivos del paquete
+            //---------------------------------           
+        */
+        (function() {
+            function ServiceLocator() {
+                var _self = this,
+                    _contenedor = new Map(),
+                    _packages = new Map(),
+                    _promisesGet = new Map();
+                
+                // Obtiene los paquetes si estos ya se solicitaron, si no se solicitan y se guardan
+                function _get(nameOrPackage) {
+                    var isStringPackage = typeof nameOrPackage === 'string',
+                        packageName = isStringPackage ? nameOrPackage : nameOrPackage.name,
+                        _package = _packages.get(packageName) || nameOrPackage;
+
+                    if(!_package.paths) throw "Package does not have any path: " + nameOrPackage;
+
+                    return new Promise(function(resolve, reject) {
+                        var resolvePackage, dependenciesPromises;
+                        if(_contenedor.has(packageName)) resolvePackage = Promise.resolve({ response: _contenedor.get(packageName) });
+                        else {
+                            dependenciesPromises = [];
+                            // Evaluar dependencias
+                            _package.dependencies && _package.dependencies.forEach(dependencie => {
+                                if(!_promisesGet.has(dependencie)) {
+                                    _promisesGet.set(dependencie, _get(dependencie));
+                                    dependenciesPromises.push(_promisesGet.get(dependencie));
+                                }
+                            });
+                            if(!_promisesGet.has(_package.name)) {
+                                _promisesGet.set(_package.name, Promise.all(dependenciesPromises).then(() => fnGet(_package.paths)));
+                            } 
+                            resolvePackage = _promisesGet.get(_package.name);
+                        }
+
+                        resolvePackage.then(function(result) {
+                            var packages = [];
+
+                            (!_packages.has(packageName) ? _setPackages([result.response]) : Promise.resolve()).then(function() {
+                                _package = _packages.get(packageName);
+                                _package.namespaces.forEach(function(ns) { packages.push(fnImport(ns)); });
+                                _contenedor.set(packageName, packages);                         
+                                resolve(packages);
+                            });
+
+                        }, reject);
+                    });
+                }
+
+                // Asigna la información de los paquetes, o descarga el json que los contiene
+                function _setPackages(pathOrPackages) {
+                    var resolve = typeof pathOrPackages === 'string' ? fnGet(pathOrPackages) : Promise.resolve({ response: pathOrPackages });
+                    return resolve.then(function(result) {
+                        if(!(result.response instanceof Array)) result.response = [result.response];
+                        result.response.forEach(_package => {
+                            if(_packages.has(_package.name)) return;
+                            _packages.set(_package.name, { 
+                                name: _package.name,
+                                paths: _package.paths, 
+                                namespaces: _package.namespaces, 
+                                dependencies: _package.dependencies
+                            });
+                        });
+                    });
+                }
+
+                function api(nameOrPackage) {
+                    if(typeof nameOrPackage === 'string') {
+                        return /.+(\.|\/).+/.test(nameOrPackage) ? _setPackages(nameOrPackage) : _get(nameOrPackage);
+                    }
+
+                    if(typeof nameOrPackage === 'object') return _setPackages(nameOrPackage);
+                    if(nameOrPackage instanceof Array) return _setPackages(nameOrPackage);
+                }
+
+                api.remove = function(nameOrPackage) {
+                    var isStringPackage = typeof nameOrPackage === 'string',
+                        packageName = isStringPackage ? nameOrPackage : nameOrPackage.name,
+                        _package = _packages.get(packageName) || nameOrPackage;
+
+                    if(_package) {
+                        (_package.namespaces) && _package.namespaces.forEach(ns => fnImport(ns, true));
+                        (_package.paths) && _package.paths.forEach(path => {
+                            var tag = document.querySelector(`[data-name="${path}"]`)
+                            tag && tag.parentNode.removeChild(tag);
+                        });
+                    }
+
+                    _contenedor.delete(nameOrPackage);
+                    _promisesGet.delete(nameOrPackage);
+                    
+                    return Promise.resolve();
+                }
+
+                return api;
+            }
+
+            // Public API
+            Object.defineProperty(_patterns, 'serviceLocator', { get: () => new ServiceLocator() });
+        })();
+
+        // Public API
+        this.addNS('singleton', fnSingleton);
+    }).call(_patterns);
+
+    //---------------------------------
+    // Fin Patrones de Diseño
+    //---------------------------------
+
+
+
+
+
+    //---------------------------------
+    // Public API
+    //---------------------------------
+
+    // Herramientas
+    jr.isFunction = fnIsFunction;
+    jr.parametersWithoutFirst = fnParametersWithoutFirst;
+    jr.execFunction = fnExecFunction;
+    jr.errorHandler = fnErrorHandler;
+    jr.getQuerys = getQuerys;
+    jr.insertAfter = fnInsertAfter;
+    jr.deleteTag = fnDeleteTag;
+    jr.parseJsonDate = fnParseJsonDate;
+    jr.now = fnNow;
+
+    // Métodos para NameSpacing
+    jr.namespace = Namespace;
+    jr.import = fnImport;
+    jr.replaceWith = fnReplaceWith;
+    jr.compileHTML = fnCompileHTML;
+    
+    // Métodos para peticiones asíncronas
+    jr.get = fnGet;
+    jr.tagScriptLink = fnTagScriptLink;
+
+    // Patrones de Diseño
+    jr.patterns = _patterns;
+    //---------------------------------
+
+    //---------------------------------
+    // Variables globales
+    //---------------------------------
+
+    // Variable para validar los nombres de espacios
+    jr.validateNS = /^[a-zA-Z]?[a-zA-z0-9]+$/;
+    // Contador de tags
+    jr.countTags = 0;
+    // Variable para conocer si se esta navegando bajo el protocolo seguro (https)
+    jr.ssl = location.origin.indexOf('https') > -1;
+    jr.dev = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
+    //-----------------------------
+
+    // Legunaje de la página
+    jr.lang = document.querySelector("html").getAttribute("lang");
+
+    // Inicio de Peticiones asincronas
+    fnInitJMain();
+})(window);
+//---------------------------------
+
+
+/*
+REQUEST_OBJECT = new function () {
+    return {
+        src: '{string} Ruta para el request.',
+        then: '{function} Función de callback.',
+        catch: '{function} Función de callback.',
+        mime: '{string} Mime Type especial, este se puede obtener a través de la extensión.',
+        cache: '{bool} Identifica si se debe realizar la petición al servidor.',
+        method: '{string} Identifica el verbo que se debe usar en la petición.',
+        value: '{Object} Valores que se enviaran en la petición.'
+    }
+} // end function;
+*/

@@ -1,1 +1,12 @@
-self.importScripts("../vendor/compiler.js"),self.addEventListener("message",(function(b){try{self.postMessage(self.Hogan.compile(b.data.template).render(b.data.data))}catch(b){}}));
+self.importScripts('../vendor/compiler.js');
+
+//---------------------------------
+// Recepción del App
+self.addEventListener("message", function (e) {
+    try {
+        self.postMessage(self.Hogan.compile(e.data.template).render(e.data.data));
+    } catch (e) {
+        console.log(e);
+    }
+});
+//---------------------------------
