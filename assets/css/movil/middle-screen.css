@@ -1,1 +1,1 @@
-.contents li{flex:1 0 33%}.contents li:nth-child(1),.contents li:nth-child(2){display:flex;flex:0 1 35%}.contents li:nth-child(1) svg,.contents li:nth-child(2) svg{margin:0 auto}.movies .detail li{padding:5px}.movies .detail h4{font-size:.9em}
+.contents li{flex:1 0 33%}.contents li:first-child,.contents li:nth-child(2){display:flex;flex:0 1 35%}.contents li:first-child svg,.contents li:nth-child(2) svg{margin:0 auto}.movies .detail li{padding:5px}.movies .detail h4{font-size:.9em}
